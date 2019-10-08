@@ -2,9 +2,9 @@ package com.baharmc.loader.contained;
 
 import com.baharmc.loader.PluginContained;
 import com.baharmc.loader.PluginMetaData;
-import com.baharmc.loader.metadata.PluginMetaDataBasic;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.nio.file.Path;
 
 public class PluginContainerBasic implements PluginContained {
@@ -12,18 +12,22 @@ public class PluginContainerBasic implements PluginContained {
     @NotNull
     private final PluginMetaData pluginMetaData;
 
-    public PluginContainerBasic(@NotNull PluginMetaData pluginMetaData) {
+    @NotNull
+    private final File file;
+
+    public PluginContainerBasic(@NotNull PluginMetaData pluginMetaData, @NotNull File file) {
         this.pluginMetaData = pluginMetaData;
+        this.file = file;
     }
 
     @Override
-    public PluginMetaDataBasic getMetaData() {
-        return null;
+    public PluginMetaData getMetaData() {
+        return pluginMetaData;
     }
 
     @Override
     public Path getRootPath() {
-        return null;
+        return file.toPath();
     }
 
 }
