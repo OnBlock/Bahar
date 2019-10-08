@@ -17,9 +17,4 @@ public class PluginContainerBasic implements PluginContained {
         return null;
     }
 
-    @Override
-    public Path getPath(String file) {
-        return null;
-    }
-
 }
