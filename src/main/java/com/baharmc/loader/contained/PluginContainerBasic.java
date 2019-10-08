@@ -1,14 +1,14 @@
 package com.baharmc.loader.contained;
 
 import com.baharmc.loader.PluginContained;
-import com.baharmc.loader.metadata.PluginMetaData;
+import com.baharmc.loader.metadata.PluginMetaDataBasic;
 
 import java.nio.file.Path;
 
 public class PluginContainerBasic implements PluginContained {
 
     @Override
-    public PluginMetaData getMetaData() {
+    public PluginMetaDataBasic getMetaData() {
         return null;
     }
 

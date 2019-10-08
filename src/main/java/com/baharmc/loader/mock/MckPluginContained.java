@@ -1,7 +1,7 @@
 package com.baharmc.loader.mock;
 
 import com.baharmc.loader.PluginContained;
-import com.baharmc.loader.metadata.PluginMetaData;
+import com.baharmc.loader.PluginMetaData;
 
 import java.nio.file.Path;
 
