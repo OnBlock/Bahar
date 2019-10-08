@@ -46,7 +46,7 @@ public class LauncherBasic implements BaharLaunched {
 
         Thread.currentThread().setContextClassLoader(newClassLoader);
 
-        new ClassOf(newClassLoader.loadClass(""))
+        new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.server.KnotServer"))
             .getMethod("start")
             .of(KnotServer.class)
             .call(new KnotServer(args));
