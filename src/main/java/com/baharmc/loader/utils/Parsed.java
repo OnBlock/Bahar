@@ -1,5 +1,6 @@
 package com.baharmc.loader.utils;
 
+import org.cactoos.Scalar;
 import org.cactoos.map.MapEntry;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class Parsed {
+public final class Parsed implements Scalar<Map.Entry<Map<String, String>, List<String>>> {
 
     @NotNull
     private final List<String> arguments;

@@ -1,12 +1,13 @@
 package com.baharmc.loader.utils;
 
+import org.cactoos.Scalar;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public final class Arrayed {
+public final class Arrayed implements Scalar<String[]> {
 
     @NotNull
     private final Map<String, String> values;
