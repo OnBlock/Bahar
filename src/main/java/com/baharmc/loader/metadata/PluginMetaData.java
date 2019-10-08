@@ -1,11 +1,10 @@
 package com.baharmc.loader.metadata;
 
-import com.baharmc.loader.PluginMetaData;
 import com.baharmc.loader.utils.semanticversion.Version;
 
 import java.util.List;
 
-public class PluginMetaDataBasic implements PluginMetaData {
+public class PluginMetaData  {
     /**
      * Required
      */
