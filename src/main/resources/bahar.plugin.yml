@@ -8,7 +8,7 @@ name: BaharLoader
 #Version, must respect semver
 #Default: '${thisVersion}' managed by Gradle
 #More info: https://semver.org/
-version: '${thisVersion}'
+version: '${version}'
 #If you're plugin is stable set it to true, otherwise false
 isStable: false
 #Optional fields
@@ -21,7 +21,7 @@ authors:
   - CODY_AI
   - Portlek
 #A list of ways to contact you!
-contacts              :
+contacts:
   - website: https://onblock.xyz/bahar
   - github: https://github.com/BaharMC/loader
 #Does your plugin depends on any other plugins?

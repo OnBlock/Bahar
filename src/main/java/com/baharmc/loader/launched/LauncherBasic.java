@@ -20,6 +20,7 @@ public class LauncherBasic implements BaharLaunched {
         this.args = args;
     }
 
+    @Override
     public void start() throws Exception {
         final String serverJarPath = ".bahar/server.jar";
         final File serverJar = new File(serverJarPath);
