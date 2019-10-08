@@ -5,6 +5,6 @@ package com.baharmc.loader;
  */
 public interface BaharLaunched {
 
-    void start() throws Exception;
+    void init();
 
 }

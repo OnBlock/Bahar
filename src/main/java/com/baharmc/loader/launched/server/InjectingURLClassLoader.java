@@ -1,4 +1,4 @@
-package com.baharmc.loader.launched;
+package com.baharmc.loader.launched.server;
 
 import org.cactoos.list.ListOf;
 
@@ -6,11 +6,11 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
 
-class InjectingURLClassLoader extends URLClassLoader {
+public class InjectingURLClassLoader extends URLClassLoader {
 
 	private final List<String> exclusions;
 
-	InjectingURLClassLoader(URL[] urls, ClassLoader classLoader, String... exclusions) {
+	public InjectingURLClassLoader(URL[] urls, ClassLoader classLoader, String... exclusions) {
 		super(urls, classLoader);
 		this.exclusions  = new ListOf<>(exclusions);
 	}

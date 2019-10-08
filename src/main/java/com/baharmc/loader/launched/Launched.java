@@ -1,28 +1,41 @@
 package com.baharmc.loader.launched;
 
-import com.baharmc.loader.BaharLaunched;
-import com.baharmc.loader.launched.server.KnotServer;
+import com.baharmc.loader.launched.knot.KnotServer;
+import com.baharmc.loader.launched.server.InjectingURLClassLoader;
 import com.baharmc.loader.utils.UrlUtil;
 import io.github.portlek.reflection.clazz.ClassOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
-public class LauncherBasic implements BaharLaunched {
+public class Launched {
 
-    private static final ClassLoader parentLoader = LauncherBasic.class.getClassLoader();
+    private static final ClassLoader parentLoader = Launched.class.getClassLoader();
 
     @NotNull
-    private final String[] args;
+    private final List<String> args;
 
-    public LauncherBasic(@NotNull String[] args) {
+    public Launched(@NotNull List<String> args) {
         this.args = args;
     }
 
-    @Override
     public void start() throws Exception {
-        final String serverJarPath = ".bahar/server.jar";
+        final String serverJarPath;
+
+        if (args.size() == 0) {
+            serverJarPath = ".bahar/server.jar";
+        } else jar:{
+            for (int i = 0; i < args.size(); i++) {
+                if (args.get(i).equalsIgnoreCase("serverJarPath") && i + 1 < args.size()) {
+                    serverJarPath = args.get(i + 1);
+                    break jar;
+                }
+            }
+            serverJarPath = ".bahar/server.jar";
+        }
+
         final File serverJar = new File(serverJarPath);
 
         if (!serverJar.exists()) {
@@ -36,7 +49,7 @@ public class LauncherBasic implements BaharLaunched {
 
         final ClassLoader newClassLoader = new InjectingURLClassLoader(
             new URL[]{
-                LauncherBasic.class.getProtectionDomain().getCodeSource().getLocation(),
+                Launched.class.getProtectionDomain().getCodeSource().getLocation(),
                 UrlUtil.asUrl(serverJar)
             },
             parentLoader,
@@ -45,7 +58,7 @@ public class LauncherBasic implements BaharLaunched {
 
         Thread.currentThread().setContextClassLoader(newClassLoader);
 
-        new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.server.KnotServer"))
+        new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.KnotServer"))
             .getMethod("start")
             .of(KnotServer.class)
             .call(new KnotServer(args));
