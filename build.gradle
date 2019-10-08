@@ -10,3 +10,8 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
 }
+
+
+dependencies {
+    compile 'com.electronwill.night-config:yaml:3.6.0'
+}
