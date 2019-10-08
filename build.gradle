@@ -28,6 +28,11 @@ repositories {
     }
 }
 
+configurations {
+    fatJar
+    compile.extendsFrom fatJar
+}
+
 dependencies {
     compile 'com.electronwill.night-config:yaml:3.6.0'
 }
