@@ -2,6 +2,8 @@ package com.baharmc.loader.metadata;
 
 import com.baharmc.loader.utils.semanticversion.Version;
 
+import java.util.List;
+
 public class PluginMetaData  {
     /**
      * Required
@@ -16,5 +18,9 @@ public class PluginMetaData  {
      * Optional
      */
 
+    private String description;
+    private String license;
+    private List<String> authors;
+    private List<String> contacts;
 
 }
