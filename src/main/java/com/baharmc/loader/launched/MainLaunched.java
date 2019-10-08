@@ -1,7 +1,6 @@
 package com.baharmc.loader.launched;
 
-import com.baharmc.loader.launched.knot.KnotServer;
-import com.baharmc.loader.launched.server.InjectingURLClassLoader;
+import com.baharmc.loader.launched.knot.Knot;
 import com.baharmc.loader.utils.UrlUtil;
 import io.github.portlek.reflection.clazz.ClassOf;
 import org.jetbrains.annotations.NotNull;
@@ -10,14 +9,14 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-public class Launched {
+public class MainLaunched {
 
-    private static final ClassLoader parentLoader = Launched.class.getClassLoader();
+    private static final ClassLoader parentLoader = MainLaunched.class.getClassLoader();
 
     @NotNull
     private final List<String> args;
 
-    public Launched(@NotNull List<String> args) {
+    public MainLaunched(@NotNull List<String> args) {
         this.args = args;
     }
 
@@ -49,7 +48,7 @@ public class Launched {
 
         final ClassLoader newClassLoader = new InjectingURLClassLoader(
             new URL[]{
-                Launched.class.getProtectionDomain().getCodeSource().getLocation(),
+                MainLaunched.class.getProtectionDomain().getCodeSource().getLocation(),
                 UrlUtil.asUrl(serverJar)
             },
             parentLoader,
@@ -58,10 +57,10 @@ public class Launched {
 
         Thread.currentThread().setContextClassLoader(newClassLoader);
 
-        new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.KnotServer"))
-            .getMethod("start")
-            .of(KnotServer.class)
-            .call(new KnotServer(args));
+        new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"))
+            .getMethod("init")
+            .of(Knot.class)
+            .call(new Knot(serverJar));
     }
 
 }

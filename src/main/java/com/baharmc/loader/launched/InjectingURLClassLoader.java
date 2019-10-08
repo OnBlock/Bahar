@@ -1,4 +1,4 @@
-package com.baharmc.loader.launched.server;
+package com.baharmc.loader.launched;
 
 import org.cactoos.list.ListOf;
 
