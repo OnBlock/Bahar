@@ -1,4 +1,6 @@
 package com.baharmc.loader.metadata;
 
-public class PluginMetaData {
+public class PluginMetaData  {
+    private String id;
+
 }
