@@ -1,17 +1,16 @@
 #Bahar plugin metadata
 #Information about the plugin
 #Required fields
-#Id <String> can include: "a-z 1-9 _"
+#Plugin id, no spaces and special characters are allowed
 id: bahar_loader
-#Name <greedyString>
+#Name
 name: BaharLoader
-#Version information
-version:
-  #Version value, must respect semver
-  #More info: https://semver.org/
-  value: ${version}
-  #If you're plugin is stable set it to true, otherwise false
-  isStable: true
+#Version, must respect semver
+#Default: '${thisVersion}' managed by Gradle
+#More info: https://semver.org/
+version: '${thisVersion}'
+#If you're plugin is stable set it to true, otherwise false
+isStable: false
 #Optional fields
 #Plugin description, describe how awesome your plugin is!
 description: 'The base plugin loader'
@@ -22,11 +21,11 @@ authors:
   - CODY_AI
   - Portlek
 #A list of ways to contact you!
-contacts:
+contacts              :
   - website: https://onblock.xyz/bahar
   - github: https://github.com/BaharMC/loader
 #Does your plugin depends on any other plugins?
 #You can add that here
-#e.g: plugin_id: '>=1.0.0'
+#e.g: plugin_id: '>=1.3.0'
 depends:
   - minecraft: '>=19w40a'
