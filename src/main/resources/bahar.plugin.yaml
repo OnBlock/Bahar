@@ -1,17 +1,32 @@
 #Bahar plugin metadata
+#Schema version for this file
 schemaVersion: 1.0
 
+#Information about the plugin
 plugin:
+  #Id <String> can include: "a-z 1-9 _"
   id: bahar_loader
+  #Name <greedyString>
   name: BaharLoader
+  #Version information
   version:
+    #Version value, must respect semver
+    #More info: https://semver.org/
     value: ${version}
+    #If its a snapshot set it to true, otherwise false
     isSnapshot: false
+    #If its stable set it to true, otherwise false
     isStable: false
+  #Plugin description, describe how awesome your plugin is!
   description: 'The base plugin loader'
+  #If you're not licensing your plugin then set to null
   license: MIT
+  #A list of the plugin authors
   authors:
     - CODY_AI
     - Portlek
+  #Does your plugin depends on any other plugins?
+  #You can add that here
+  #e.g: plugin_id: '>=1.0.0'
   depends:
     - minecraft: '>=19w40a'
