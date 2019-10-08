@@ -1,12 +1,16 @@
 package com.baharmc.loader.provided;
 
 import com.baharmc.loader.api.EnvType;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 
 public class MinecraftProvided implements GameProvided {
+
+    @NotNull
+    private final String entryPoint;
 
 
 
