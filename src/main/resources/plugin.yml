@@ -1,5 +1,0 @@
-id: bahamc-loader
-name: BaharMC
-version: ${version}
-description: BaharMC plugin loader
-license: MIT

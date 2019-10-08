@@ -1,0 +1,17 @@
+#Bahar plugin metadata
+schemaVersion: 1.0
+
+plugin:
+  id: bahar_loader
+  name: BaharLoader
+  version:
+    value: ${version}
+    isSnapshot: false
+    isStable: false
+  description: 'The base plugin loader'
+  license: MIT
+  authors:
+    - CODY_AI
+    - Portlek
+  depends:
+    - minecraft: 19w40a
