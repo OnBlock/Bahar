@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Arrayed {
 
@@ -21,16 +22,14 @@ public final class Arrayed {
     @NotNull
     public String[] value() {
         final String[] newArgs = new String[values.size() * 2 + extraArgs.size()];
+        final AtomicInteger integer = new AtomicInteger();
 
-        int i = 0;
-        for (String s : values.keySet()) {
-            newArgs[i++] = "--" + s;
-            newArgs[i++] = values.get(s);
-        }
+        values.keySet().forEach(s -> {
+            newArgs[integer.getAndIncrement()] = "--" + s;
+            newArgs[integer.getAndIncrement()] = values.get(s);
+        });
 
-        for (String s : extraArgs) {
-            newArgs[i++] = s;
-        }
+        extraArgs.forEach(s -> newArgs[integer.getAndIncrement()] = s);
 
         return newArgs;
     }
