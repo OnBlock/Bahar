@@ -1,6 +1,6 @@
 package com.baharmc.loader;
 
-public abstract class Knot {
+public abstract class Knot extends LaunchedBase {
 
 
 

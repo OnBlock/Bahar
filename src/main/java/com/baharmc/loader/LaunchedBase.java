@@ -1,4 +1,4 @@
-package com.baharmc.loader.launched.server;
+package com.baharmc.loader;
 
 import com.baharmc.loader.BaharLaunched;
 
