@@ -1,2 +1,11 @@
-rootProject.name = 'Bahar-loader'
+pluginManagement {
+    repositories {
+        maven {
+            url = "http://maven.fabricmc.net"
+            name = "FabricMC"
+        }
+        gradlePluginPortal()
+    }
+}
 
+rootProject.name = 'Bahar-loader'
