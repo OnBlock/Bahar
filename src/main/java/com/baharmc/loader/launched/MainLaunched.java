@@ -1,16 +1,20 @@
 package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.knot.Knot;
-import com.baharmc.loader.utils.BaharLogger;
 import com.baharmc.loader.utils.UrlUtil;
+import io.github.portlek.reflection.LoggerOf;
 import io.github.portlek.reflection.clazz.ClassOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainLaunched {
+
+    private static final Logger LOGGER = new LoggerOf(MainLaunched.class);
 
     private static final ClassLoader parentLoader = MainLaunched.class.getClassLoader();
 
@@ -39,11 +43,11 @@ public class MainLaunched {
         final File serverJar = new File(serverJarPath);
 
         if (!serverJar.exists()) {
-            BaharLogger.error("Could not find Minecraft server .JAR (" + serverJarPath + ")!");
-            BaharLogger.printLine();
-            BaharLogger.error("Bahar's server-side launcher expects the server .JAR to be provided.");
-            BaharLogger.printLine();
-            BaharLogger.error("Without the official Minecraft server .JAR, Bahar Loader cannot launch.");
+            LOGGER.log(Level.SEVERE, "Could not find Minecraft server .JAR (" + serverJarPath + ")!");
+            System.out.println();
+            LOGGER.log(Level.SEVERE,"Bahar's server-side launcher expects the server .JAR to be provided.");
+            System.out.println();
+            LOGGER.log(Level.SEVERE,"Without the official Minecraft server .JAR, Bahar Loader cannot launch.");
             throw new RuntimeException("Searched for '" + serverJar.getName() + "' but could not find it.");
         }
 
