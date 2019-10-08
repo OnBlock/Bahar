@@ -1,10 +1,10 @@
-package com.baharmc.loader.api;
+package com.baharmc.loader;
 
 import com.baharmc.loader.metadata.PluginMetaData;
 
 import java.nio.file.Path;
 
-public interface PluginContainer {
+public interface PluginContained {
     /**
      * Gets the Plugin meta data
      * @return PluginMetaData
