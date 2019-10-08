@@ -71,12 +71,12 @@ processResources {
     inputs.property "version", version
 
     from(sourceSets.main.resources.srcDirs) {
-        include 'bahar.plugin.yaml'
+        include 'plugin.yml'
         expand 'version':version
     }
 
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'bahar.plugin.yaml'
+        exclude 'plugin.yml'
     }
 }
 
