@@ -14,4 +14,4 @@ plugin:
     - CODY_AI
     - Portlek
   depends:
-    - minecraft: 19w40a
+    - minecraft: '>=19w40a'
