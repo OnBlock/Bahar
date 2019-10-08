@@ -13,10 +13,6 @@ plugin:
     #Version value, must respect semver
     #More info: https://semver.org/
     value: ${version}
-    #If its a snapshot set it to true, otherwise false
-    isSnapshot: false
-    #If its stable set it to true, otherwise false
-    isStable: false
   #Plugin description, describe how awesome your plugin is!
   description: 'The base plugin loader'
   #If you're not licensing your plugin then set to null
