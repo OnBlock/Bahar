@@ -1,7 +1,5 @@
 package com.baharmc.loader;
 
-import com.baharmc.loader.metadata.PluginMetaDataBasic;
-
 import java.nio.file.Path;
 
 public interface PluginContained {
@@ -11,6 +9,11 @@ public interface PluginContained {
      */
     PluginMetaData getMetaData();
 
+    /**
+     * Gets the Roots of the plugin
+     *
+     * @return {@link Path}
+     */
     Path getRootPath();
 
     /**
