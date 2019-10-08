@@ -5,7 +5,11 @@ import com.baharmc.loader.launched.LauncherBasic;
 public class Main {
 
     public static void main(String[] args) {
-        new LauncherBasic(args).start();
+        try {
+            new LauncherBasic(args).start();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
 }

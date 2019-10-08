@@ -68,6 +68,7 @@ dependencies {
     fatJar 'com.google.code.gson:gson:2.8.6'
     compile 'org.jetbrains:annotations:17.0.0'
     fatJar 'org.cactoos:cactoos:0.42'
+    fatJar 'io.github.portlek:reflection:2.9'
 }
 
 processResources {
