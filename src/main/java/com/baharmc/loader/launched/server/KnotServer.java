@@ -11,7 +11,7 @@ public class KnotServer {
         this.args = args;
     }
 
-    public static void main(String[] args) {
+    public void start() {
 
     }
 

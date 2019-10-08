@@ -3,13 +3,11 @@ package com.baharmc.loader.launched;
 import com.baharmc.loader.BaharLaunched;
 import com.baharmc.loader.launched.server.KnotServer;
 import com.baharmc.loader.utils.UrlUtil;
-import io.github.portlek.reflection.RefClass;
 import io.github.portlek.reflection.clazz.ClassOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
-import java.net.URLClassLoader;
 
 public class LauncherBasic implements BaharLaunched {
 
@@ -35,7 +33,7 @@ public class LauncherBasic implements BaharLaunched {
             throw new RuntimeException("Searched for '" + serverJar.getName() + "' but could not find it.");
         }
 
-        final URLClassLoader newClassLoader = new InjectingURLClassLoader(
+        final ClassLoader newClassLoader = new InjectingURLClassLoader(
             new URL[]{
                 LauncherBasic.class.getProtectionDomain().getCodeSource().getLocation(),
                 UrlUtil.asUrl(serverJar)
