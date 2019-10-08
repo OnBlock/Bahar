@@ -1,14 +1,19 @@
 plugins {
     id 'java'
+
+    id 'idea'
+    id("fabric-loom") version "0.2.5-SNAPSHOT"
 }
 
 group 'com.baharmc'
 version '1.0'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+
 }
 
 
