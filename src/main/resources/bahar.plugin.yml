@@ -1,5 +1,6 @@
 #Bahar plugin metadata
 #Information about the plugin
+#Required fields
 #Id <String> can include: "a-z 1-9 _"
 id: bahar_loader
 #Name <greedyString>
@@ -11,6 +12,7 @@ version:
   value: ${version}
   #If you're plugin is stable set it to true, otherwise false
   isStable: true
+#Optional fields
 #Plugin description, describe how awesome your plugin is!
 description: 'The base plugin loader'
 #If you're not licensing your plugin then set to null
