@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 
-public class BuiltinMod {
+public class BuiltinPlugin {
 
 	@NotNull
 	private final URL url;
@@ -13,7 +13,7 @@ public class BuiltinMod {
 	@NotNull
 	private final PluginMetaData pluginMetaData;
 
-	public BuiltinMod(@NotNull URL url, @NotNull PluginMetaData pluginMetaData) {
+	public BuiltinPlugin(@NotNull URL url, @NotNull PluginMetaData pluginMetaData) {
 		this.url = url;
 		this.pluginMetaData = pluginMetaData;
 	}

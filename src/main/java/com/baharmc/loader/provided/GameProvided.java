@@ -12,7 +12,7 @@ public interface GameProvided {
 	String getGameName();
 	String getRawGameVersion();
 	String getNormalizedGameVersion();
-	Collection<BuiltinMod> getBuiltinMods();
+	Collection<BuiltinPlugin> getBuiltinMods();
 
 	String getEntryPoint();
 	Path getLaunchDirectory();

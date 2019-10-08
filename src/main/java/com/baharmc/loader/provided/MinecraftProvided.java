@@ -1,6 +1,7 @@
 package com.baharmc.loader.provided;
 
 import com.baharmc.loader.api.EnvType;
+import com.baharmc.loader.utils.Arguments;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -11,6 +12,12 @@ public class MinecraftProvided implements GameProvided {
 
     @NotNull
     private final String entryPoint;
+
+    @NotNull
+    private final McVersion mcVersion;
+
+    @NotNull
+    private final Arguments arguments;
 
 
 
@@ -35,7 +42,7 @@ public class MinecraftProvided implements GameProvided {
     }
 
     @Override
-    public Collection<BuiltinMod> getBuiltinMods() {
+    public Collection<BuiltinPlugin> getBuiltinMods() {
         return null;
     }
 
