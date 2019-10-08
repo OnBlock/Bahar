@@ -13,6 +13,8 @@ plugin:
     #Version value, must respect semver
     #More info: https://semver.org/
     value: ${version}
+    #If you're plugin is stable set it to true, otherwise false
+    isStable: true
   #Plugin description, describe how awesome your plugin is!
   description: 'The base plugin loader'
   #If you're not licensing your plugin then set to null
