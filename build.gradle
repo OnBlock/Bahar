@@ -1,6 +1,7 @@
 plugins {
     id 'java'
 
+    id 'eclipse'
     id 'idea'
     id("fabric-loom") version "0.2.3-SNAPSHOT"
 }
@@ -36,30 +37,33 @@ configurations {
 }
 
 dependencies {
-    //fatJar 'com.baharmc:plugin-api:0.1.0-SNAPSHOT'
+    //compile 'com.baharmc:plugin-api:0.1.0-SNAPSHOT'
 
     minecraft "com.mojang:minecraft:1.14.4"
     mappings "net.fabricmc:yarn:1.14.4+build.1"
 
-    fatJar 'com.google.code.findbugs:jsr305:3.0.2'
+    // Minecraft's JAR uses these annotations
+    compile 'com.google.code.findbugs:jsr305:3.0.2'
 
+    // fabric-loader dependencies
     compile 'org.ow2.asm:asm:7.1'
     compile 'org.ow2.asm:asm-analysis:7.1'
     compile 'org.ow2.asm:asm-commons:7.1'
     compile 'org.ow2.asm:asm-tree:7.1'
     compile 'org.ow2.asm:asm-util:7.1'
 
-    fatJar('net.fabricmc:sponge-mixin:0.7.11.38') {
+    compile('net.fabricmc:sponge-mixin:0.7.11.36') {
         exclude module: 'launchwrapper'
         exclude module: 'guava'
     }
-    fatJar 'net.fabricmc:tiny-mappings-parser:0.1.1.8'
-    fatJar 'net.fabricmc:tiny-remapper:0.1.0.40'
+    compile 'net.fabricmc:tiny-mappings-parser:0.1.1.8'
+    compile 'net.fabricmc:tiny-remapper:0.1.0.40'
 
-    fatJar 'com.google.jimfs:jimfs:1.1'
-    fatJar 'net.fabricmc:fabric-loader-sat4j:2.3.5.4'
+    compile 'com.google.jimfs:jimfs:1.1'
+    compile 'net.fabricmc:fabric-loader-sat4j:2.3.5.4'
 
-    compile('net.minecraft:launchwrapper:1.12') {
+    // launchwrapper + dependencies
+    compile ('net.minecraft:launchwrapper:1.12') {
         transitive = false
     }
     compile 'net.sf.jopt-simple:jopt-simple:5.0.3'
