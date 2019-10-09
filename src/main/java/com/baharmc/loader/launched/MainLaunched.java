@@ -28,7 +28,7 @@ public class MainLaunched {
     public void start() throws Exception {
         final String serverJarPath;
 
-        if (args.size() == 0) {
+        if (args.isEmpty()) {
             serverJarPath = ".bahar/server.jar";
         } else jar:{
             for (int i = 0; i < args.size(); i++) {
