@@ -4,6 +4,8 @@ import com.baharmc.loader.*;
 import com.baharmc.loader.api.EnvType;
 import com.baharmc.loader.metadata.PluginMetaDataBasic;
 import com.baharmc.loader.utils.Arguments;
+import com.baharmc.loader.utils.semanticversion.VersionDeserializer;
+import com.baharmc.loader.utils.semanticversion.VersionParsingException;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
@@ -73,23 +75,24 @@ public class MinecraftProvided implements GameProvided {
             throw new RuntimeException(e);
         }
 
-        return new ListOf<>(
-            new BuiltinPlugin(
-                url,
-                new PluginMetaDataBasic(
-                    "minecraft",
-                    "Minecraft",
-                    true,
-                    false,
-                    "The Minecraft game",
-                    this::getNormalizedGameVersion,
-                    ListOf<String>::new,
-                    new ListOf<>(),
-                    new ListOf<>(),
-                    new ListOf<>()
+        try {
+            return new ListOf<>(
+                new BuiltinPlugin(
+                    url,
+                    new PluginMetaDataBasic(
+                        "minecraft",
+                        "Minecraft",
+                        true,
+                        false,
+                        "The Minecraft game",
+                        VersionDeserializer.deserializeSemantic(getNormalizedGameVersion())
+                    )
                 )
-            )
-        );
+            );
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new ListOf<>();
+        }
     }
 
     @NotNull

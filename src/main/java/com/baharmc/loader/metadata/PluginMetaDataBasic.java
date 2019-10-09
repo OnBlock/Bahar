@@ -2,6 +2,7 @@ package com.baharmc.loader.metadata;
 
 import com.baharmc.loader.*;
 import com.baharmc.loader.utils.semanticversion.Version;
+import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -51,5 +52,11 @@ public class PluginMetaDataBasic implements PluginMetaData {
         this.authors = authors;
         this.contacts = contacts;
         this.pluginDependencies = pluginDependencies;
+    }
+
+    public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot, @NotNull String description, @NotNull Version version) {
+        this(id, name, isStable, isSnapshot, description, version, ListOf<String>::new, new ListOf<>(), new ListOf<>(),
+            new ListOf<>()
+        );
     }
 }
