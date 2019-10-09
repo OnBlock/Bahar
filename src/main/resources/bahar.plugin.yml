@@ -5,7 +5,7 @@
 id: bahar_loader
 #Name
 name: BaharLoader
-#Version, must respect semver
+#Version, must respect Semantic version (semver)
 #Default: '${version}' managed by Gradle
 #More info: https://semver.org/
 version: '${version}'
@@ -37,6 +37,7 @@ contacts:
   github: https://github.com/BaharMC/loader
 #Does your plugin depends on any other plugins?
 #You can add that here
+#Note: the plugin version must respects the semver
 #e.g: plugin_id: '>=1.3.0'
 depends:
   minecraft: '>=19w40a'
