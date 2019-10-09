@@ -6,7 +6,7 @@ id: bahar_loader
 #Name
 name: BaharLoader
 #Version, must respect semver
-#Default: '${thisVersion}' managed by Gradle
+#Default: '${version}' managed by Gradle
 #More info: https://semver.org/
 version: '${version}'
 #If you're plugin is stable set it to true, otherwise false
