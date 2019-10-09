@@ -1,7 +1,5 @@
 package com.baharmc.loader.plugin;
 
-import com.baharmc.loader.plugin.PluginMetaData;
-
 import java.nio.file.Path;
 
 public interface PluginContained {
