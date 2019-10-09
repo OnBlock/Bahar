@@ -102,7 +102,7 @@ public class MinecraftProvided implements GameProvided {
     @NotNull
     @Override
     public Path getLaunchDirectory() {
-        return arguments.launchDirectory().toPath();
+        return arguments.getAsFile("gameDir").toPath();
     }
 
     @Override

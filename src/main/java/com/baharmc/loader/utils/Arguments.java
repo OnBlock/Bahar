@@ -42,9 +42,9 @@ public final class Arguments {
     }
 
     @NotNull
-    public File launchDirectory() {
+    public File getAsFile(@NotNull String path) {
         try {
-            return new File(scalar.value().getKey().getOrDefault("gameDir", "."));
+            return new File(scalar.value().getKey().getOrDefault(path, "."));
         } catch (Exception e) {
             return new File(".");
         }
