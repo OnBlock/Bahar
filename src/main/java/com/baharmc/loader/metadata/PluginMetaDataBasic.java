@@ -36,6 +36,18 @@ public class PluginMetaDataBasic implements PluginMetaData {
     @NotNull
     private final List<Contact> contacts;
 
-
+    public PluginMetaDataBasic(@NotNull String id, @NotNull String name, @NotNull Version version, boolean isStable,
+                               boolean isSnapshot, @NotNull String description, @NotNull License license,
+                               @NotNull List<Person> authors, @NotNull List<Contact> contacts) {
+        this.id = id;
+        this.name = name;
+        this.version = version;
+        this.isStable = isStable;
+        this.isSnapshot = isSnapshot;
+        this.description = description;
+        this.license = license;
+        this.authors = authors;
+        this.contacts = contacts;
+    }
 
 }
