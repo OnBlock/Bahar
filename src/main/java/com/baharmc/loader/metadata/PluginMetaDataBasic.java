@@ -54,7 +54,8 @@ public class PluginMetaDataBasic implements PluginMetaData {
         this.pluginDependencies = pluginDependencies;
     }
 
-    public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot, @NotNull String description, @NotNull Version version) {
+    public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
+                               @NotNull String description, @NotNull Version version) {
         this(id, name, isStable, isSnapshot, description, version, ListOf<String>::new, new ListOf<>(), new ListOf<>(),
             new ListOf<>()
         );
