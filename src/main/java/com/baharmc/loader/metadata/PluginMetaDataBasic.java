@@ -1,5 +1,8 @@
 package com.baharmc.loader.metadata;
 
+import com.baharmc.loader.Contact;
+import com.baharmc.loader.License;
+import com.baharmc.loader.Person;
 import com.baharmc.loader.PluginMetaData;
 import com.baharmc.loader.utils.semanticversion.Version;
 import org.jetbrains.annotations.NotNull;
@@ -25,25 +28,14 @@ public class PluginMetaDataBasic implements PluginMetaData {
     private final String description;
 
     @NotNull
-    private final String license;
+    private final License license;
 
     @NotNull
-    private final List<String> authors;
+    private final List<Person> authors;
 
     @NotNull
-    private final List<String> contacts;
+    private final List<Contact> contacts;
 
-    public PluginMetaDataBasic(@NotNull String id, @NotNull String name, @NotNull Version version,
-                               boolean isStable, boolean isSnapshot, @NotNull String description,
-                               @NotNull String license, @NotNull List<String> authors, @NotNull List<String> contacts) {
-        this.id = id;
-        this.name = name;
-        this.version = version;
-        this.isStable = isStable;
-        this.isSnapshot = isSnapshot;
-        this.description = description;
-        this.license = license;
-        this.authors = authors;
-        this.contacts = contacts;
-    }
+
+
 }
