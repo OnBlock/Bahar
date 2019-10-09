@@ -14,7 +14,6 @@ public abstract class BrandedBaharServer {
             target = "Lnet/minecraft/server/MinecraftServer;getServerModName()Ljava/lang/String;",
             value = "RETURN"
     ))
-
     private void Bahar$Brand(CallbackInfoReturnable<String> cir) {
         cir.setReturnValue("Bahar");
     }
