@@ -21,13 +21,13 @@ public final class Arguments {
     }
 
     public Arguments(@NotNull List<String> arguments) {
-        this(new Parsed(arguments));
+        this(new ArgumentParsed(arguments));
     }
 
     @NotNull
     String[] toArray() {
         try {
-            return new Arrayed(scalar.value().getKey(), scalar.value().getValue()).value();
+            return new ArgumentArrayed(scalar.value().getKey(), scalar.value().getValue()).value();
         } catch (Exception e) {
             return new String[0];
         }

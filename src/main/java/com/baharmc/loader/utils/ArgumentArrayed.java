@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public final class Arrayed implements Scalar<String[]> {
+public class ArgumentArrayed implements Scalar<String[]> {
 
     @NotNull
     private final Map<String, String> values;
@@ -15,7 +15,7 @@ public final class Arrayed implements Scalar<String[]> {
     @NotNull
     private final List<String> extraArgs;
 
-    public Arrayed(@NotNull Map<String, String> values, @NotNull List<String> extraArgs) {
+    public ArgumentArrayed(@NotNull Map<String, String> values, @NotNull List<String> extraArgs) {
         this.values = values;
         this.extraArgs = extraArgs;
     }

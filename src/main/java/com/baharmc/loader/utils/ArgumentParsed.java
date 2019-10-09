@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class Parsed implements Scalar<Map.Entry<Map<String, String>, List<String>>> {
+public class ArgumentParsed implements Scalar<Map.Entry<Map<String, String>, List<String>>> {
 
     @NotNull
     private final List<String> arguments;
 
-    public Parsed(@NotNull List<String> arguments) {
+    public ArgumentParsed(@NotNull List<String> arguments) {
         this.arguments = arguments;
     }
 

@@ -51,4 +51,5 @@ public class PluginMetaDataBasic implements PluginMetaData {
         this.contacts = contacts;
         this.pluginDependencies = pluginDependencies;
     }
+
 }
