@@ -33,4 +33,4 @@ contacts:
 #You can add that here
 #e.g: plugin_id: '>=1.3.0'
 depends:
-  - minecraft: '>=19w40a'
+  minecraft: '>=19w40a'
