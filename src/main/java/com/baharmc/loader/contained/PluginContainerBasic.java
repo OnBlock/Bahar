@@ -1,7 +1,7 @@
 package com.baharmc.loader.contained;
 
-import com.baharmc.loader.PluginContained;
-import com.baharmc.loader.PluginMetaData;
+import com.baharmc.loader.plugin.PluginContained;
+import com.baharmc.loader.plugin.PluginMetaData;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

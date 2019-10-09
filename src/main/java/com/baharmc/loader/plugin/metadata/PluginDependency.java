@@ -1,4 +1,4 @@
-package com.baharmc.loader;
+package com.baharmc.loader.plugin.metadata;
 
 import com.baharmc.loader.utils.semanticversion.Version;
 import org.jetbrains.annotations.NotNull;

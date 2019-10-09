@@ -1,6 +1,6 @@
 package com.baharmc.loader.mock;
 
-import com.baharmc.loader.Contact;
+import com.baharmc.loader.plugin.metadata.Contact;
 import org.cactoos.map.MapOf;
 import org.jetbrains.annotations.NotNull;
 

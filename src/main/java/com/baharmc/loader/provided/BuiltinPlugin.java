@@ -1,6 +1,6 @@
 package com.baharmc.loader.provided;
 
-import com.baharmc.loader.PluginMetaData;
+import com.baharmc.loader.plugin.PluginMetaData;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;

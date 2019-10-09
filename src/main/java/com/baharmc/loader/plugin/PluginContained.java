@@ -1,4 +1,6 @@
-package com.baharmc.loader;
+package com.baharmc.loader.plugin;
+
+import com.baharmc.loader.plugin.PluginMetaData;
 
 import java.nio.file.Path;
 

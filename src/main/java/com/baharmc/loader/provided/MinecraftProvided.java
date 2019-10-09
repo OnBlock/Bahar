@@ -1,7 +1,7 @@
 package com.baharmc.loader.provided;
 
 import com.baharmc.loader.GameProvided;
-import com.baharmc.loader.metadata.PluginMetaDataBasic;
+import com.baharmc.loader.plugin.PluginMetaDataBasic;
 import com.baharmc.loader.utils.Arguments;
 import com.baharmc.loader.utils.semanticversion.VersionDeserializer;
 import org.cactoos.list.ListOf;

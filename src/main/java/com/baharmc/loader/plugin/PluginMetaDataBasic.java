@@ -1,6 +1,9 @@
-package com.baharmc.loader.metadata;
+package com.baharmc.loader.plugin;
 
-import com.baharmc.loader.*;
+import com.baharmc.loader.plugin.metadata.Contact;
+import com.baharmc.loader.plugin.metadata.License;
+import com.baharmc.loader.plugin.metadata.Person;
+import com.baharmc.loader.plugin.metadata.PluginDependency;
 import com.baharmc.loader.utils.semanticversion.Version;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
