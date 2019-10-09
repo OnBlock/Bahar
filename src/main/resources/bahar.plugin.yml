@@ -12,7 +12,7 @@ version: '${version}'
 #If your plugin is stable set it to true, otherwise false
 isStable: false
 #If your plugin is snapshot set it true, otherwise false
-isSnapShot: false
+isSnapshot: false
 #Optional fields
 #Plugin description, describe how awesome your plugin is!
 description: 'The base plugin loader'
