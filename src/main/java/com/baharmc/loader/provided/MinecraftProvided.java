@@ -1,18 +1,17 @@
 package com.baharmc.loader.provided;
 
-import com.baharmc.loader.*;
+import com.baharmc.loader.GameProvided;
 import com.baharmc.loader.api.EnvType;
 import com.baharmc.loader.metadata.PluginMetaDataBasic;
 import com.baharmc.loader.utils.Arguments;
 import com.baharmc.loader.utils.semanticversion.VersionDeserializer;
-import com.baharmc.loader.utils.semanticversion.VersionParsingException;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -119,12 +118,14 @@ public class MinecraftProvided implements GameProvided {
     }
 
     @Override
-    public void acceptArguments(@NotNull String... arguments) {
-
-    }
-
-    @Override
     public void launch(@NotNull ClassLoader loader) {
-
+        try {
+            Class<?> c = loader.loadClass(entryPoint);
+            Method m = c.getMethod("main", String[].class);
+            m.invoke(null, (Object) arguments.toArray());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
 }

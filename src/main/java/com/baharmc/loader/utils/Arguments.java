@@ -25,7 +25,7 @@ public final class Arguments {
     }
 
     @NotNull
-    String[] toArray() {
+    public String[] toArray() {
         try {
             return new ArgumentArrayed(scalar.value().getKey(), scalar.value().getValue()).value();
         } catch (Exception e) {

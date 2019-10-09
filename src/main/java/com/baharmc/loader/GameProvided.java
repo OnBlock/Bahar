@@ -1,6 +1,5 @@
 package com.baharmc.loader;
 
-import com.baharmc.loader.api.EnvType;
 import com.baharmc.loader.provided.BuiltinPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,8 +34,6 @@ public interface GameProvided {
 
 	@NotNull
 	List<Path> getGameContextJars();
-
-	void acceptArguments(@NotNull String... arguments);
 
 	void launch(@NotNull ClassLoader loader);
 
