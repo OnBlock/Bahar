@@ -1,5 +1,6 @@
 package com.baharmc.loader.provided;
 
+import com.baharmc.loader.GameProvided;
 import com.baharmc.loader.api.EnvType;
 import com.baharmc.loader.utils.Arguments;
 import org.cactoos.list.ListOf;
@@ -33,26 +34,31 @@ public class MinecraftProvided implements GameProvided {
         this.hasModLoader = hasModLoader;
     }
 
+    @NotNull
     @Override
     public String getGameId() {
         return "minecrfft";
     }
 
+    @NotNull
     @Override
     public String getGameName() {
         return "Minecraft";
     }
 
+    @NotNull
     @Override
     public String getRawGameVersion() {
         return mcVersion.getRaw();
     }
 
+    @NotNull
     @Override
     public String getNormalizedGameVersion() {
         return mcVersion.getNormalized();
     }
 
+    @NotNull
     @Override
     public Collection<BuiltinPlugin> getBuiltinMods() {
         return null;
@@ -64,6 +70,7 @@ public class MinecraftProvided implements GameProvided {
         return entryPoint;
     }
 
+    @NotNull
     @Override
     public Path getLaunchDirectory() {
         return arguments.launchDirectory().toPath();
@@ -74,23 +81,24 @@ public class MinecraftProvided implements GameProvided {
         return hasModLoader;
     }
 
+    @NotNull
     @Override
     public List<Path> getGameContextJars() {
         return new ListOf<>(gameJar);
     }
 
     @Override
-    public boolean locateGame(EnvType envType, ClassLoader loader) {
+    public boolean locateGame(@NotNull EnvType envType, @NotNull ClassLoader loader) {
         return false;
     }
 
     @Override
-    public void acceptArguments(String... arguments) {
+    public void acceptArguments(@NotNull String... arguments) {
 
     }
 
     @Override
-    public void launch(ClassLoader loader) {
+    public void launch(@NotNull ClassLoader loader) {
 
     }
 }
