@@ -81,7 +81,7 @@ public class MinecraftProvided implements GameProvided {
                     "Minecraft",
                     true,
                     false,
-                    "Minecraft game",
+                    "The Minecraft game",
                     this::getNormalizedGameVersion,
                     ListOf<String>::new,
                     new ListOf<>(),
