@@ -36,8 +36,6 @@ public interface GameProvided {
 	@NotNull
 	List<Path> getGameContextJars();
 
-	boolean locateGame(@NotNull EnvType envType, @NotNull ClassLoader loader);
-
 	void acceptArguments(@NotNull String... arguments);
 
 	void launch(@NotNull ClassLoader loader);

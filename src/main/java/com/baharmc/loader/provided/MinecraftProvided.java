@@ -119,11 +119,6 @@ public class MinecraftProvided implements GameProvided {
     }
 
     @Override
-    public boolean locateGame(@NotNull EnvType envType, @NotNull ClassLoader loader) {
-        return false;
-    }
-
-    @Override
     public void acceptArguments(@NotNull String... arguments) {
 
     }
