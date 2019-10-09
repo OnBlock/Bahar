@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Normalized implements Scalar<String> {
+public class VersionNormalized implements Scalar<String> {
 
     private static final Pattern PRE_RELEASE_PATTERN = Pattern.compile(".+(?:-pre| Pre-Release )(\\d+)");
     private static final Pattern SNAPSHOT_PATTERN = Pattern.compile("(\\d+)w(\\d+)([a-z])");
@@ -17,7 +17,7 @@ public class Normalized implements Scalar<String> {
     @NotNull
     private final String release;
 
-    public Normalized(@NotNull String name, @NotNull String release) {
+    public VersionNormalized(@NotNull String name, @NotNull String release) {
         this.name = name;
         this.release = release;
     }
