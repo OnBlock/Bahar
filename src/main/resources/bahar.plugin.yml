@@ -9,8 +9,10 @@ name: BaharLoader
 #Default: '${version}' managed by Gradle
 #More info: https://semver.org/
 version: '${version}'
-#If you're plugin is stable set it to true, otherwise false
+#If your plugin is stable set it to true, otherwise false
 isStable: false
+#If your plugin is snapshot set it true, otherwise false
+isSnapShot: false
 #Optional fields
 #Plugin description, describe how awesome your plugin is!
 description: 'The base plugin loader'
