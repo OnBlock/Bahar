@@ -14,8 +14,6 @@ public class PluginMetaDataBasic implements PluginMetaData {
     @NotNull
     private final String name;
 
-    @NotNull
-    private final Version version;
 
     private final boolean isStable;
 
@@ -23,6 +21,9 @@ public class PluginMetaDataBasic implements PluginMetaData {
 
     @NotNull
     private final String description;
+
+    @NotNull
+    private final Version version;
 
     @NotNull
     private final License license;
@@ -36,20 +37,19 @@ public class PluginMetaDataBasic implements PluginMetaData {
     @NotNull
     private final List<PluginDependency> pluginDependencies;
 
-    public PluginMetaDataBasic(@NotNull String id, @NotNull String name, @NotNull Version version, boolean isStable,
-                               boolean isSnapshot, @NotNull String description, @NotNull License license,
+    public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
+                               @NotNull String description, @NotNull Version version, @NotNull License license,
                                @NotNull List<Person> authors, @NotNull List<Contact> contacts,
                                @NotNull List<PluginDependency> pluginDependencies) {
         this.id = id;
         this.name = name;
-        this.version = version;
         this.isStable = isStable;
         this.isSnapshot = isSnapshot;
         this.description = description;
+        this.version = version;
         this.license = license;
         this.authors = authors;
         this.contacts = contacts;
         this.pluginDependencies = pluginDependencies;
     }
-
 }
