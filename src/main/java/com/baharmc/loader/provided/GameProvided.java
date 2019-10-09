@@ -16,7 +16,6 @@ public interface GameProvided {
 
 	String getEntryPoint();
 	Path getLaunchDirectory();
-	boolean isObfuscated();
 	boolean requiresUrlClassLoader();
 	List<Path> getGameContextJars();
 

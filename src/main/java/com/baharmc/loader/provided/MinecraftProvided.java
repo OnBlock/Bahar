@@ -2,6 +2,7 @@ package com.baharmc.loader.provided;
 
 import com.baharmc.loader.api.EnvType;
 import com.baharmc.loader.utils.Arguments;
+import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -19,26 +20,37 @@ public class MinecraftProvided implements GameProvided {
     @NotNull
     private final Arguments arguments;
 
+    @NotNull
+    private final Path gameJar;
 
+    private final boolean hasModLoader;
+
+    public MinecraftProvided(@NotNull String entryPoint, @NotNull McVersion mcVersion, @NotNull Arguments arguments, @NotNull Path gameJar, boolean hasModLoader) {
+        this.entryPoint = entryPoint;
+        this.mcVersion = mcVersion;
+        this.arguments = arguments;
+        this.gameJar = gameJar;
+        this.hasModLoader = hasModLoader;
+    }
 
     @Override
     public String getGameId() {
-        return null;
+        return "minecrfft";
     }
 
     @Override
     public String getGameName() {
-        return null;
+        return "Minecraft";
     }
 
     @Override
     public String getRawGameVersion() {
-        return null;
+        return mcVersion.getRaw();
     }
 
     @Override
     public String getNormalizedGameVersion() {
-        return null;
+        return mcVersion.getNormalized();
     }
 
     @Override
@@ -46,29 +58,25 @@ public class MinecraftProvided implements GameProvided {
         return null;
     }
 
+    @NotNull
     @Override
     public String getEntryPoint() {
-        return null;
+        return entryPoint;
     }
 
     @Override
     public Path getLaunchDirectory() {
-        return null;
-    }
-
-    @Override
-    public boolean isObfuscated() {
-        return false;
+        return arguments.launchDirectory().toPath();
     }
 
     @Override
     public boolean requiresUrlClassLoader() {
-        return false;
+        return hasModLoader;
     }
 
     @Override
     public List<Path> getGameContextJars() {
-        return null;
+        return new ListOf<>(gameJar);
     }
 
     @Override

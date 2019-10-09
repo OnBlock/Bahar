@@ -3,6 +3,7 @@ package com.baharmc.loader.utils;
 import org.cactoos.Scalar;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,15 @@ public final class Arguments {
             scalar.value().getKey().remove(key);
         } catch (Exception exception) {
             exception.printStackTrace();
+        }
+    }
+
+    @NotNull
+    public File launchDirectory() {
+        try {
+            return new File(scalar.value().getKey().getOrDefault("gameDir", "."));
+        } catch (Exception e) {
+            return new File(".");
         }
     }
 

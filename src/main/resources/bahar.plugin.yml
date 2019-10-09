@@ -18,12 +18,17 @@ description: 'The base plugin loader'
 license: MIT
 #A list of the plugin authors
 authors:
-  - CODY_AI
-  - Portlek
+  CODY_AI:
+    contatcs:
+      website: https://onblock.xyz/
+      github: https://github.com/OnBlock
+  portlek:
+    contatcs:
+      github: https://github.com/portlek
 #A list of ways to contact you!
 contacts:
-  - website: https://onblock.xyz/bahar
-  - github: https://github.com/BaharMC/loader
+  website: https://onblock.xyz/bahar
+  github: https://github.com/BaharMC/loader
 #Does your plugin depends on any other plugins?
 #You can add that here
 #e.g: plugin_id: '>=1.3.0'

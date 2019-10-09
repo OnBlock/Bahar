@@ -9,8 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Optional;
 
 public final class GameProviderHelped {
 
