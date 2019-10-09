@@ -2,11 +2,15 @@ package com.baharmc.loader.provided;
 
 import com.baharmc.loader.GameProvided;
 import com.baharmc.loader.api.EnvType;
+import com.baharmc.loader.metadata.PluginMetaDataBasic;
 import com.baharmc.loader.utils.Arguments;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -61,7 +65,24 @@ public class MinecraftProvided implements GameProvided {
     @NotNull
     @Override
     public Collection<BuiltinPlugin> getBuiltinMods() {
-        return null;
+        URL url;
+
+        try {
+            url = gameJar.toUri().toURL();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ListOf<>(
+            new BuiltinPlugin(
+                url,
+                new BuiltinModMetadata.Builder(
+                    getGameId(),
+                    getNormalizedGameVersion()
+                ).setName(getGameName())
+                    .build()
+            )
+        );
     }
 
     @NotNull

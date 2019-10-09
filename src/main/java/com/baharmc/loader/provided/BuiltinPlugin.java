@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 
-public class BuiltinPlugin {
+public final class BuiltinPlugin {
 
 	@NotNull
 	private final URL url;

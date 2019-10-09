@@ -19,10 +19,14 @@ license: MIT
 #A list of the plugin authors
 authors:
   CODY_AI:
+    roles:
+      - Head Developer
     contatcs:
       website: https://onblock.xyz/
       github: https://github.com/OnBlock
   portlek:
+    roles:
+      - Head Developer
     contatcs:
       github: https://github.com/portlek
 #A list of ways to contact you!
