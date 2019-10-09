@@ -41,7 +41,7 @@ public class MinecraftProvided implements GameProvided {
     @NotNull
     @Override
     public String getGameId() {
-        return "minecrfft";
+        return "minecraft";
     }
 
     @NotNull
