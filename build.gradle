@@ -76,7 +76,7 @@ processResources {
 
     from(sourceSets.main.resources.srcDirs) {
         include 'bahar.plugin.yml'
-        expand 'thisVersion': version
+        expand 'version': version
     }
 
     from(sourceSets.main.resources.srcDirs) {
