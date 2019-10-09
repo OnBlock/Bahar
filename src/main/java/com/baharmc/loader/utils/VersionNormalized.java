@@ -29,7 +29,7 @@ public class VersionNormalized implements Scalar<String> {
         }
 
         final String finalName;
-        Matcher matcher;
+        final Matcher matcher;
 
         if (name.startsWith(release)) {
             matcher = PRE_RELEASE_PATTERN.matcher(name);
