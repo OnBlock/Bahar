@@ -43,27 +43,24 @@ dependencies {
     mappings "net.fabricmc:yarn:1.14.4+build.1"
     modCompile "net.fabricmc.fabric-api:fabric-api:0.3.2+build.218-1.14"
 
-    // Minecraft's JAR uses these annotations
-    compile 'com.google.code.findbugs:jsr305:3.0.2'
+    fatJar 'com.google.code.findbugs:jsr305:3.0.2'
 
-    // fabric-loader dependencies
-    compile 'org.ow2.asm:asm:7.1'
-    compile 'org.ow2.asm:asm-analysis:7.1'
-    compile 'org.ow2.asm:asm-commons:7.1'
-    compile 'org.ow2.asm:asm-tree:7.1'
-    compile 'org.ow2.asm:asm-util:7.1'
+    compile 'org.ow2.asm:asm:7.2'
+    compile 'org.ow2.asm:asm-analysis:7.2'
+    compile 'org.ow2.asm:asm-commons:7.2'
+    compile 'org.ow2.asm:asm-tree:7.2'
+    compile 'org.ow2.asm:asm-util:7.2'
 
-    compile('net.fabricmc:sponge-mixin:0.7.11.36') {
+    fatJar('net.fabricmc:sponge-mixin:0.7.11.36') {
         exclude module: 'launchwrapper'
         exclude module: 'guava'
     }
-    compile 'net.fabricmc:tiny-mappings-parser:0.1.1.8'
-    compile 'net.fabricmc:tiny-remapper:0.1.0.40'
+    fatJar 'net.fabricmc:tiny-mappings-parser:0.1.1.8'
+    fatJar 'net.fabricmc:tiny-remapper:0.1.0.40'
 
-    compile 'com.google.jimfs:jimfs:1.1'
-    compile 'net.fabricmc:fabric-loader-sat4j:2.3.5.4'
+    fatJar 'com.google.jimfs:jimfs:1.1'
+    fatJar 'net.fabricmc:fabric-loader-sat4j:2.3.5.4'
 
-    // launchwrapper + dependencies
     compile ('net.minecraft:launchwrapper:1.12') {
         transitive = false
     }
@@ -92,8 +89,11 @@ processResources {
 jar {
     manifest {
         attributes(
-            'Main-Class': 'com.baharmc.Main'
+            'Main-Class': 'com.baharmc.loader.Main'
         )
+    }
+    from {
+        configurations.fatJar.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
