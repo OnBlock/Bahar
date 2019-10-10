@@ -63,8 +63,8 @@ public class MainLaunched {
 
         new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"))
             .getMethod("init")
-            .of(Knot.class)
-            .call(null, new Knot(serverJar));
+            .of(new Knot(serverJar))
+            .call(null);
     }
 
 }
