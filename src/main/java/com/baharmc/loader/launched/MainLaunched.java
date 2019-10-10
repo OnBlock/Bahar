@@ -67,7 +67,7 @@ public class MainLaunched {
         RefClass refClass = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"));
 
         Object knot = refClass.getConstructor(File.class).create(new Knot(serverJar), serverJar);
-        refClass.getMethod("init").of(knot).call(null);
+        refClass.getMethod("init").of(knot).call(new Knot(serverJar));
     }
 
 }
