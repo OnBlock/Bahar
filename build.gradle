@@ -37,7 +37,7 @@ configurations {
 }
 
 dependencies {
-    //compile 'com.baharmc:plugin-api:0.1.0-SNAPSHOT'
+    //fatJar 'com.baharmc:BaharAPI:0.0.1-SNAPSHOT'
 
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}"
