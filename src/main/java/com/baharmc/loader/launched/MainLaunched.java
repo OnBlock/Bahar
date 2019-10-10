@@ -4,17 +4,18 @@ import com.baharmc.loader.utils.UrlUtil;
 import com.baharmc.loader.utils.argument.ArgumentParsed;
 import io.github.portlek.reflection.RefClass;
 import io.github.portlek.reflection.clazz.ClassOf;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MainLaunched {
 
-    private static final Logger LOGGER = Logger.getLogger("Bahar");
+    private static final Logger LOGGER = LogManager.getLogger("Bahar");
 
     private static final ClassLoader parentLoader = MainLaunched.class.getClassLoader();
 
@@ -36,11 +37,11 @@ public class MainLaunched {
         final File serverJar = new File(serverJarPath);
 
         if (!serverJar.exists()) {
-            LOGGER.log(Level.SEVERE, "Could not find Minecraft server .JAR (" + serverJarPath + ")!");
+            LOGGER.log(Level.FATAL, "Could not find Minecraft server .JAR (" + serverJarPath + ")!");
             System.out.println();
-            LOGGER.log(Level.SEVERE,"Bahar's server-side launcher expects the server .JAR to be provided.");
+            LOGGER.log(Level.FATAL,"Bahar's server-side launcher expects the server .JAR to be provided.");
             System.out.println();
-            LOGGER.log(Level.SEVERE,"Without the official Minecraft server .JAR, Bahar Loader cannot launch.");
+            LOGGER.log(Level.FATAL,"Without the official Minecraft server .JAR, Bahar Loader cannot launch.");
             throw new RuntimeException("Searched for '" + serverJar.getName() + "' but could not find it.");
         }
 
@@ -57,8 +58,8 @@ public class MainLaunched {
 
         RefClass refClass = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.Knot"));
 
-        Object knot = refClass.getConstructor(File.class).create(new Knot(serverJar), serverJar);
-        refClass.getMethod("init").of(knot).call(new Knot(serverJar));
+        Object knot = refClass.getConstructor(File.class).create(new Knot(serverJar, LOGGER), serverJar);
+        refClass.getMethod("init").of(knot).call(new Knot(serverJar, LOGGER));
     }
 
 }
