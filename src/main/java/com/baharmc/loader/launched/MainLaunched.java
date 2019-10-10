@@ -40,7 +40,7 @@ public class MainLaunched {
             System.out.println();
             LOGGER.severe("Bahar's server-side launcher expects the server .JAR to be provided.");
             System.out.println();
-            LOGGER.severe("Without the official Minecraft server .JAR, Bahar Loader cannot launch.");
+            LOGGER.severe("Without the official Minecraft server .JAR, Bahar Server cannot launch.");
             throw new RuntimeException("Searched for '" + serverJar.getName() + "' but could not find it.");
         }
 
