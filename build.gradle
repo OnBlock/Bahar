@@ -9,7 +9,7 @@ plugins {
 group 'com.baharmc'
 version '1.0'
 
-archivesBaseName = "Bahar-loader"
+archivesBaseName = "Bahar-server"
 
 sourceCompatibility = 8
 targetCompatibility = 8
