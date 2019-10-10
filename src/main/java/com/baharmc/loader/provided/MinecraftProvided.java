@@ -1,7 +1,7 @@
 package com.baharmc.loader.provided;
 
 import com.baharmc.loader.plugin.PluginMetaDataBasic;
-import com.baharmc.loader.utils.Arguments;
+import com.baharmc.loader.utils.argument.Arguments;
 import com.baharmc.loader.utils.semanticversion.VersionDeserializer;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;

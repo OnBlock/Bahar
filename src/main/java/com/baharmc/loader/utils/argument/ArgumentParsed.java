@@ -1,4 +1,4 @@
-package com.baharmc.loader.utils;
+package com.baharmc.loader.utils.argument;
 
 import org.cactoos.Scalar;
 import org.cactoos.map.MapEntry;

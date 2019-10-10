@@ -1,6 +1,5 @@
 package com.baharmc.loader.provided;
 
-import com.baharmc.loader.provided.BuiltinPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
