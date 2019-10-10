@@ -1,6 +1,5 @@
-package com.baharmc.loader.launched.knot;
+package com.baharmc.loader.launched;
 
-import com.baharmc.loader.launched.LaunchedBase;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

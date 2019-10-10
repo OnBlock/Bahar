@@ -1,6 +1,5 @@
 package com.baharmc.loader.launched;
 
-import com.baharmc.loader.launched.knot.Knot;
 import com.baharmc.loader.utils.UrlUtil;
 import com.baharmc.loader.utils.argument.ArgumentParsed;
 import io.github.portlek.reflection.RefClass;
@@ -56,7 +55,7 @@ public class MainLaunched {
 
         Thread.currentThread().setContextClassLoader(newClassLoader);
 
-        RefClass refClass = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"));
+        RefClass refClass = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.Knot"));
 
         Object knot = refClass.getConstructor(File.class).create(new Knot(serverJar), serverJar);
         refClass.getMethod("init").of(knot).call(new Knot(serverJar));
