@@ -2,7 +2,6 @@ package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.knot.Knot;
 import com.baharmc.loader.utils.UrlUtil;
-import com.baharmc.loader.utils.argument.ArgumentArrayed;
 import com.baharmc.loader.utils.argument.ArgumentParsed;
 import io.github.portlek.reflection.RefClass;
 import io.github.portlek.reflection.clazz.ClassOf;
@@ -10,9 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
