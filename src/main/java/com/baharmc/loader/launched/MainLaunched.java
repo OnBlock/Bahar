@@ -3,6 +3,8 @@ package com.baharmc.loader.launched;
 import com.baharmc.loader.launched.knot.Knot;
 import com.baharmc.loader.utils.UrlUtil;
 import io.github.portlek.reflection.clazz.ClassOf;
+import io.github.portlek.reflection.method.MethodOf;
+import net.fabricmc.loader.launch.knot.KnotServer;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -61,10 +63,10 @@ public class MainLaunched {
 
         Thread.currentThread().setContextClassLoader(newClassLoader);
 
-        new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"))
-            .getMethod("init")
-            .of(new Knot(serverJar))
-            .call(null);
+        Object knot = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"))
+            .getConstructor(File.class)
+            .create(new Knot(serverJar), serverJar);
+        new ClassOf(knot).getMethod("init").of(knot).call(null);
     }
 
 }
