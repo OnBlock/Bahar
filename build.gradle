@@ -39,9 +39,9 @@ configurations {
 dependencies {
     //fatJar 'com.baharmc:BaharAPI:0.0.1-SNAPSHOT'
 
-    minecraft "com.mojang:minecraft:1.14.4"
-    mappings "net.fabricmc:yarn:1.14.4+build.1"
-    modCompile "net.fabricmc.fabric-api:fabric-api:0.3.2+build.218-1.14"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+    modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric}"
 
     fatJar 'com.google.code.findbugs:jsr305:3.0.2'
 
