@@ -1,4 +1,4 @@
-package com.baharmc.loader;
+package com.baharmc.loader.provided;
 
 import com.baharmc.loader.provided.BuiltinPlugin;
 import org.jetbrains.annotations.NotNull;

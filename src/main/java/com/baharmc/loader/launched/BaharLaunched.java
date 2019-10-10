@@ -1,4 +1,4 @@
-package com.baharmc.loader;
+package com.baharmc.loader.launched;
 
 /**
  * Launcher of Bahar-loader

@@ -1,4 +1,4 @@
-package com.baharmc;
+package com.baharmc.loader;
 
 import com.baharmc.loader.launched.MainLaunched;
 import org.cactoos.list.ListOf;
