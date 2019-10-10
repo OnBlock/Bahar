@@ -2,6 +2,7 @@ package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.knot.Knot;
 import com.baharmc.loader.utils.UrlUtil;
+import io.github.portlek.reflection.RefClass;
 import io.github.portlek.reflection.clazz.ClassOf;
 import io.github.portlek.reflection.method.MethodOf;
 import net.fabricmc.loader.launch.knot.KnotServer;
@@ -63,10 +64,10 @@ public class MainLaunched {
 
         Thread.currentThread().setContextClassLoader(newClassLoader);
 
-        Object knot = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"))
-            .getConstructor(File.class)
-            .create(new Knot(serverJar), serverJar);
-        new ClassOf(knot).getMethod("init").of(knot).call(null);
+        RefClass refClass = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"));
+
+        Object knot = refClass.getConstructor(File.class).create(new Knot(serverJar), serverJar);
+        refClass.getMethod("init").of(knot).call(null);
     }
 
 }
