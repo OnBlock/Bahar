@@ -1,11 +1,11 @@
 package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.common.MappingConfiguration;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public abstract class LaunchedBase implements BaharLaunched {
 
@@ -34,4 +34,5 @@ public abstract class LaunchedBase implements BaharLaunched {
     public Logger getLogger() {
         return logger;
     }
+
 }

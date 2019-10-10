@@ -1,8 +1,9 @@
 package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.common.MappingConfiguration;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.logging.Logger;
 
 public interface BaharLaunched {
 
@@ -11,8 +12,6 @@ public interface BaharLaunched {
 
     @NotNull
     Logger getLogger();
-
-    boolean isDevelopment();
 
     void init();
 

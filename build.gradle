@@ -65,7 +65,6 @@ dependencies {
     }
     compile 'net.sf.jopt-simple:jopt-simple:5.0.3'
 
-    fatJar 'com.electronwill.night-config:yaml:3.6.0'
     fatJar 'com.google.code.gson:gson:2.8.6'
     compile 'org.jetbrains:annotations:17.0.0'
     fatJar 'org.cactoos:cactoos:0.42'

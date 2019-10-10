@@ -1,9 +1,9 @@
 package com.baharmc.loader.launched;
 
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 public final class Knot extends LaunchedBase {
 
