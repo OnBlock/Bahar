@@ -2,7 +2,6 @@ package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.knot.Knot;
 import com.baharmc.loader.utils.UrlUtil;
-import io.github.portlek.reflection.LoggerOf;
 import io.github.portlek.reflection.clazz.ClassOf;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +13,7 @@ import java.util.logging.Logger;
 
 public class MainLaunched {
 
-    private static final Logger LOGGER = new LoggerOf(MainLaunched.class);
+    private static final Logger LOGGER = Logger.getLogger("Bahar");
 
     private static final ClassLoader parentLoader = MainLaunched.class.getClassLoader();
 
@@ -65,7 +64,7 @@ public class MainLaunched {
         new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"))
             .getMethod("init")
             .of(Knot.class)
-            .call(new Knot(serverJar));
+            .call(null, new Knot(serverJar));
     }
 
 }
