@@ -57,7 +57,7 @@ public abstract class LaunchedBase implements BaharLaunched {
     }
 
     @Override
-    public void finishMixinBootstrapping() {
+    public void doneMixinBootstrapping() {
         if (mixinReady) {
             throw new RuntimeException("Must not call LaunchedBase#finishMixinBootstrapping() twice!");
         }

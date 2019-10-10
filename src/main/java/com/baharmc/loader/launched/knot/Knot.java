@@ -1,5 +1,6 @@
-package com.baharmc.loader.launched;
+package com.baharmc.loader.launched.knot;
 
+import com.baharmc.loader.launched.LaunchedBase;
 import com.baharmc.loader.provided.EntrypointResult;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.provided.GameProviderHelped;
@@ -61,6 +62,7 @@ public final class Knot extends LaunchedBase {
 
         getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
 
+        final boolean useCompatibility = provided.requiresUrlClassLoader() || ;
     }
 
     @Override

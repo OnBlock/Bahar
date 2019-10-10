@@ -13,7 +13,7 @@ public interface BaharLaunched {
     void deobfuscate(@NotNull String gameId, @NotNull String gameVersion, @NotNull Path gameDirectory,
                      @NotNull Path jarFile);
 
-    void finishMixinBootstrapping();
+    void doneMixinBootstrapping();
 
     void propose(@NotNull URL url);
 

@@ -34,6 +34,9 @@ public interface GameProvided {
 	@NotNull
 	List<Path> getGameContextJars();
 
+	@NotNull
+	byte[] transform(@NotNull String name);
+
 	void launch(@NotNull ClassLoader loader);
 
 }
