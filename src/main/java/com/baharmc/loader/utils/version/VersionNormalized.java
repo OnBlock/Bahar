@@ -4,7 +4,6 @@ import org.cactoos.Scalar;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class VersionNormalized implements Scalar<String> {
 

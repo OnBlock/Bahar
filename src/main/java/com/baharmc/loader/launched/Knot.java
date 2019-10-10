@@ -6,8 +6,6 @@ import com.baharmc.loader.provided.GameProviderHelped;
 import com.baharmc.loader.provided.MinecraftProvided;
 import com.baharmc.loader.utils.argument.Arguments;
 import com.baharmc.loader.utils.version.GetVersion;
-import com.baharmc.loader.utils.version.McVersion;
-import com.baharmc.loader.utils.version.VersionNormalized;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,7 +49,6 @@ public final class Knot extends LaunchedBase {
         arguments.remove("gameDir");
         arguments.remove("assetsDir");
 
-        final VersionNormalized versionNormalized = new VersionNormalized();
         final GameProvided provided = new MinecraftProvided(
             entrypointResult.getEntrypointName(),
             new GetVersion(
