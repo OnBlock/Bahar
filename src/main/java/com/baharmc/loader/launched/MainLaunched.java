@@ -34,7 +34,7 @@ public class MainLaunched {
             serverJarPath = ".bahar/server.jar";
         } else jar:{
             for (int i = 0; i < args.size(); i++) {
-                if (args.get(i).equalsIgnoreCase("serverJarPath") && i + 1 < args.size()) {
+                if (args.get(i).equalsIgnoreCase("-serverJarPath") && i + 1 < args.size()) {
                     serverJarPath = args.get(i + 1);
                     break jar;
                 }
