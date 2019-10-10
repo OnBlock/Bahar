@@ -17,8 +17,7 @@ public class PluginMetaDataBasic implements PluginMetaData {
 
     @NotNull
     private final String name;
-
-
+    
     private final boolean isStable;
 
     private final boolean isSnapshot;
