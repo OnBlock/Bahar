@@ -8,4 +8,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'Bahar-loader'
+rootProject.name = 'Bahar-server'
+
