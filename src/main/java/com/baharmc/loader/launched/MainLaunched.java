@@ -32,9 +32,7 @@ public class MainLaunched {
     public void start() throws Exception {
         final String serverJarPath;
 
-        final ArgumentParsed argumentParsed = new ArgumentParsed(args);
-
-        serverJarPath = argumentParsed.value().getKey().getOrDefault(
+        serverJarPath = new ArgumentParsed(args).value().getKey().getOrDefault(
             "serverJarPath",
             ".bahar/server.jar"
         );
