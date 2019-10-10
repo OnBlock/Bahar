@@ -2,15 +2,17 @@ package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.knot.Knot;
 import com.baharmc.loader.utils.UrlUtil;
+import com.baharmc.loader.utils.argument.ArgumentArrayed;
+import com.baharmc.loader.utils.argument.ArgumentParsed;
 import io.github.portlek.reflection.RefClass;
 import io.github.portlek.reflection.clazz.ClassOf;
-import io.github.portlek.reflection.method.MethodOf;
-import net.fabricmc.loader.launch.knot.KnotServer;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,17 +32,12 @@ public class MainLaunched {
     public void start() throws Exception {
         final String serverJarPath;
 
-        if (args.isEmpty()) {
-            serverJarPath = ".bahar/server.jar";
-        } else jar:{
-            for (int i = 0; i < args.size(); i++) {
-                if (args.get(i).equalsIgnoreCase("-serverJarPath") && i + 1 < args.size()) {
-                    serverJarPath = args.get(i + 1);
-                    break jar;
-                }
-            }
-            serverJarPath = ".bahar/server.jar";
-        }
+        final ArgumentParsed argumentParsed = new ArgumentParsed(args);
+
+        serverJarPath = argumentParsed.value().getKey().getOrDefault(
+            "serverJarPath",
+            ".bahar/server.jar"
+        );
 
         final File serverJar = new File(serverJarPath);
 
