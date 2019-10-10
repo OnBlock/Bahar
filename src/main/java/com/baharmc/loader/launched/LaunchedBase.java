@@ -1,10 +1,13 @@
 package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.common.MappingConfiguration;
+import net.fabricmc.loader.util.UrlUtil;
+import net.fabricmc.mappings.Mappings;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +26,9 @@ public abstract class LaunchedBase implements BaharLaunched {
 
     private boolean mixinReady = false;
 
+    @NotNull
+    private Path minecraftJar = Path.of(URI.create(""));
+
     public LaunchedBase(@NotNull Logger logger) {
         this.logger = logger;
         this.mappingConfiguration = new MappingConfiguration(this);
@@ -30,7 +36,24 @@ public abstract class LaunchedBase implements BaharLaunched {
 
     @Override
     public void deobfuscate(@NotNull String gameId, @NotNull String gameVersion, @NotNull Path gameDirectory, @NotNull Path jarFile) {
+        logger.fine("Requesting deobfuscation of " + jarFile.getFileName());
 
+        final Mappings mappings = mappingConfiguration.getMappings();
+        final String targetNameSpace = MappingConfiguration.TARGET_NAMESPACE;
+
+        if (mappings.getNamespaces().contains(targetNameSpace)) {
+            return;
+        }
+
+        try {
+            propose(UrlUtil.asUrl(jarFile));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (minecraftJar.toString().isEmpty()) {
+            minecraftJar = jarFile;
+        }
     }
 
     @Override

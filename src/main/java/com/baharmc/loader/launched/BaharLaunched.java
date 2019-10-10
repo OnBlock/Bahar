@@ -3,6 +3,7 @@ package com.baharmc.loader.launched;
 import com.baharmc.loader.launched.common.MappingConfiguration;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -13,6 +14,8 @@ public interface BaharLaunched {
                      @NotNull Path jarFile);
 
     void finishMixinBootstrapping();
+
+    void propose(@NotNull URL url);
 
     void init();
 

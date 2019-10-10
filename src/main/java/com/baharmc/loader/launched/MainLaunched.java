@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainLaunched {
@@ -57,8 +56,8 @@ public class MainLaunched {
 
         RefClass refClass = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.Knot"));
 
-        Object knot = refClass.getConstructor(File.class, Logger.class).create(new Knot(serverJar, LOGGER), serverJar, LOGGER);
-        refClass.getMethod("init").of(knot).call(new Knot(serverJar, LOGGER));
+        Object knot = refClass.getConstructor(File.class, Logger.class).create(new Knot(LOGGER, args, serverJar), LOGGER, args, serverJar);
+        refClass.getMethod("init").of(knot).call(new Knot(LOGGER, args, serverJar));
     }
 
 }

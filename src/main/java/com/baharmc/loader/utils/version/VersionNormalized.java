@@ -1,4 +1,4 @@
-package com.baharmc.loader.utils;
+package com.baharmc.loader.utils.version;
 
 import org.cactoos.Scalar;
 import org.jetbrains.annotations.NotNull;
@@ -7,9 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class VersionNormalized implements Scalar<String> {
-
-    private static final Pattern PRE_RELEASE_PATTERN = Pattern.compile(".+(?:-pre| Pre-Release )(\\d+)");
-    private static final Pattern SNAPSHOT_PATTERN = Pattern.compile("(\\d+)w(\\d+)([a-z])");
 
     @NotNull
     private final String name;
@@ -32,7 +29,7 @@ public class VersionNormalized implements Scalar<String> {
         final Matcher matcher;
 
         if (name.startsWith(release)) {
-            matcher = PRE_RELEASE_PATTERN.matcher(name);
+            matcher = McVersion.PRE_RELEASE_PATTERN.matcher(name);
 
             if (matcher.matches()) {
                 finalName = String.format("rc.%s", matcher.group(1));
@@ -40,7 +37,7 @@ public class VersionNormalized implements Scalar<String> {
                 finalName = normalizeVersion();
             }
 
-        } else if ((matcher = SNAPSHOT_PATTERN.matcher(name)).matches()) {
+        } else if ((matcher =  McVersion.SNAPSHOT_PATTERN.matcher(name)).matches()) {
             finalName = String.format("alpha.%s.%s.%s", matcher.group(1), matcher.group(2), matcher.group(3));
         } else {
             finalName = normalizeVersion();
