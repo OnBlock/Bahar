@@ -52,8 +52,6 @@ public final class BaharTransformed {
 
         final ClassReader classReader = new ClassReader(bytes);
         final ClassWriter classWriter = new ClassWriter(0);
-        ClassVisitor visitor = classWriter;
-        int visitorCount = 0;
 
         final EnvironmentStrippingData stripData = new EnvironmentStrippingData(Opcodes.ASM7, EnvType.SERVER.toString());
 
@@ -64,22 +62,17 @@ public final class BaharTransformed {
         }
 
         if (!stripData.isEmpty()) {
-            visitor = new ClassStripper(
+            classReader.accept(new ClassStripper(
                 Opcodes.ASM7,
-                visitor,
+                classWriter,
                 stripData.getStripInterfaces(),
                 stripData.getStripFields(),
                 stripData.getStripMethods()
-            );
-            visitorCount++;
+            ), 0);
+            return classWriter.toByteArray();
         }
 
-        if (visitorCount <= 0) {
-            return bytes;
-        }
-
-        classReader.accept(visitor, 0);
-        return classWriter.toByteArray();
+        return bytes;
     }
 
 }
