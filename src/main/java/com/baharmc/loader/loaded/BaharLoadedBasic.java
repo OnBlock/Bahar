@@ -1,5 +1,6 @@
 package com.baharmc.loader.loaded;
 
+import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.launched.BaharLaunched;
 import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
@@ -24,11 +25,14 @@ public class BaharLoadedBasic implements BaharLoaded {
     @NotNull
     private MappingResolved mappingResolved = new MckMappingResolved();
 
+    private final EntryPointStorage entryPointStorage;
+
     static BaharLoaded INSTANCE;
 
     public BaharLoadedBasic(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
         this.launched = launched;
         this.provided = provided;
+        this.entryPointStorage = new EntryPointStorage(launched);
         INSTANCE = this;
     }
 
