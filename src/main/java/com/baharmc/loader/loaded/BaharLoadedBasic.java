@@ -24,11 +24,12 @@ public class BaharLoadedBasic implements BaharLoaded {
     @NotNull
     private MappingResolved mappingResolved = new MckMappingResolved();
 
-    public static BaharLoaded INSTANCE;
+    static BaharLoaded INSTANCE;
 
     public BaharLoadedBasic(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
         this.launched = launched;
         this.provided = provided;
+        INSTANCE = this;
     }
 
     @Override
