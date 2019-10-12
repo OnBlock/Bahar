@@ -12,6 +12,8 @@ public final class EntryPointServer {
             runDir = new File(".");
         }
 
+        // initiate mods
+
         EntryPointUtils.logErrors("server", BaharLoaded.getInstance().getEntryPoints("server", Plugin.class), Plugin::load);
     }
 
