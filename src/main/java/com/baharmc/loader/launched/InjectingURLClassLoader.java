@@ -18,7 +18,7 @@ public class InjectingURLClassLoader extends URLClassLoader {
 	@Override
 	protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
 		synchronized (getClassLoadingLock(name)) {
-			Class<?> c = findLoadedClass(name);
+			Class c = findLoadedClass(name);
 
 			if (c == null) {
 				boolean excluded = false;

@@ -53,7 +53,8 @@ class KnotCompatibilityClassLoader extends URLClassLoader implements KnotClassLo
 						metadata = delegate.getMetadata(name, resourceURL);
 					}
 
-					int pkgDelimiterPos = name.lastIndexOf('.');
+					final int pkgDelimiterPos = name.lastIndexOf('.');
+
 					if (pkgDelimiterPos > 0) {
 						String pkgString = name.substring(0, pkgDelimiterPos);
 						if (getPackage(pkgString) == null) {
@@ -82,18 +83,16 @@ class KnotCompatibilityClassLoader extends URLClassLoader implements KnotClassLo
 		super.addURL(url);
 	}
 
-	static {
-		registerAsParallelCapable();
-	}
-
 	@Override
-	public InputStream getResourceAsStream(String classFile, boolean skipOriginalLoader) throws IOException {
-		if (skipOriginalLoader) {
-			if (findResource(classFile) == null) {
-				return null;
-			}
+	public InputStream getResourceAsStream(String classFile, boolean skipOriginalLoader) {
+		if (skipOriginalLoader && findResource(classFile) == null) {
+			return null;
 		}
 
 		return super.getResourceAsStream(classFile);
+	}
+
+	static {
+		registerAsParallelCapable();
 	}
 }

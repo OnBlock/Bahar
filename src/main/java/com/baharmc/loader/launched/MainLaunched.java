@@ -55,11 +55,10 @@ public class MainLaunched {
 
         Thread.currentThread().setContextClassLoader(newClassLoader);
 
-        final RefClass refClass = new ClassOf(newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot"));
-        final Object object = refClass.getConstructor(Logger.class, List.class, File.class)
-            .create(new Knot(LOGGER, args, serverJar), LOGGER, args, serverJar);
-
         try {
+            final Object object = newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot")
+                .getConstructor(Logger.class, List.class, File.class)
+                .newInstance(LOGGER, args, serverJar);
             object.getClass()
                 .getMethod("start")
                 .invoke(object);

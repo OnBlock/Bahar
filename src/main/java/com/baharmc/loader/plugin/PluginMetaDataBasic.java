@@ -68,4 +68,11 @@ public class PluginMetaDataBasic implements PluginMetaData {
     public String getId() {
         return id;
     }
+
+    @NotNull
+    @Override
+    public Version getVersion() {
+        return version;
+    }
+
 }

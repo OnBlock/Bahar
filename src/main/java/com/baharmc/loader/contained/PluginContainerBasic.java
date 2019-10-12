@@ -40,7 +40,8 @@ public class PluginContainerBasic implements PluginContained {
         }
 
         try {
-            Path holder = UrlUtil.asPath(originUrl).toAbsolutePath();
+            final Path holder = UrlUtil.asPath(originUrl).toAbsolutePath();
+
             if (Files.isDirectory(holder)) {
                 root = holder.toAbsolutePath();
             } else {
