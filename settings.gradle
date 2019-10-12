@@ -10,3 +10,10 @@ pluginManagement {
 
 rootProject.name = 'Bahar-server'
 
+if (new File("../Bahar-API").exists()) {
+    includeBuild("../Bahar-API") {
+        dependencySubstitution {
+            substitute module('com.baharmc:BaharAPI') with project(':')
+        }
+    }
+}
