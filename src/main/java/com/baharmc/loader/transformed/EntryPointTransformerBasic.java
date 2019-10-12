@@ -36,7 +36,7 @@ public class EntryPointTransformerBasic implements EntryPointTransformed {
     }
 
     @Override
-    public void locateEntryPoints(BaharLaunched launched) {
+    public void locateEntryPoints(@NotNull BaharLaunched launched) {
         if (entryPointsLocated) {
             return;
         }
@@ -47,7 +47,7 @@ public class EntryPointTransformerBasic implements EntryPointTransformed {
         launched.getLogger().fine("[EntrypointTransformerBasic] Patched " +
             (patchedClasses.size() == 1
                 ? "1 class."
-                : (patchedClasses.size() + " classes."))
+                : patchedClasses.size() + " classes.")
         );
     }
 

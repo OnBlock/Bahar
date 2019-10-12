@@ -1,7 +1,6 @@
 package com.baharmc.loader.mock;
 
 import com.baharmc.loader.loaded.MappingResolved;
-import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

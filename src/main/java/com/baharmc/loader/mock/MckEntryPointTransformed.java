@@ -16,7 +16,7 @@ public class MckEntryPointTransformed implements EntryPointTransformed {
     }
 
     @Override
-    public void locateEntryPoints(BaharLaunched launched) {
+    public void locateEntryPoints(@NotNull BaharLaunched launched) {
         throw new UnsupportedOperationException();
     }
 

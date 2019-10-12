@@ -12,7 +12,7 @@ public interface EntryPointTransformed {
     @NotNull
     Logger getLogger();
 
-    void locateEntryPoints(BaharLaunched launched);
+    void locateEntryPoints(@NotNull BaharLaunched launched);
 
     ClassNode loadClass(@NotNull BaharLaunched launched, @NotNull String className) throws IOException;
 
