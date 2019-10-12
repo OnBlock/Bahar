@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.baharmc.runtime.mixins",
+  "package": "com.baharmc.server.mixins",
   "compatibilityLevel": "JAVA_12",
   "injectors": {
     "defaultRequire": 1

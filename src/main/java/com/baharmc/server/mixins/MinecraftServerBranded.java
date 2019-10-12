@@ -1,4 +1,4 @@
-package com.baharmc.runtime.mixins;
+package com.baharmc.server.mixins;
 
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,11 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MinecraftServerBranded {
 
     @Inject(
-            method = "getServerModName", at = @At(
+        method = "getServerModName",
+        at = @At(
             target = "Lnet/minecraft/server/MinecraftServer;getServerModName()Ljava/lang/String;",
             value = "RETURN"
-    ))
-
+        )
+    )
     private void Bahar$Brand(CallbackInfoReturnable<String> cir) {
         cir.setReturnValue("Bahar");
     }
