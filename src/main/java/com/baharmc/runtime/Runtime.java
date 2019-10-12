@@ -11,10 +11,12 @@ public class Runtime implements Plugin {
 
     @Override
     public void enable() {
+        System.out.println("Runtime was enabled!");
     }
 
     @Override
     public void disable() {
+        System.out.println("Runtime was disabled!");
     }
 
 }
