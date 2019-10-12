@@ -19,9 +19,9 @@ import java.util.List;
 
 public class MinecraftProvided implements GameProvided {
 
-    private final EntryPointTransformed TRANSFORMER = new EntryPointTransformerBasic(transformed ->
+    private final EntryPointTransformed transformed = new EntryPointTransformerBasic(it ->
         new ListOf<>(
-            new EntryPointPatchHook(transformed)
+            new EntryPointPatchHook(it)
         )
     );
 
@@ -37,14 +37,11 @@ public class MinecraftProvided implements GameProvided {
     @NotNull
     private final Path gameJar;
 
-    private final boolean hasModLoader;
-
-    public MinecraftProvided(@NotNull String entryPoint, @NotNull McVersion mcVersion, @NotNull Arguments arguments, @NotNull Path gameJar, boolean hasModLoader) {
+    public MinecraftProvided(@NotNull String entryPoint, @NotNull McVersion mcVersion, @NotNull Arguments arguments, @NotNull Path gameJar) {
         this.entryPoint = entryPoint;
         this.mcVersion = mcVersion;
         this.arguments = arguments;
         this.gameJar = gameJar;
-        this.hasModLoader = hasModLoader;
     }
 
     @NotNull
@@ -114,11 +111,6 @@ public class MinecraftProvided implements GameProvided {
         return arguments.getAsFile("gameDir").toPath();
     }
 
-    @Override
-    public boolean requiresUrlClassLoader() {
-        return hasModLoader;
-    }
-
     @NotNull
     @Override
     public List<Path> getGameContextJars() {
@@ -128,11 +120,11 @@ public class MinecraftProvided implements GameProvided {
     @NotNull
     @Override
     public byte[] transform(@NotNull String name) {
-        final byte[] transformed = TRANSFORMER.transform(name);
+        final byte[] transform = transformed.transform(name);
 
-        return transformed.length == 0
+        return transform.length == 0
             ? new byte[0]
-            : transformed;
+            : transform;
     }
 
     @Override
@@ -149,7 +141,7 @@ public class MinecraftProvided implements GameProvided {
     @NotNull
     @Override
     public EntryPointTransformed getEntryPointTransformed() {
-        return TRANSFORMER;
+        return transformed;
     }
 
 }

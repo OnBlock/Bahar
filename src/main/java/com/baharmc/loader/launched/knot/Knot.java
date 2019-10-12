@@ -69,8 +69,7 @@ public final class Knot extends LaunchedBase {
                 entrypointResult.getEntrypointPath()
             ).value(),
             arguments,
-            entrypointResult.getEntrypointPath(),
-            helped.getSource("ModLoader.class").isPresent()
+            entrypointResult.getEntrypointPath()
         );
 
         getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
