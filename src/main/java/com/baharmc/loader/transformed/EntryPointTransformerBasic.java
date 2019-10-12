@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class EntryPointTransformerBasic implements EntryPointTransformed {
@@ -24,8 +25,8 @@ public class EntryPointTransformerBasic implements EntryPointTransformed {
 
     private boolean entryPointsLocated = false;
 
-    public EntryPointTransformerBasic(@NotNull List<EntryPointPatch> patches) {
-        this.patches = patches;
+    public EntryPointTransformerBasic(@NotNull Function<EntryPointTransformed, List<EntryPointPatch>> patches) {
+        this.patches = patches.apply(this);
     }
 
     @NotNull

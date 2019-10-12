@@ -77,12 +77,14 @@ public class BaharLoaderBasic implements BaharLoaded {
     @NotNull
     @Override
     public Collection<PluginContained> getAllPlugins() {
-        return new CollectionOf<>();
+        return new CollectionOf<>(
+            plugins.values()
+        );
     }
 
     @Override
-    public boolean isModLoaded(String id) {
-        return false;
+    public boolean isPluginLoaded(@NotNull String id) {
+        return plugins.containsKey(id);
     }
 
     @NotNull

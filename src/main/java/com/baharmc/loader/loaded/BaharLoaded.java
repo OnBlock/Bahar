@@ -33,7 +33,7 @@ public interface BaharLoaded {
     @NotNull
     Collection<PluginContained> getAllPlugins();
 
-    boolean isModLoaded(String id);
+    boolean isPluginLoaded(String id);
 
     @NotNull
     Object getGameInstance();

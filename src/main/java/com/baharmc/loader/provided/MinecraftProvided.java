@@ -1,5 +1,6 @@
 package com.baharmc.loader.provided;
 
+import com.baharmc.loader.entrypoint.patch.EntryPointPatchHook;
 import com.baharmc.loader.plugin.PluginMetaDataBasic;
 import com.baharmc.loader.transformed.EntryPointTransformed;
 import com.baharmc.loader.transformed.EntryPointTransformerBasic;
@@ -18,9 +19,9 @@ import java.util.List;
 
 public class MinecraftProvided implements GameProvided {
 
-    private static final EntryPointTransformed TRANSFORMER = new EntryPointTransformerBasic(
+    private static final EntryPointTransformed TRANSFORMER = new EntryPointTransformerBasic(transformed ->
         new ListOf<>(
-
+            new EntryPointPatchHook(transformed)
         )
     );
 
