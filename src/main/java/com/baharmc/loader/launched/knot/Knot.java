@@ -2,7 +2,7 @@ package com.baharmc.loader.launched.knot;
 
 import com.baharmc.loader.launched.LaunchedBase;
 import com.baharmc.loader.loaded.BaharLoaded;
-import com.baharmc.loader.loaded.BaharLoadedBasic;
+import com.baharmc.loader.loaded.BaharLoaderBasic;
 import com.baharmc.loader.mock.MckEntryPointTransformed;
 import com.baharmc.loader.mock.MckGameProvided;
 import com.baharmc.loader.provided.EntrypointResult;
@@ -90,7 +90,7 @@ public final class Knot extends LaunchedBase {
 
         Thread.currentThread().setContextClassLoader((ClassLoader) loaded);
 
-        final BaharLoaded baharLoaded = new BaharLoadedBasic(this, provided);
+        final BaharLoaded baharLoaded = new BaharLoaderBasic(this, provided);
 
         baharLoaded.load();
         baharLoaded.freeze();

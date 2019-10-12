@@ -7,14 +7,13 @@ import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.provided.GameProvided;
 import org.cactoos.collection.CollectionOf;
-import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-public class BaharLoadedBasic implements BaharLoaded {
+public class BaharLoaderBasic implements BaharLoaded {
 
     @NotNull
     private final BaharLaunched launched;
@@ -29,7 +28,7 @@ public class BaharLoadedBasic implements BaharLoaded {
 
     static BaharLoaded INSTANCE;
 
-    public BaharLoadedBasic(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
+    public BaharLoaderBasic(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
         this.launched = launched;
         this.provided = provided;
         this.entryPointStorage = new EntryPointStorage(launched);
@@ -49,7 +48,7 @@ public class BaharLoadedBasic implements BaharLoaded {
     @NotNull
     @Override
     public <T> List<T> getEntryPoints(@NotNull String key, @NotNull Class<T> type) {
-        return new ListOf<>();
+        return entryPointStorage.getEntryPoints(key, type);
     }
 
     @NotNull

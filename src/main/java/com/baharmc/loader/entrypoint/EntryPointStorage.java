@@ -4,7 +4,7 @@ import com.baharmc.loader.language.LanguageAdapted;
 import com.baharmc.loader.launched.BaharLaunched;
 import com.baharmc.loader.metadata.EntryPointMetadata;
 import com.baharmc.loader.plugin.PluginContained;
-import net.fabricmc.loader.api.EntrypointException;
+import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -19,7 +19,62 @@ public final class EntryPointStorage {
         this.launched = launched;
     }
 
-    public final class Entry {
+    private final Map<String, List<Entry>> entryMap = new HashMap<>();
+
+    private List<Entry> getOrCreateEntries(@NotNull String key) {
+        return entryMap.computeIfAbsent(key, z -> new ArrayList<>());
+    }
+
+    public void add(@NotNull PluginContained pluginContained,
+                    @NotNull String key,
+                    @NotNull EntryPointMetadata metadata,
+                    @NotNull Map<String, LanguageAdapted> adapterMap) throws Exception {
+        if (!adapterMap.containsKey(metadata.getAdapter())) {
+            throw new Exception(
+                "Could not find adapter '" +
+                    metadata.getAdapter() +
+                "' (plugin " + pluginContained.getMetaData().getId() + "!)"
+            );
+        }
+
+        launched.getLogger().fine(
+            "Registering new-style initializer " +
+                metadata.getValue() +
+                " for plugin " +
+                pluginContained.getMetaData().getId() +
+                " (key " + key + ")");
+        getOrCreateEntries(key).add(new Entry(
+            pluginContained, adapterMap.get(metadata.getAdapter()), metadata.getValue()
+        ));
+    }
+
+    public <T> List<T> getEntryPoints(String key, Class<T> type) {
+        final List<Entry> entries = entryMap.getOrDefault(key, new ListOf<>());
+        final List<T> results = new ArrayList<>(entries.size());
+        boolean hadException = false;
+
+        for (Entry entry : entries) {
+            try {
+                T result = entry.getOrCreate(type);
+                results.add(result);
+            } catch (Exception e) {
+                hadException = true;
+                launched.getLogger().log(
+                    Level.SEVERE,
+                    "Exception occured while getting '" + key + "' entry points @ " + entry,
+                    e
+                );
+            }
+        }
+
+        if (hadException) {
+            throw new EntryPointException("Could not look up entries for entry point " + key + "!");
+        } else {
+            return results;
+        }
+    }
+
+    private static final class Entry {
 
         private final Map<Class<?>, Object> instanceMap = new IdentityHashMap<>();
 
@@ -53,63 +108,6 @@ public final class EntryPointStorage {
             return languageAdapted.create(pluginContained, value, type);
         }
 
-    }
-
-    private final Map<String, List<Entry>> entryMap = new HashMap<>();
-
-    private List<Entry> getOrCreateEntries(@NotNull String key) {
-        return entryMap.computeIfAbsent(key, z -> new ArrayList<>());
-    }
-
-    protected void add(@NotNull PluginContained pluginContained, @NotNull String key,
-                       @NotNull EntryPointMetadata metadata,
-                       @NotNull Map<String, LanguageAdapted> adapterMap) throws Exception {
-        if (!adapterMap.containsKey(metadata.getAdapter())) {
-            throw new Exception(
-                "Could not find adapter '" +
-                    metadata.getAdapter() +
-                "' (plugin " + pluginContained.getMetaData().getId() + "!)"
-            );
-        }
-
-        launched.getLogger().fine(
-            "Registering new-style initializer " +
-                metadata.getValue() +
-                " for plugin " +
-                pluginContained.getMetaData().getId() +
-                " (key " + key + ")");
-        getOrCreateEntries(key).add(new Entry(
-            pluginContained, adapterMap.get(metadata.getAdapter()), metadata.getValue()
-        ));
-    }
-
-    protected <T> List<T> getEntryPoints(String key, Class<T> type) {
-        List<Entry> entries = entryMap.get(key);
-        if (entries == null) {
-            return Collections.emptyList();
-        }
-
-        boolean hadException = false;
-        List<T> results = new ArrayList<>(entries.size());
-        for (Entry entry : entries) {
-            try {
-                T result = entry.getOrCreate(type);
-                results.add(result);
-            } catch (Exception e) {
-                hadException = true;
-                launched.getLogger().log(
-                    Level.SEVERE,
-                    "Exception occured while getting '" + key + "' entry points @ " + entry,
-                    e
-                );
-            }
-        }
-
-        if (hadException) {
-            throw new EntrypointException("Could not look up entries for entry point " + key + "!");
-        } else {
-            return results;
-        }
     }
 
 }

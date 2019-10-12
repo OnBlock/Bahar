@@ -10,11 +10,11 @@ import java.util.List;
 public interface BaharLoaded {
 
     static BaharLoaded getInstance() {
-        if (BaharLoadedBasic.INSTANCE == null) {
+        if (BaharLoaderBasic.INSTANCE == null) {
             throw new RuntimeException("Accessed FabricLoader too early!");
         }
 
-        return BaharLoadedBasic.INSTANCE;
+        return BaharLoaderBasic.INSTANCE;
     }
 
     void load();
