@@ -1,5 +1,7 @@
 package com.baharmc.loader.entrypoint.hooks;
 
+import com.baharmc.loader.loaded.BaharLoaded;
+
 import java.io.File;
 
 public final class EntryPointServer {
@@ -9,7 +11,7 @@ public final class EntryPointServer {
             runDir = new File(".");
         }
 
-
+        EntryPointUtils.logErrors("server", BaharLoaded.getInstance().getEntryPoints("server", ), );
     }
 
 }

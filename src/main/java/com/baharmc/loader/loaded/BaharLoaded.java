@@ -5,12 +5,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 public interface BaharLoaded {
+
+    static BaharLoaded getInstance() {
+        if (BaharLoadedBasic.INSTANCE == null) {
+            throw new RuntimeException("Accessed FabricLoader too early!");
+        }
+
+        return BaharLoadedBasic.INSTANCE;
+    }
 
     void load();
 
     void freeze();
+
+    @NotNull
+    <T> List<T> getEntryPoints(@NotNull String key, @NotNull Class<T> type);
 
     @NotNull
     MappingResolved getMappingResolver();

@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
-final class EntrypointUtils {
+final class EntryPointUtils {
 
-	private EntrypointUtils() {
+	private EntryPointUtils() {
 	}
 
 	static <T> void logErrors(String name, Collection<T> entrypoints, Consumer<T> entrypointConsumer) {
