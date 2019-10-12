@@ -57,17 +57,16 @@ public final class EntryPointPatchHook extends EntryPointPatch {
                 serverHasFile = newGameInsn.desc.startsWith("(Ljava/io/File;");
             }
 
-
             if (gameEntrypoint == null) {
-                final MethodInsnNode newGameInsn = (MethodInsnNode) findInsn(mainMethod,
+                final MethodInsnNode newGameInsnNode = (MethodInsnNode) findInsn(mainMethod,
                    insn -> insn.getOpcode() == Opcodes.INVOKESPECIAL &&
                        ((MethodInsnNode) insn).name.equals("<init>") &&
                        ((MethodInsnNode) insn).desc.startsWith("(Ljava/io/File;"),
                     true
                 );
 
-                if (newGameInsn != null) {
-                    gameEntrypoint = newGameInsn.owner.replace('/', '.');
+                if (newGameInsnNode != null) {
+                    gameEntrypoint = newGameInsnNode.owner.replace('/', '.');
                 }
             }
 
@@ -125,7 +124,7 @@ public final class EntryPointPatchHook extends EntryPointPatch {
         it.add(new VarInsnNode(Opcodes.ALOAD, 0));
         it.add(new MethodInsnNode(
             Opcodes.INVOKESTATIC,
-            "net/fabricmc/loader/entrypoint/minecraft/hooks/EntryPointServer",
+            "com/baharmc/loader/entrypoint/hooks/EntryPointServer.java",
             "start",
             "(Ljava/io/File;Ljava/lang/Object;)V",
             false)
