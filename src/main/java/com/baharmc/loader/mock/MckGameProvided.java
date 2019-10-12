@@ -3,8 +3,6 @@ package com.baharmc.loader.mock;
 import com.baharmc.loader.provided.BuiltinPlugin;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.transformed.EntryPointTransformed;
-import org.cactoos.collection.CollectionOf;
-import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -16,69 +14,65 @@ public class MckGameProvided implements GameProvided {
     @NotNull
     @Override
     public String getGameId() {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String getGameName() {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String getRawGameVersion() {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String getNormalizedGameVersion() {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public Collection<BuiltinPlugin> getBuiltinMods() {
-        return new CollectionOf<>();
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String getEntryPoint() {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public Path getLaunchDirectory() {
-        return null;
-    }
-
-    @Override
-    public boolean requiresUrlClassLoader() {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public List<Path> getGameContextJars() {
-        return new ListOf<>();
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public byte[] transform(@NotNull String name) {
-        return new byte[0];
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void launch(@NotNull ClassLoader loader) {
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public EntryPointTransformed getEntryPointTransformed() {
-        return new MckEntryPointTransformed();
+        throw new UnsupportedOperationException();
     }
 }

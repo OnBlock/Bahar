@@ -8,16 +8,15 @@ import java.net.URI;
 import java.nio.file.Path;
 
 public class MckPluginContained implements PluginContained {
-
     @NotNull
     @Override
     public PluginMetaData getMetaData() {
-        return () -> "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public Path getRootPath() {
-        return Path.of(URI.create(""));
+        throw new UnsupportedOperationException();
     }
 }

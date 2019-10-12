@@ -11,36 +11,36 @@ public class MckMappingResolved implements MappingResolved {
     @NotNull
     @Override
     public Collection<String> getNamespaces() {
-        return new CollectionOf<>();
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String getCurrentRuntimeNamespace() {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String mapClassName(@NotNull String namespace, @NotNull String className) {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String unmapClassName(@NotNull String targetNamespace, @NotNull String className) {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String mapFieldName(@NotNull String namespace, @NotNull String owner, @NotNull String name, @NotNull String descriptor) {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
     public String mapMethodName(@NotNull String namespace, @NotNull String owner, @NotNull String name, @NotNull String descriptor) {
-        return "";
+        throw new UnsupportedOperationException();
     }
 }

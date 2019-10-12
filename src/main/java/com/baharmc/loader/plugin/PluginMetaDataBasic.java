@@ -62,4 +62,10 @@ public class PluginMetaDataBasic implements PluginMetaData {
             new ListOf<>()
         );
     }
+
+    @NotNull
+    @Override
+    public String getId() {
+        return id;
+    }
 }
