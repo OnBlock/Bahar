@@ -3,6 +3,10 @@ package com.baharmc.loader.launched.knot;
 import com.baharmc.loader.launched.BaharLaunched;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.transformed.BaharTransformed;
+import net.fabricmc.loader.launch.common.FabricLauncherBase;
+import net.fabricmc.loader.util.FileSystemUtil;
+import net.fabricmc.loader.util.UrlConversionException;
+import net.fabricmc.loader.util.UrlUtil;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.transformer.MixinTransformer;
 
@@ -10,8 +14,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.FileSystemNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.CodeSource;
+import java.security.cert.Certificate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.jar.Manifest;
 
 class KnotClassDelegate {
 
@@ -57,7 +70,7 @@ class KnotClassDelegate {
         return mixinTransformer;
     }
 
-    public byte[] loadClassData(String name) {
+    public byte[] loadClassData(@NotNull String name) {
         if (!transformInitialized) {
             try {
                 return getClassByteArray(name, true);
@@ -85,6 +98,61 @@ class KnotClassDelegate {
         }
 
         return getMixinTransformer().transformClassBytes(name, name, null);
+    }
+
+    Metadata getMetadata(@NotNull String name, @NotNull URL resourceURL) {
+        URL codeSourceURL = null;
+        String filename = name.replace('.', '/') + ".class";
+
+        try {
+            codeSourceURL = UrlUtil.getSource(filename, resourceURL);
+        } catch (UrlConversionException e) {
+            System.err.println("Could not find code source for " + resourceURL + ": " + e.getMessage());
+        }
+
+        if (codeSourceURL != null) {
+            return metadataCache.computeIfAbsent(codeSourceURL.toString(), (codeSourceStr) -> {
+                Manifest manifest = null;
+                CodeSource codeSource = null;
+                Certificate[] certificates = null;
+                URL fCodeSourceUrl = null;
+
+                try {
+                    fCodeSourceUrl = new URL(codeSourceStr);
+                    Path path = UrlUtil.asPath(fCodeSourceUrl);
+
+                    if (Files.isRegularFile(path)) {
+                        URLConnection connection = new URL("jar:" + codeSourceStr + "!/").openConnection();
+                        if (connection instanceof JarURLConnection) {
+                            manifest = ((JarURLConnection) connection).getManifest();
+                            certificates = ((JarURLConnection) connection).getCertificates();
+                        }
+
+                        if (manifest == null) {
+                            try (FileSystemUtil.FileSystemDelegate jarFs = FileSystemUtil.getJarFileSystem(path, false)) {
+                                Path manifestPath = jarFs.get().getPath("META-INF/MANIFEST.MF");
+                                if (Files.exists(manifestPath)) {
+                                    try (InputStream stream = Files.newInputStream(manifestPath)) {
+                                        manifest = new Manifest(stream);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (IOException | FileSystemNotFoundException | UrlConversionException e) {
+                    if (FabricLauncherBase.getLauncher().isDevelopment()) {
+                        System.err.println("Failed to load manifest: " + e);
+                        e.printStackTrace();
+                    }
+                }
+
+                codeSource = new CodeSource(fCodeSourceUrl, certificates);
+
+                return new Metadata(manifest, codeSource);
+            });
+        }
+
+        return Metadata.EMPTY;
     }
 
     String getClassFileName(String name) {

@@ -20,11 +20,13 @@ public class PluginContainerBasic implements PluginContained {
         this.file = file;
     }
 
+    @NotNull
     @Override
     public PluginMetaData getMetaData() {
         return pluginMetaData;
     }
 
+    @NotNull
     @Override
     public Path getRootPath() {
         return file.toPath();

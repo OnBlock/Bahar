@@ -1,5 +1,6 @@
 package com.baharmc.loader.provided;
 
+import net.fabricmc.loader.entrypoint.EntrypointTransformer;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -38,5 +39,8 @@ public interface GameProvided {
 	byte[] transform(@NotNull String name);
 
 	void launch(@NotNull ClassLoader loader);
+
+	@NotNull
+    EntrypointTransformer getEntrypointTransformer();
 
 }

@@ -7,7 +7,6 @@ import net.fabricmc.loader.transformer.ClassStripper;
 import net.fabricmc.loader.transformer.EnvironmentStrippingData;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 

@@ -1,12 +1,16 @@
 package com.baharmc.loader.plugin;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.nio.file.Path;
 
 public interface PluginContained {
+
     /**
      * Gets the Plugin meta data
      * @return {@link PluginMetaData}
      */
+    @NotNull
     PluginMetaData getMetaData();
 
     /**
@@ -14,6 +18,7 @@ public interface PluginContained {
      *
      * @return {@link Path}
      */
+    @NotNull
     Path getRootPath();
 
     /**
@@ -23,6 +28,7 @@ public interface PluginContained {
      * @param file The location from root, using "/" as a separator.
      * @return The Path to a given file.
      */
+    @NotNull
     default Path getPath(String file) {
         Path root = getRootPath();
         return root.resolve(file.replace("/", root.getFileSystem().getSeparator()));

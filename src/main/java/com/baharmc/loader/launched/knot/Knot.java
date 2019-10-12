@@ -1,17 +1,22 @@
 package com.baharmc.loader.launched.knot;
 
 import com.baharmc.loader.launched.LaunchedBase;
+import com.baharmc.loader.loaded.BaharLoaded;
+import com.baharmc.loader.loaded.BaharLoadedBasic;
 import com.baharmc.loader.provided.EntrypointResult;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.provided.GameProviderHelped;
 import com.baharmc.loader.provided.MinecraftProvided;
 import com.baharmc.loader.utils.argument.Arguments;
 import com.baharmc.loader.utils.version.GetVersion;
+import net.fabricmc.loader.FabricLoader;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -62,7 +67,27 @@ public final class Knot extends LaunchedBase {
 
         getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
 
-        final boolean useCompatibility = provided.requiresUrlClassLoader() || ;
+        final boolean useCompatibility = provided.requiresUrlClassLoader();
+        final KnotClassLoaded knotClassLoaded = new KnotCompatibilityClassLoader(this, provided);
+
+        for (Path path : provided.getGameContextJars()) {
+            deobfuscate(
+                provided.getGameId(),
+                provided.getNormalizedGameVersion(),
+                provided.getLaunchDirectory(),
+                path
+            );
+        }
+
+        provided.getEntrypointTransformer().locateEntrypoints(this);
+
+        Thread.currentThread().setContextClassLoader((ClassLoader) knotClassLoaded);
+
+        final BaharLoaded baharLoaded = new BaharLoadedBasic(this, provided);
+
+        baharLoaded.load();
+        baharLoaded.freeze();
+        MixinBootstrap.init();
     }
 
     @Override

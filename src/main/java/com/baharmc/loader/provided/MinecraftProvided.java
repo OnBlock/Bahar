@@ -144,4 +144,10 @@ public class MinecraftProvided implements GameProvided {
         }
     }
 
+    @NotNull
+    @Override
+    public EntrypointTransformer getEntrypointTransformer() {
+        return null;
+    }
+
 }
