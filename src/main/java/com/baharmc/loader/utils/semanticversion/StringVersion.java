@@ -16,6 +16,8 @@
 
 package com.baharmc.loader.utils.semanticversion;
 
+import org.jetbrains.annotations.NotNull;
+
 public class StringVersion implements Version {
 	private final String version;
 
@@ -23,7 +25,8 @@ public class StringVersion implements Version {
 		this.version = version;
 	}
 
-	@Override
+	@NotNull
+    @Override
 	public String getFriendlyString() {
 		return version;
 	}

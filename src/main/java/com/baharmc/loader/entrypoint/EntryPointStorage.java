@@ -33,7 +33,7 @@ public final class EntryPointStorage {
             throw new Exception(
                 "Could not find adapter '" +
                     metadata.getAdapter() +
-                "' (plugin " + pluginContained.getMetaData().getId() + "!)"
+                "' (plugin " + pluginContained.getMetadata().getId() + "!)"
             );
         }
 
@@ -41,7 +41,7 @@ public final class EntryPointStorage {
             "Registering new-style initializer " +
                 metadata.getValue() +
                 " for plugin " +
-                pluginContained.getMetaData().getId() +
+                pluginContained.getMetadata().getId() +
                 " (key " + key + ")");
         getOrCreateEntries(key).add(new Entry(
             pluginContained, adapterMap.get(metadata.getAdapter()), metadata.getValue()

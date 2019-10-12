@@ -9,7 +9,7 @@ import java.nio.file.Path;
 public class MckPluginContained implements PluginContained {
     @NotNull
     @Override
-    public PluginMetaData getMetaData() {
+    public PluginMetaData getMetadata() {
         throw new UnsupportedOperationException();
     }
 

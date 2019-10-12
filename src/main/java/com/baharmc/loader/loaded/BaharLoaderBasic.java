@@ -6,6 +6,7 @@ import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.provided.GameProvided;
+import net.fabricmc.loader.api.SemanticVersion;
 import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +31,8 @@ public class BaharLoaderBasic implements BaharLoaded {
 
     private final Map<String, PluginContained> plugins = new HashMap<>();
 
+    private boolean frozen = false;
+
     static BaharLoaded INSTANCE;
 
     public BaharLoaderBasic(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
@@ -46,7 +49,12 @@ public class BaharLoaderBasic implements BaharLoaded {
 
     @Override
     public void freeze() {
+        if (frozen) {
+            throw new RuntimeException("Already frozen!");
+        }
 
+        frozen = true;
+        finishPluginLoading();
     }
 
     @NotNull
@@ -104,4 +112,35 @@ public class BaharLoaderBasic implements BaharLoaded {
     public File getConfigDirectory() {
         return null;
     }
+
+    private void finishPluginLoading() {
+        for (PluginContained pluginContained : plugins.values()) {
+            if (!pluginContained.getMetadata().getId().equals("bahar")) {
+                launched.propose(pluginContained.getOriginURL());
+            }
+        }
+
+        postprocessPluginMetadata();
+    }
+
+    private void postprocessPluginMetadata() {
+        for (PluginContained pluginContained : plugins.values()) {
+            if (!(pluginContained.getMetadata().getVersion() instanceof SemanticVersion)) {
+                launched.getLogger().warning("Plugin `" +
+                    pluginContained.getMetadata().getId() +
+                    "` (" +
+                    pluginContained.getMetadata().getVersion().getFriendlyString() +
+                    ") does not respect SemVer - comparison support is limited."
+                );
+            } else if (((SemanticVersion) pluginContained.getMetadata().getVersion()).getVersionComponentCount() >= 4) {
+                launched.getLogger().warning("Plugin `" +
+                    pluginContained.getMetadata().getId() +
+                    "` (" +
+                    pluginContained.getMetadata().getVersion().getFriendlyString() +
+                    ") uses more dot-separated version components than SemVer allows; support for this is currently not guaranteed."
+                );
+            }
+        }
+    }
+
 }

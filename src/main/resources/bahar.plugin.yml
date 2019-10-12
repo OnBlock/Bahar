@@ -2,9 +2,9 @@
 #Information about the plugin
 #Required fields
 #Plugin id, no spaces and special characters are allowed
-id: bahar_loader
+id: bahar
 #Name
-name: BaharLoader
+name: BaharRuntime
 #Version, must respect Semantic version (semver)
 #Default: '${version}' managed by Gradle
 #More info: https://semver.org/
@@ -34,7 +34,7 @@ authors:
 #A list of ways to contact you!
 contacts:
   website: https://onblock.xyz/bahar
-  github: https://github.com/BaharMC/loader
+  github: https://github.com/BaharMC/Bahar-server
 #Does your plugin depends on any other plugins?
 #You can add that here
 #Note: the plugin version must respects the semver

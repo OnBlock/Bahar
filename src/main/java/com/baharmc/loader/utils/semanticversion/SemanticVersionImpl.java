@@ -16,6 +16,8 @@
 
 package com.baharmc.loader.utils.semanticversion;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
@@ -159,7 +161,8 @@ public class SemanticVersionImpl implements SemanticVersion {
 		return Optional.ofNullable(build);
 	}
 
-	@Override
+	@NotNull
+    @Override
 	public String getFriendlyString() {
 		return friendlyName;
 	}
