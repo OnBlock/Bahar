@@ -19,7 +19,7 @@ import java.util.List;
 
 public class MinecraftProvided implements GameProvided {
 
-    private static final EntryPointTransformed TRANSFORMER = new EntryPointTransformerBasic(transformed ->
+    private final EntryPointTransformed TRANSFORMER = new EntryPointTransformerBasic(transformed ->
         new ListOf<>(
             new EntryPointPatchHook(transformed)
         )
@@ -148,7 +148,7 @@ public class MinecraftProvided implements GameProvided {
 
     @NotNull
     @Override
-    public EntryPointTransformed getEntrypointTransformer() {
+    public EntryPointTransformed getEntryPointTransformed() {
         return TRANSFORMER;
     }
 

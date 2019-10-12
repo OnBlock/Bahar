@@ -78,7 +78,7 @@ public class MckGameProvided implements GameProvided {
 
     @NotNull
     @Override
-    public EntryPointTransformed getEntrypointTransformer() {
+    public EntryPointTransformed getEntryPointTransformed() {
         return new MckEntryPointTransformed();
     }
 }

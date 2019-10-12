@@ -86,7 +86,7 @@ public final class Knot extends LaunchedBase {
             );
         }
 
-        provided.getEntrypointTransformer().locateEntryPoints(this);
+        provided.getEntryPointTransformed().locateEntryPoints(this);
 
         Thread.currentThread().setContextClassLoader((ClassLoader) loaded);
 

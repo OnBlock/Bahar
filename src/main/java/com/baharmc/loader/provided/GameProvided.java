@@ -30,8 +30,6 @@ public interface GameProvided {
 	@NotNull
 	Path getLaunchDirectory();
 
-	boolean requiresUrlClassLoader();
-
 	@NotNull
 	List<Path> getGameContextJars();
 
@@ -41,6 +39,6 @@ public interface GameProvided {
 	void launch(@NotNull ClassLoader loader);
 
 	@NotNull
-	EntryPointTransformed getEntrypointTransformer();
+	EntryPointTransformed getEntryPointTransformed();
 
 }
