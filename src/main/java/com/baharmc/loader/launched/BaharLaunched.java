@@ -3,6 +3,7 @@ package com.baharmc.loader.launched;
 import com.baharmc.loader.launched.common.MappingConfiguration;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -36,5 +37,11 @@ public interface BaharLaunched {
 
     @NotNull
     Collection<URL> getLoadTimeDependencies();
+
+    @NotNull
+    String getEntryPoint();
+
+    @NotNull
+    byte[] getClassByteArray(String name) throws IOException;
 
 }

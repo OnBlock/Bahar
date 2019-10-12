@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-interface KnotClassLoaded {
+public interface KnotClassLoaded {
 
 	@NotNull
 	KnotClassDelegate getDelegate();

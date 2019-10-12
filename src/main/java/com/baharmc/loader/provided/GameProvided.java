@@ -1,6 +1,6 @@
 package com.baharmc.loader.provided;
 
-import net.fabricmc.loader.entrypoint.EntrypointTransformer;
+import com.baharmc.loader.transformed.EntryPointTransformed;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -41,6 +41,6 @@ public interface GameProvided {
 	void launch(@NotNull ClassLoader loader);
 
 	@NotNull
-    EntrypointTransformer getEntrypointTransformer();
+	EntryPointTransformed getEntrypointTransformer();
 
 }

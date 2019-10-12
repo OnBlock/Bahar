@@ -3,10 +3,9 @@ package com.baharmc.loader.launched.knot;
 import com.baharmc.loader.launched.BaharLaunched;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.transformed.BaharTransformed;
-import net.fabricmc.loader.launch.common.FabricLauncherBase;
-import net.fabricmc.loader.util.FileSystemUtil;
-import net.fabricmc.loader.util.UrlConversionException;
-import net.fabricmc.loader.util.UrlUtil;
+import com.baharmc.loader.utils.FileSystemUtil;
+import com.baharmc.loader.utils.UrlConversionException;
+import com.baharmc.loader.utils.UrlUtil;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.transformer.MixinTransformer;
 
@@ -17,7 +16,6 @@ import java.lang.reflect.Constructor;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.CodeSource;
@@ -26,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.Manifest;
 
-class KnotClassDelegate {
+public final class KnotClassDelegate {
 
     private final Map<String, Metadata> metadataCache = new HashMap<>();
 
@@ -139,11 +137,7 @@ class KnotClassDelegate {
                             }
                         }
                     }
-                } catch (IOException | FileSystemNotFoundException | UrlConversionException e) {
-                    if (FabricLauncherBase.getLauncher().isDevelopment()) {
-                        System.err.println("Failed to load manifest: " + e);
-                        e.printStackTrace();
-                    }
+                } catch (Exception ignored) {
                 }
 
                 codeSource = new CodeSource(fCodeSourceUrl, certificates);

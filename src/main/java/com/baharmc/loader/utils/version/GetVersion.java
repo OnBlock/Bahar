@@ -1,7 +1,7 @@
 package com.baharmc.loader.utils.version;
 
+import com.baharmc.loader.utils.FileSystemUtil;
 import com.google.gson.stream.JsonReader;
-import net.fabricmc.loader.util.FileSystemUtil;
 import org.cactoos.Scalar;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.ClassReader;

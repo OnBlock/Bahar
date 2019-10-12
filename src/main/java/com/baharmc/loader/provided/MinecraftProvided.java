@@ -1,13 +1,11 @@
 package com.baharmc.loader.provided;
 
 import com.baharmc.loader.plugin.PluginMetaDataBasic;
+import com.baharmc.loader.transformed.EntryPointTransformed;
+import com.baharmc.loader.transformed.EntryPointTransformerBasic;
 import com.baharmc.loader.utils.argument.Arguments;
 import com.baharmc.loader.utils.semanticversion.VersionDeserializer;
 import com.baharmc.loader.utils.version.McVersion;
-import net.fabricmc.loader.entrypoint.EntrypointTransformer;
-import net.fabricmc.loader.entrypoint.minecraft.EntrypointPatchBranding;
-import net.fabricmc.loader.entrypoint.minecraft.EntrypointPatchFML125;
-import net.fabricmc.loader.entrypoint.minecraft.EntrypointPatchHook;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,17 +13,16 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public class MinecraftProvided implements GameProvided {
 
-    private static final EntrypointTransformer TRANSFORMER = new EntrypointTransformer(it -> Arrays.asList(
-        new EntrypointPatchHook(it),
-        new EntrypointPatchBranding(it),
-        new EntrypointPatchFML125(it)
-    ));
+    private static final EntryPointTransformed TRANSFORMER = new EntryPointTransformerBasic(
+        new ListOf<>(
+
+        )
+    );
 
     @NotNull
     private final String entryPoint;
@@ -130,7 +127,11 @@ public class MinecraftProvided implements GameProvided {
     @NotNull
     @Override
     public byte[] transform(@NotNull String name) {
-        return TRANSFORMER.transform(name) == null ? new byte[0] : TRANSFORMER.transform(name);
+        final byte[] transformed = TRANSFORMER.transform(name);
+
+        return transformed.length == 0
+            ? new byte[0]
+            : transformed;
     }
 
     @Override
@@ -146,8 +147,8 @@ public class MinecraftProvided implements GameProvided {
 
     @NotNull
     @Override
-    public EntrypointTransformer getEntrypointTransformer() {
-        return null;
+    public EntryPointTransformed getEntrypointTransformer() {
+        return TRANSFORMER;
     }
 
 }
