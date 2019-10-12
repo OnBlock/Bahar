@@ -5,9 +5,6 @@ import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.provided.GameProvided;
-import net.fabricmc.loader.FabricMappingResolver;
-import net.fabricmc.loader.api.MappingResolver;
-import net.fabricmc.loader.launch.common.FabricLauncherBase;
 import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,7 +42,7 @@ public class BaharLoadedBasic implements BaharLoaded {
     public MappingResolved getMappingResolver() {
         if (mappingResolved instanceof MckMappingResolved) {
             mappingResolved = new MappingResolverBasic(
-                launched.getMappingConfiguration()::getMappings,
+                launched.getMappingConfiguration().getMappings(),
                 launched.getTargetNamespace()
             );
         }

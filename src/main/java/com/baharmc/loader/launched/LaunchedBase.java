@@ -97,4 +97,9 @@ public abstract class LaunchedBase implements BaharLaunched {
         return mixinReady;
     }
 
+    @NotNull
+    @Override
+    public String getTargetNamespace() {
+        return "intermediary";
+    }
 }

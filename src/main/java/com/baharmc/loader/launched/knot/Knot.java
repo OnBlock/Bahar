@@ -9,7 +9,6 @@ import com.baharmc.loader.provided.GameProviderHelped;
 import com.baharmc.loader.provided.MinecraftProvided;
 import com.baharmc.loader.utils.argument.Arguments;
 import com.baharmc.loader.utils.version.GetVersion;
-import net.fabricmc.loader.FabricLoader;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.launch.MixinBootstrap;
@@ -79,7 +78,7 @@ public final class Knot extends LaunchedBase {
             );
         }
 
-        provided.getEntrypointTransformer().locateEntrypoints(this);
+        //provided.getEntrypointTransformer().locateEntrypoints(this);
 
         Thread.currentThread().setContextClassLoader((ClassLoader) knotClassLoaded);
 

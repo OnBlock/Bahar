@@ -30,4 +30,7 @@ public interface BaharLaunched {
 
     boolean isMixinReady();
 
+    @NotNull
+    String getTargetNamespace();
+
 }

@@ -1,10 +1,22 @@
 package com.baharmc.loader.loaded;
 
+import net.fabricmc.mappings.Mappings;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
 public class MappingResolverBasic implements MappingResolved {
+
+    @NotNull
+    private final Mappings mappings;
+
+    @NotNull
+    private final String targetName;
+
+    public MappingResolverBasic(@NotNull Mappings mappings, @NotNull String targetName) {
+        this.mappings = mappings;
+        this.targetName = targetName;
+    }
 
     @NotNull
     @Override
