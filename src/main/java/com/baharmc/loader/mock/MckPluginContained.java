@@ -12,7 +12,7 @@ public class MckPluginContained implements PluginContained {
     @NotNull
     @Override
     public PluginMetaData getMetaData() {
-        return new PluginMetaData() {};
+        return () -> "";
     }
 
     @NotNull

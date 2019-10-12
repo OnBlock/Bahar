@@ -11,7 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BaharLoaderBasic implements BaharLoaded {
 
@@ -25,6 +27,8 @@ public class BaharLoaderBasic implements BaharLoaded {
     private MappingResolved mappingResolved = new MckMappingResolved();
 
     private final EntryPointStorage entryPointStorage;
+
+    private final Map<String, PluginContained> plugins = new HashMap<>();
 
     static BaharLoaded INSTANCE;
 
@@ -66,8 +70,8 @@ public class BaharLoaderBasic implements BaharLoaded {
 
     @NotNull
     @Override
-    public PluginContained getPluginContained(String id) {
-        return new MckPluginContained();
+    public PluginContained getPluginContained(@NotNull String id) {
+        return plugins.getOrDefault(id, new MckPluginContained());
     }
 
     @NotNull
