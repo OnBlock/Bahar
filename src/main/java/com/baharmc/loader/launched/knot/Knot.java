@@ -25,17 +25,13 @@ public final class Knot extends LaunchedBase {
     @NotNull
     private final List<String> args;
 
-    @NotNull
-    private final File serverJarFile;
-
     public Knot(@NotNull Logger logger, @NotNull List<String> args, @NotNull File serverJarFile) {
-        super(logger);
+        super(logger, serverJarFile);
         this.args = args;
-        this.serverJarFile = serverJarFile;
     }
 
     @Override
-    public void init() {
+    public void start() {
         final List<String> classes = new ListOf<>(
             "net.minecraft.server.MinecraftServer",
             "com.mojang.minecraft.server.MinecraftServer"

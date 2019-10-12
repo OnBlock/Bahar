@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ public interface BaharLaunched {
 
     void propose(@NotNull URL url);
 
-    void init();
+    void start();
 
     @NotNull
     MappingConfiguration getMappingConfiguration();
@@ -32,5 +33,8 @@ public interface BaharLaunched {
 
     @NotNull
     String getTargetNamespace();
+
+    @NotNull
+    Collection<URL> getLoadTimeDependencies();
 
 }
