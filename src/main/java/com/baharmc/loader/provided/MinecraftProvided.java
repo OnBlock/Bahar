@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -132,7 +133,7 @@ public class MinecraftProvided implements GameProvided {
         try {
             Class<?> c = loader.loadClass(entryPoint);
             Method m = c.getMethod("main", String[].class);
-            m.invoke(null, (Object) arguments.toArray());
+            m.invoke(null, new String[] {"--nogui"});
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

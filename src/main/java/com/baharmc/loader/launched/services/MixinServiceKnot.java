@@ -3,7 +3,6 @@ package com.baharmc.loader.launched.services;
 import com.baharmc.loader.launched.BaharLaunched;
 import com.baharmc.loader.launched.knot.Knot;
 import com.google.common.collect.ImmutableList;
-import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.launch.common.FabricLauncherBase;
 import org.spongepowered.asm.lib.ClassReader;
 import org.spongepowered.asm.lib.tree.ClassNode;

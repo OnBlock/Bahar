@@ -1,6 +1,7 @@
 package com.baharmc.loader.launched.knot;
 
 import com.baharmc.loader.launched.LaunchedBase;
+import com.baharmc.loader.launched.common.BaharMixinBootstrap;
 import com.baharmc.loader.loaded.BaharLoaded;
 import com.baharmc.loader.loaded.BaharLoaderBasic;
 import com.baharmc.loader.mock.MckGameProvided;
@@ -92,6 +93,10 @@ public final class Knot extends LaunchedBase {
         baharLoaded.load();
         baharLoaded.freeze();
         MixinBootstrap.init();
+        new BaharMixinBootstrap(baharLoaded).init();
+        doneMixinBootstrapping();
+        loaded.getDelegate().initializeTransformers();
+        provided.launch(getTargetClassLoader());
     }
 
     @Override
