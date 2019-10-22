@@ -126,14 +126,14 @@ public class BaharLoaderBasic implements BaharLoaded {
     private void postprocessPluginMetadata() {
         for (PluginContained pluginContained : plugins.values()) {
             if (!(pluginContained.getMetadata().getVersion() instanceof SemanticVersion)) {
-                launched.getLogger().warning("Plugin `" +
+                launched.getLogger().warn("Plugin `" +
                     pluginContained.getMetadata().getId() +
                     "` (" +
                     pluginContained.getMetadata().getVersion().getFriendlyString() +
                     ") does not respect SemVer - comparison support is limited."
                 );
             } else if (((SemanticVersion) pluginContained.getMetadata().getVersion()).getVersionComponentCount() >= 4) {
-                launched.getLogger().warning("Plugin `" +
+                launched.getLogger().warn("Plugin `" +
                     pluginContained.getMetadata().getId() +
                     "` (" +
                     pluginContained.getMetadata().getVersion().getFriendlyString() +

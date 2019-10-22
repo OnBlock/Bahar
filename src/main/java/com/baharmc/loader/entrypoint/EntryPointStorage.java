@@ -8,7 +8,6 @@ import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.logging.Level;
 
 public final class EntryPointStorage {
 
@@ -37,7 +36,7 @@ public final class EntryPointStorage {
             );
         }
 
-        launched.getLogger().fine(
+        launched.getLogger().debug(
             "Registering new-style initializer " +
                 metadata.getValue() +
                 " for plugin " +
@@ -59,8 +58,7 @@ public final class EntryPointStorage {
                 results.add(result);
             } catch (Exception e) {
                 hadException = true;
-                launched.getLogger().log(
-                    Level.SEVERE,
+                launched.getLogger().fatal(
                     "Exception occured while getting '" + key + "' entry points @ " + entry,
                     e
                 );

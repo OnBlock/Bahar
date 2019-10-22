@@ -7,6 +7,7 @@ import net.fabricmc.loom.util.TinyRemapperMappingsHelper;
 import net.fabricmc.mappings.Mappings;
 import net.fabricmc.tinyremapper.OutputConsumerPath;
 import net.fabricmc.tinyremapper.TinyRemapper;
+import org.apache.logging.log4j.Logger;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.collection.Filtered;
 import org.cactoos.collection.Mapped;
@@ -23,8 +24,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.jar.JarFile;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class LaunchedBase implements BaharLaunched {
 
@@ -46,7 +45,10 @@ public abstract class LaunchedBase implements BaharLaunched {
 
     private boolean emittedInfo = false;
 
+    static BaharLaunched INSTANCE;
+
     public LaunchedBase(@NotNull Logger logger, @NotNull File serverJarFile) {
+        INSTANCE = this;
         this.logger = logger;
         this.serverJarFile = serverJarFile;
         this.mappingConfiguration = new MappingConfiguration(this);
@@ -56,7 +58,7 @@ public abstract class LaunchedBase implements BaharLaunched {
     public void deobfuscate(@NotNull String gameId, @NotNull String gameVersion, @NotNull Path gameDirectory, @NotNull Path jarFile) {
         Path resultJarFile = jarFile;
 
-        logger.fine("Requesting deobfuscation of " + jarFile.getFileName());
+        logger.debug("Requesting deobfuscation of " + jarFile.getFileName());
 
         final Mappings mappings = mappingConfiguration.getMappings();
         final String targetNameSpace = MappingConfiguration.TARGET_NAMESPACE;
@@ -75,7 +77,7 @@ public abstract class LaunchedBase implements BaharLaunched {
             return;
         }
 
-        logger.fine("Bahar mapping file detected, applying...");
+        logger.debug("Bahar mapping file detected, applying...");
 
         try {
             if (!Files.exists(jarFile)) {
@@ -98,7 +100,7 @@ public abstract class LaunchedBase implements BaharLaunched {
             Path deobfJarFileTmp = deobfJarDir.resolve(deobfJarFilename + ".tmp");
 
             if (Files.exists(deobfJarFileTmp)) {
-                logger.warning(
+                logger.warn(
                     "Incomplete remapped file found!" +
                         " This means that the remapping process failed on the previous launch. " +
                         "If this persists, make sure to let us at Bahar know!"
@@ -147,7 +149,7 @@ public abstract class LaunchedBase implements BaharLaunched {
                         .build()
                     ) {
                         for (Path path : depPaths) {
-                            logger.fine("Appending '" + path + "' to remapper classpath");
+                            logger.debug("Appending '" + path + "' to remapper classpath");
                             remapper.readClassPath(path);
                         }
                         remapper.readInputs(jarFile);
@@ -176,7 +178,7 @@ public abstract class LaunchedBase implements BaharLaunched {
                     }
 
                     if (!found) {
-                        logger.severe("Generated deobfuscated JAR contains no classes! Trying again...");
+                        logger.fatal("Generated deobfuscated JAR contains no classes! Trying again...");
                         Files.delete(deobfJarFileTmp);
                     } else {
                         Files.move(deobfJarFileTmp, deobfJarFile);
@@ -267,7 +269,7 @@ public abstract class LaunchedBase implements BaharLaunched {
                             try {
                                 return (UrlUtil.asUrl(file));
                             } catch (UrlConversionException e) {
-                                logger.log(Level.FINE, "", e);
+                                logger.debug(e);
                                 return null;
                             }
                         } else {

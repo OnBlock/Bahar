@@ -44,7 +44,7 @@ public class EntryPointTransformerBasic implements EntryPointTransformed {
         entryPointsLocated = true;
 
         patches.forEach(e -> e.process(launched, this::addPatchedClass));
-        launched.getLogger().fine("[EntrypointTransformerBasic] Patched " +
+        launched.getLogger().debug("[EntrypointTransformerBasic] Patched " +
             (patchedClasses.size() == 1
                 ? "1 class."
                 : patchedClasses.size() + " classes.")

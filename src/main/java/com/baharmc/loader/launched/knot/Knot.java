@@ -10,6 +10,7 @@ import com.baharmc.loader.provided.GameProviderHelped;
 import com.baharmc.loader.provided.MinecraftProvided;
 import com.baharmc.loader.utils.argument.Arguments;
 import com.baharmc.loader.utils.version.GetVersion;
+import org.apache.logging.log4j.LogManager;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.launch.MixinBootstrap;
@@ -20,7 +21,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public final class Knot extends LaunchedBase {
 
@@ -31,10 +31,10 @@ public final class Knot extends LaunchedBase {
     private GameProvided provided = new MckGameProvided();
 
     @NotNull
-    private KnotClassLoaded loaded = new KnotCompatibilityClassLoader(this, provided);
+    private KnotClassLoaded loaded = new KnotClassLoader(this, provided);
 
-    public Knot(@NotNull Logger logger, @NotNull List<String> args, @NotNull File serverJarFile) {
-        super(logger, serverJarFile);
+    public Knot(@NotNull List<String> args, @NotNull File serverJarFile) {
+        super(LogManager.getFormatterLogger("Bahar"), serverJarFile);
         this.args = args;
     }
 
@@ -73,7 +73,7 @@ public final class Knot extends LaunchedBase {
 
         getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
 
-        loaded = new KnotCompatibilityClassLoader(this, provided);
+        loaded = new KnotClassLoader(this, provided);
 
         for (Path path : provided.getGameContextJars()) {
             deobfuscate(
@@ -96,7 +96,7 @@ public final class Knot extends LaunchedBase {
 
     @Override
     public void propose(@NotNull URL url) {
-        getLogger().fine("[Knot] Proposed " + url + " to classpath.");
+        getLogger().debug("[Knot] Proposed " + url + " to classpath.");
         loaded.addURL(url);
     }
 
@@ -110,5 +110,11 @@ public final class Knot extends LaunchedBase {
     @Override
     public String getEntryPoint() {
         return provided.getEntryPoint();
+    }
+
+    @NotNull
+    @Override
+    public ClassLoader getTargetClassLoader() {
+        return (ClassLoader) loaded;
     }
 }

@@ -40,7 +40,7 @@ public final class MappingConfiguration {
         try {
             long time = System.currentTimeMillis();
             mappings = MappingsProvider.readTinyMappings(mappingStream);
-            baharLaunched.getLogger().fine("Loading mappings took " + (System.currentTimeMillis() - time) + " ms");
+            baharLaunched.getLogger().debug("Loading mappings took " + (System.currentTimeMillis() - time) + " ms");
         } catch (Exception exception) {
             exception.printStackTrace();
         }

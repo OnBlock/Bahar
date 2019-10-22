@@ -50,7 +50,7 @@ public final class GetVersion implements Scalar<McVersion> {
                 mcVersion = new McVersion("", "");
             }
 
-            if (mcVersion.getRaw().isEmpty() && mcVersion.getNormalized().isEmpty()) {
+            if (!mcVersion.getRaw().isEmpty() && !mcVersion.getNormalized().isEmpty()) {
                 return mcVersion;
             }
         } catch (IOException e) {

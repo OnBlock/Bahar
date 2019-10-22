@@ -11,7 +11,7 @@ public interface BaharLoaded {
 
     static BaharLoaded getInstance() {
         if (BaharLoaderBasic.INSTANCE == null) {
-            throw new RuntimeException("Accessed FabricLoader too early!");
+            throw new RuntimeException("Accessed BaharLoaded too early!");
         }
 
         return BaharLoaderBasic.INSTANCE;
