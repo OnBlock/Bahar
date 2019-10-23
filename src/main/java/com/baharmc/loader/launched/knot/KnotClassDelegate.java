@@ -68,36 +68,6 @@ public final class KnotClassDelegate {
         return mixinTransformer;
     }
 
-    public byte[] loadClassData(@NotNull String name) {
-        if (!transformInitialized) {
-            try {
-                return getClassByteArray(name, true);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to load class file for '" + name + "'!", e);
-            }
-        }
-
-        if (!name.startsWith("org.apache.logging.log4j")) {
-            byte[] input = gameProvided.transform(name);
-
-            if (input.length == 0) {
-                try {
-                    input = getClassByteArray(name, true);
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to load class file for '" + name + "'!", e);
-                }
-            }
-
-            if (input.length != 0) {
-                byte[] b = new BaharTransformed(launched, gameProvided, name, input).transform(input);
-                b = getMixinTransformer().transformClassBytes(name, name, b);
-                return b;
-            }
-        }
-
-        return getMixinTransformer().transformClassBytes(name, name, null);
-    }
-
     Metadata getMetadata(@NotNull String name, @NotNull URL resourceURL) {
         URL codeSourceURL = null;
         String filename = name.replace('.', '/') + ".class";
@@ -147,6 +117,36 @@ public final class KnotClassDelegate {
         }
 
         return Metadata.EMPTY;
+    }
+
+    public byte[] loadClassData(@NotNull String name) {
+        if (!transformInitialized) {
+            try {
+                return getClassByteArray(name, true);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to load class file for '" + name + "'!", e);
+            }
+        }
+
+        if (!name.startsWith("org.apache.logging.log4j")) {
+            byte[] input = gameProvided.getEntryPointTransformed().transform(name);
+
+            if (input.length == 0) {
+                try {
+                    input = getClassByteArray(name, true);
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to load class file for '" + name + "'!", e);
+                }
+            }
+
+            if (input.length != 0) {
+                byte[] b = new BaharTransformed(launched, gameProvided, name, input).transform(input);
+                b = getMixinTransformer().transformClassBytes(name, name, b);
+                return b;
+            }
+        }
+
+        return getMixinTransformer().transformClassBytes(name, name, null);
     }
 
     String getClassFileName(String name) {

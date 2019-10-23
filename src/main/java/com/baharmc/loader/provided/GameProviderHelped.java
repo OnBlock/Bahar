@@ -6,7 +6,6 @@ import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -47,22 +46,18 @@ public final class GameProviderHelped {
             while (urls.hasMoreElements()) {
                 final URL url = urls.nextElement();
 
-                try {
-                    final URL urlSource = UrlUtil.getSource(fileName, url);
-                    paths.add(UrlUtil.asPath(urlSource));
-                } catch (UrlConversionException e) {
-                    e.printStackTrace();
-                }
+                final URL urlSource = UrlUtil.getSource(fileName, url);
+                paths.add(UrlUtil.asPath(urlSource));
             }
 
             return paths;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new ListOf<>();
         }
     }
 
-    public Optional<EntrypointResult> findFirstClass(@NotNull List<String> classNames) {
+    public Optional<EntryPointResult> findFirstClass(@NotNull List<String> classNames) {
         final List<String> entryPointFilenames = new Mapped<>(
             className -> className.replace('.', '/') + ".class",
             classNames
@@ -72,7 +67,7 @@ public final class GameProviderHelped {
             final Optional<Path> classSourcePath = getSource(entryPointFilenames.get(i));
 
             if (classSourcePath.isPresent()) {
-                return Optional.of(new EntrypointResult(classNames.get(i), classSourcePath.get()));
+                return Optional.of(new EntryPointResult(classNames.get(i), classSourcePath.get()));
             }
         }
 

@@ -85,8 +85,15 @@ class KnotClassLoader extends SecureClassLoader implements KnotClassLoaded {
 
 			@Override
 			public boolean hasMoreElements() {
-				return (current != null && current.hasMoreElements()) ||
-					(current == first && second.hasMoreElements());
+				if (current == null) {
+					return false;
+				}
+
+				if (current.hasMoreElements()) {
+					return true;
+				}
+
+				return current == first && second.hasMoreElements();
 			}
 
 			@Override

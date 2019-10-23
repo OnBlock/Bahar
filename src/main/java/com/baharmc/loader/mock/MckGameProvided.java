@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 
 public class MckGameProvided implements GameProvided {
 
@@ -49,13 +48,7 @@ public class MckGameProvided implements GameProvided {
 
     @NotNull
     @Override
-    public Path getLaunchDirectory() {
-        throw new UnsupportedOperationException();
-    }
-
-    @NotNull
-    @Override
-    public List<Path> getGameContextJars() {
+    public Path getGameContextJars() {
         throw new UnsupportedOperationException();
     }
 

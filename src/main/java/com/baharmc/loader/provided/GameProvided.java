@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 
 public interface GameProvided {
 
@@ -28,10 +27,7 @@ public interface GameProvided {
 	String getEntryPoint();
 
 	@NotNull
-	Path getLaunchDirectory();
-
-	@NotNull
-	List<Path> getGameContextJars();
+	Path getGameContextJars();
 
 	@NotNull
 	byte[] transform(@NotNull String name);

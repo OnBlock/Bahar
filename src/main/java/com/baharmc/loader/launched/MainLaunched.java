@@ -40,7 +40,7 @@ public class MainLaunched {
 
         final ClassLoader newClassLoader = new InjectingURLClassLoader(
             new URL[]{
-                MainLaunched.class.getProtectionDomain().getCodeSource().getLocation(),
+                getClass().getProtectionDomain().getCodeSource().getLocation(),
                 UrlUtil.asUrl(serverJar)
             },
             parentLoader,
@@ -51,8 +51,8 @@ public class MainLaunched {
 
         try {
             final Object object = newClassLoader.loadClass("com.baharmc.loader.launched.knot.Knot")
-                .getConstructor(List.class, File.class)
-                .newInstance(args, serverJar);
+                .getConstructor(File.class)
+                .newInstance(serverJar);
             object.getClass()
                 .getMethod("start")
                 .invoke(object);

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class EntryPointTransformerBasic implements EntryPointTransformed {
 
-    public final Logger logger = Logger.getLogger("BaharServer|EntryPointTransformed");
+    public final Logger logger = Logger.getLogger("Bahar|EntryPointTransformed");
 
     @NotNull
     private final List<EntryPointPatch> patches;
@@ -44,7 +44,7 @@ public class EntryPointTransformerBasic implements EntryPointTransformed {
         entryPointsLocated = true;
 
         patches.forEach(e -> e.process(launched, this::addPatchedClass));
-        launched.getLogger().debug("[EntrypointTransformerBasic] Patched " +
+        launched.getLogger().debug("[EntryPointTransformerBasic] Patched " +
             (patchedClasses.size() == 1
                 ? "1 class."
                 : patchedClasses.size() + " classes.")

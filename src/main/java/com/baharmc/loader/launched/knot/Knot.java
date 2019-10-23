@@ -5,11 +5,10 @@ import com.baharmc.loader.launched.common.BaharMixinBootstrap;
 import com.baharmc.loader.loaded.BaharLoaded;
 import com.baharmc.loader.loaded.BaharLoaderBasic;
 import com.baharmc.loader.mock.MckGameProvided;
-import com.baharmc.loader.provided.EntrypointResult;
+import com.baharmc.loader.provided.EntryPointResult;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.provided.GameProviderHelped;
 import com.baharmc.loader.provided.MinecraftProvided;
-import com.baharmc.loader.utils.argument.Arguments;
 import com.baharmc.loader.utils.version.GetVersion;
 import org.apache.logging.log4j.LogManager;
 import org.cactoos.list.ListOf;
@@ -26,17 +25,13 @@ import java.util.Optional;
 public final class Knot extends LaunchedBase {
 
     @NotNull
-    private final List<String> args;
-
-    @NotNull
     private GameProvided provided = new MckGameProvided();
 
     @NotNull
     private KnotClassLoaded loaded = new KnotClassLoader(this, provided);
 
-    public Knot(@NotNull List<String> args, @NotNull File serverJarFile) {
+    public Knot(@NotNull File serverJarFile) {
         super(LogManager.getFormatterLogger("Bahar"), serverJarFile);
-        this.args = args;
     }
 
     @Override
@@ -50,26 +45,20 @@ public final class Knot extends LaunchedBase {
             "com.mojang.minecraft.server.MinecraftServer"
         );
         final GameProviderHelped helped = new GameProviderHelped(getClass().getClassLoader());
-        final Optional<EntrypointResult> optionalEntrypointResult = helped.findFirstClass(classes);
+        final Optional<EntryPointResult> optionalEntryPointResult = helped.findFirstClass(classes);
 
-        if (!optionalEntrypointResult.isPresent()) {
+        if (!optionalEntryPointResult.isPresent()) {
             return;
         }
 
-        final EntrypointResult entrypointResult = optionalEntrypointResult.get();
-        final Arguments arguments = new Arguments(args);
-
-        arguments.remove("version");
-        arguments.remove("gameDir");
-        arguments.remove("assetsDir");
+        final EntryPointResult entrypointResult = optionalEntryPointResult.get();
 
         provided = new MinecraftProvided(
-            entrypointResult.getEntrypointName(),
+            entrypointResult.getEntryPointName(),
             new GetVersion(
-                entrypointResult.getEntrypointPath()
+                entrypointResult.getEntryPointPath()
             ).value(),
-            arguments,
-            entrypointResult.getEntrypointPath()
+            entrypointResult.getEntryPointPath()
         );
 
         getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
@@ -80,13 +69,12 @@ public final class Knot extends LaunchedBase {
             deobfuscate(
                 provided.getGameId(),
                 provided.getNormalizedGameVersion(),
-                provided.getLaunchDirectory(),
                 path
             );
         }
 
         provided.getEntryPointTransformed().locateEntryPoints(this);
-        Thread.currentThread().setContextClassLoader((ClassLoader) loaded);
+        Thread.currentThread().setContextClassLoader(getTargetClassLoader());
 
         final BaharLoaded baharLoaded = new BaharLoaderBasic(this, provided);
 

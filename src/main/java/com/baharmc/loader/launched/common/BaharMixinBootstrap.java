@@ -3,8 +3,6 @@ package com.baharmc.loader.launched.common;
 import com.baharmc.loader.loaded.BaharLoaded;
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginContained;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.list.Joined;
@@ -18,8 +16,6 @@ import org.spongepowered.asm.mixin.Mixins;
 import java.util.Set;
 
 public final class BaharMixinBootstrap {
-
-	private static final Logger LOGGER = LogManager.getFormatterLogger("Bahar|MixinBootstrap");
 
 	private boolean initialized = false;
 

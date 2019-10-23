@@ -4,7 +4,6 @@ import com.baharmc.loader.entrypoint.patch.EntryPointPatchHook;
 import com.baharmc.loader.plugin.PluginMetaDataBasic;
 import com.baharmc.loader.transformed.EntryPointTransformed;
 import com.baharmc.loader.transformed.EntryPointTransformerBasic;
-import com.baharmc.loader.utils.argument.Arguments;
 import com.baharmc.loader.utils.semanticversion.VersionDeserializer;
 import com.baharmc.loader.utils.version.McVersion;
 import org.cactoos.list.ListOf;
@@ -14,9 +13,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class MinecraftProvided implements GameProvided {
 
@@ -33,15 +30,11 @@ public class MinecraftProvided implements GameProvided {
     private final McVersion mcVersion;
 
     @NotNull
-    private final Arguments arguments;
-
-    @NotNull
     private final Path gameJar;
 
-    public MinecraftProvided(@NotNull String entryPoint, @NotNull McVersion mcVersion, @NotNull Arguments arguments, @NotNull Path gameJar) {
+    public MinecraftProvided(@NotNull String entryPoint, @NotNull McVersion mcVersion, @NotNull Path gameJar) {
         this.entryPoint = entryPoint;
         this.mcVersion = mcVersion;
-        this.arguments = arguments;
         this.gameJar = gameJar;
     }
 
@@ -108,14 +101,8 @@ public class MinecraftProvided implements GameProvided {
 
     @NotNull
     @Override
-    public Path getLaunchDirectory() {
-        return arguments.getAsFile("gameDir").toPath();
-    }
-
-    @NotNull
-    @Override
-    public List<Path> getGameContextJars() {
-        return new ListOf<>(gameJar);
+    public Path getGameContextJars() {
+        return gameJar;
     }
 
     @NotNull
@@ -133,7 +120,7 @@ public class MinecraftProvided implements GameProvided {
         try {
             Class<?> c = loader.loadClass(entryPoint);
             Method m = c.getMethod("main", String[].class);
-            m.invoke(null, new String[] {"--nogui"});
+            m.invoke(null, (Object) new String[] {"--nogui"});
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

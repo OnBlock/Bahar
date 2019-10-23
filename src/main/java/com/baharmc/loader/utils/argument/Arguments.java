@@ -24,15 +24,6 @@ public final class Arguments {
         this(new ArgumentParsed(arguments));
     }
 
-    @NotNull
-    public String[] toArray() {
-        try {
-            return new ArgumentArrayed(scalar.value().getKey(), scalar.value().getValue()).value();
-        } catch (Exception e) {
-            return new String[0];
-        }
-    }
-
     public void remove(@NotNull String key) {
         try {
             scalar.value().getKey().remove(key);

@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
 
-public class InjectingURLClassLoader extends URLClassLoader {
+public final class InjectingURLClassLoader extends URLClassLoader {
 
 	private final List<String> exclusions;
 

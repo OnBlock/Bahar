@@ -20,8 +20,7 @@ public interface BaharLaunched {
         return LaunchedBase.INSTANCE;
     }
 
-    void deobfuscate(@NotNull String gameId, @NotNull String gameVersion, @NotNull Path gameDirectory,
-                     @NotNull Path jarFile);
+    void deobfuscate(@NotNull String gameId, @NotNull String gameVersion, @NotNull Path jarFile);
 
     void doneMixinBootstrapping();
 
