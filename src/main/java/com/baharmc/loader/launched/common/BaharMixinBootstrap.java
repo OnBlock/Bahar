@@ -8,6 +8,7 @@ import org.cactoos.iterable.Filtered;
 import org.cactoos.list.Joined;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
+import org.cactoos.scalar.And;
 import org.cactoos.set.SetOf;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.launch.MixinBootstrap;
@@ -26,41 +27,41 @@ public final class BaharMixinBootstrap {
 		this.loaded = loaded;
 	}
 
-	public void addConfiguration(@NotNull String configuration) {
-		Mixins.addConfiguration(configuration);
-	}
-
-	public Set<String> getMixinConfigs() {
-		return new SetOf<>(
-			new Filtered<>(
-				s -> !s.isEmpty(),
-				new Joined<>(
-					new Mapped<>(
-						metaData -> new ListOf<>(
-							((LoadedPluginMetaData)metaData).getMixinConfigs()
-						),
-						new CollectionOf<>(
-							new Filtered<>(
-								m -> m instanceof LoadedPluginMetaData,
-								new Mapped<>(
-									PluginContained::getMetadata,
-									loaded.getAllPlugins()
-								)
-							)
-						)
-					)
-				)
-			)
-		);
-	}
-
 	public void init() {
 		if (initialized) {
 			throw new RuntimeException("BaharMixinBootstrap has already been initialized!");
 		}
 
 		MixinBootstrap.init();
-		getMixinConfigs().forEach(this::addConfiguration);
+		try {
+			new And(
+				Mixins::addConfiguration,
+				new SetOf<>(
+					new Filtered<>(
+						s -> !s.isEmpty(),
+						new Joined<>(
+							new Mapped<>(
+								metaData -> new ListOf<>(
+									((LoadedPluginMetaData)metaData).getMixinConfigs()
+								),
+								new CollectionOf<>(
+									new Filtered<>(
+										m -> m instanceof LoadedPluginMetaData,
+										new Mapped<>(
+											PluginContained::getMetadata,
+											loaded.getAllPlugins()
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			).value();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		initialized = true;
 	}
+
 }
