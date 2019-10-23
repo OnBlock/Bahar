@@ -36,7 +36,7 @@ public class MckGameProvided implements GameProvided {
 
     @NotNull
     @Override
-    public Collection<BuiltinPlugin> getBuiltinMods() {
+    public Collection<BuiltinPlugin> getBuiltinPlugins() {
         throw new UnsupportedOperationException();
     }
 

@@ -2,7 +2,7 @@ package com.baharmc.runtime;
 
 import com.baharmc.api.plugin.Plugin;
 
-public class Runtime implements Plugin {
+public final class Runtime implements Plugin {
 
     @Override
     public void load() {

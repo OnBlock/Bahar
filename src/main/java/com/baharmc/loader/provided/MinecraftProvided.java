@@ -64,7 +64,7 @@ public class MinecraftProvided implements GameProvided {
 
     @NotNull
     @Override
-    public Collection<BuiltinPlugin> getBuiltinMods() {
+    public Collection<BuiltinPlugin> getBuiltinPlugins() {
         URL url;
 
         try {

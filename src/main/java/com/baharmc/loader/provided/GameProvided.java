@@ -21,7 +21,7 @@ public interface GameProvided {
 	String getNormalizedGameVersion();
 
 	@NotNull
-	Collection<BuiltinPlugin> getBuiltinMods();
+	Collection<BuiltinPlugin> getBuiltinPlugins();
 
 	@NotNull
 	String getEntryPoint();
