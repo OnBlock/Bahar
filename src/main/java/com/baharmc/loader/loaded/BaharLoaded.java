@@ -17,7 +17,11 @@ public interface BaharLoaded {
         return BaharLoaderBasic.INSTANCE;
     }
 
-    void load();
+    void loadPlugins();
+
+    void enablePlugins();
+
+    void disablePlugins();
 
     void freeze();
 

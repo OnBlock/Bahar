@@ -43,7 +43,17 @@ public class BaharLoaderBasic implements BaharLoaded {
     }
 
     @Override
-    public void load() {
+    public void loadPlugins() {
+
+    }
+
+    @Override
+    public void enablePlugins() {
+
+    }
+
+    @Override
+    public void disablePlugins() {
 
     }
 

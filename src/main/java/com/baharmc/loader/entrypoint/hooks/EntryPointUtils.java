@@ -1,6 +1,7 @@
 package com.baharmc.loader.entrypoint.hooks;
 
 import com.baharmc.loader.launched.BaharLaunched;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,21 +13,21 @@ final class EntryPointUtils {
 	private EntryPointUtils() {
 	}
 
-	static <T> void logErrors(String name, Collection<T> entrypoints, Consumer<T> entrypointConsumer) {
+	static <T> void logErrors(@NotNull String name, @NotNull Collection<T> entryPoints, @NotNull Consumer<T> entryPointConsumer) {
 		List<Throwable> errors = new ArrayList<>();
 
-		BaharLaunched.getInstance().getLogger().debug("Iterating over entrypoint '" + name + "'");
+		BaharLaunched.getInstance().getLogger().debug("Iterating over entry point '" + name + "'");
 
-		entrypoints.forEach(e -> {
+		entryPoints.forEach(e -> {
 			try {
-				entrypointConsumer.accept(e);
+				entryPointConsumer.accept(e);
 			} catch (Throwable t) {
 				errors.add(t);
 			}
 		});
 
 		if (!errors.isEmpty()) {
-			final RuntimeException exception = new RuntimeException("Could not execute entrypoint stage '" + name + "' due to errors!");
+			final RuntimeException exception = new RuntimeException("Could not execute entry point stage '" + name + "' due to errors!");
 
 			for (Throwable t : errors) {
 				exception.addSuppressed(t);
