@@ -1,12 +1,12 @@
 package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.common.MappingConfiguration;
+import com.baharmc.loader.provided.GameProvided;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public interface BaharLaunched {
         return LaunchedBase.INSTANCE;
     }
 
-    void deobfuscate(@NotNull String gameId, @NotNull String gameVersion, @NotNull Path jarFile);
+    void deobfuscate(@NotNull GameProvided provided);
 
     void doneMixinBootstrapping();
 

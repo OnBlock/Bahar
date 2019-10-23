@@ -140,7 +140,7 @@ public final class KnotClassDelegate {
             }
 
             if (input.length != 0) {
-                byte[] b = new BaharTransformed(launched, gameProvided, name, input).transform(input);
+                byte[] b = new BaharTransformed(gameProvided, name).transform(input);
                 b = getMixinTransformer().transformClassBytes(name, name, b);
                 return b;
             }

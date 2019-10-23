@@ -1,6 +1,7 @@
 package com.baharmc.loader.launched;
 
 import com.baharmc.loader.launched.common.MappingConfiguration;
+import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.utils.UrlConversionException;
 import com.baharmc.loader.utils.UrlUtil;
 import net.fabricmc.mappings.Mappings;
@@ -38,8 +39,6 @@ public abstract class LaunchedBase implements BaharLaunched {
 
     private Path minecraftJar = null;
 
-    private boolean emittedInfo = false;
-
     static BaharLaunched INSTANCE;
 
     public LaunchedBase(@NotNull Logger logger, @NotNull File serverJarFile) {
@@ -50,10 +49,10 @@ public abstract class LaunchedBase implements BaharLaunched {
     }
 
     @Override
-    public void deobfuscate(@NotNull String gameId, @NotNull String gameVersion, @NotNull Path jarFile) {
-        Path resultJarFile = jarFile;
+    public void deobfuscate(@NotNull GameProvided provided) {
+        final Path resultJarFile = provided.getGameContextJars();
 
-        logger.debug("Requesting deobfuscation of " + jarFile.getFileName());
+        logger.debug("Requesting deobfuscation of " + resultJarFile.getFileName());
 
         final Mappings mappings = mappingConfiguration.getMappings();
         final String targetNameSpace = MappingConfiguration.TARGET_NAMESPACE;
@@ -63,7 +62,7 @@ public abstract class LaunchedBase implements BaharLaunched {
         }
 
         try {
-            propose(UrlUtil.asUrl(jarFile));
+            propose(UrlUtil.asUrl(resultJarFile));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

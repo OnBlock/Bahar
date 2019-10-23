@@ -18,7 +18,6 @@ import org.spongepowered.asm.launch.MixinBootstrap;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,13 +64,7 @@ public final class Knot extends LaunchedBase {
 
         loaded = new KnotClassLoader(this, provided);
 
-        for (Path path : provided.getGameContextJars()) {
-            deobfuscate(
-                provided.getGameId(),
-                provided.getNormalizedGameVersion(),
-                path
-            );
-        }
+        deobfuscate(provided);
 
         provided.getEntryPointTransformed().locateEntryPoints(this);
         Thread.currentThread().setContextClassLoader(getTargetClassLoader());
