@@ -81,7 +81,7 @@ public final class KnotClassDelegate {
         if (codeSourceURL != null) {
             return metadataCache.computeIfAbsent(codeSourceURL.toString(), (codeSourceStr) -> {
                 Manifest manifest = null;
-                CodeSource codeSource = null;
+                CodeSource codeSource;
                 Certificate[] certificates = null;
                 URL fCodeSourceUrl = null;
 

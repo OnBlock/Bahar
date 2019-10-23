@@ -1,6 +1,6 @@
 package com.baharmc.loader.entrypoint.hooks;
 
-import net.fabricmc.loader.FabricLoader;
+import com.baharmc.loader.launched.BaharLaunched;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +15,7 @@ final class EntryPointUtils {
 	static <T> void logErrors(String name, Collection<T> entrypoints, Consumer<T> entrypointConsumer) {
 		List<Throwable> errors = new ArrayList<>();
 
-		FabricLoader.INSTANCE.getLogger().debug("Iterating over entrypoint '" + name + "'");
+		BaharLaunched.getInstance().getLogger().debug("Iterating over entrypoint '" + name + "'");
 
 		entrypoints.forEach(e -> {
 			try {

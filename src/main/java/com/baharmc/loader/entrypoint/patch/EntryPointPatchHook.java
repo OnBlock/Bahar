@@ -125,7 +125,7 @@ public final class EntryPointPatchHook extends EntryPointPatch {
         it.add(new VarInsnNode(Opcodes.ALOAD, 0));
         it.add(new MethodInsnNode(
             Opcodes.INVOKESTATIC,
-            "com/baharmc/loader/entrypoint/hooks/EntryPointServer.java",
+            "com/baharmc/loader/entrypoint/hooks/EntryPointServer",
             "start",
             "(Ljava/io/File;Ljava/lang/Object;)V",
             false)
