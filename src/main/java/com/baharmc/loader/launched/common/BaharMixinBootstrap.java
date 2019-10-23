@@ -14,8 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
 
-import java.util.Set;
-
 public final class BaharMixinBootstrap {
 
 	private boolean initialized = false;

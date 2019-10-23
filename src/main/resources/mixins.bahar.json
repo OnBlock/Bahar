@@ -7,9 +7,9 @@
   },
   "minVersion": "0.7.11",
   "server": [
+    "MinecraftDedicatedServerMixin",
     "MinecraftServerBranded",
-    "ServerCommandOutputMixin",
     "MinecraftServerMixin",
-    "MinecraftDedicatedServerMixin"
+    "ServerCommandOutputMixin"
   ]
 }
