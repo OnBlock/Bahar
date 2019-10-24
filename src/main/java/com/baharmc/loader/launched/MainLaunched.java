@@ -99,7 +99,7 @@ public class MainLaunched {
              final FileOutputStream fileOS = new FileOutputStream(directory + File.separator + "server.jar");
              final ProgressBar progressBar = new ProgressBar(
                  "Downloading...", getFileSize(url) / 1024, 100,
-                 System.err, ProgressBarStyle.ASCII, "kb", 10, true, new DecimalFormat())
+                 System.err, ProgressBarStyle.ASCII, "mb", 1024, true, new DecimalFormat())
         ) {
             while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
                 fileOS.write(data, 0, byteContent);
