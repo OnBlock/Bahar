@@ -3,6 +3,7 @@ package com.baharmc.loader.launched;
 import com.baharmc.loader.utils.UrlUtil;
 import com.baharmc.loader.utils.argument.ArgumentParsed;
 import me.tongfei.progressbar.ProgressBar;
+import me.tongfei.progressbar.ProgressBarStyle;
 import org.cactoos.io.InputOf;
 import org.cactoos.scalar.LengthOf;
 import org.graalvm.compiler.lir.alloc.SaveCalleeSaveRegisters;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -90,13 +92,16 @@ public class MainLaunched {
 
     private void downloadJar(@NotNull String urlString, @NotNull String directory) throws Exception {
         final URL url = new URL(urlString);
-        final BufferedInputStream inputStream = new BufferedInputStream(url.openStream());
-        final FileOutputStream fileOS = new FileOutputStream(directory + File.separator + "server.jar");
-        final byte[] data = new byte[512];
+        final byte[] data = new byte[1024];
         int byteContent;
 
-        try (final ProgressBar progressBar = new ProgressBar("Downloading...", getFileSize(url) / 1024)) {
-            while ((byteContent = inputStream.read(data, 0, 512)) != -1) {
+        try (final BufferedInputStream inputStream = new BufferedInputStream(url.openStream());
+             final FileOutputStream fileOS = new FileOutputStream(directory + File.separator + "server.jar");
+             final ProgressBar progressBar = new ProgressBar(
+                 "Downloading...", getFileSize(url) / 1024, 100,
+                 System.err, ProgressBarStyle.ASCII, "kb", 10, true, new DecimalFormat())
+        ) {
+            while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
                 fileOS.write(data, 0, byteContent);
                 progressBar.step();
             }
