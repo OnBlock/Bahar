@@ -44,7 +44,13 @@ public class MainLaunched {
                 return;
             }
 
-            // TODO download the jar to .bahar/server.jar path.
+            final File directory = new File(".bahar");
+
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            return;
         }
 
         final ClassLoader newClassLoader = new InjectingURLClassLoader(
