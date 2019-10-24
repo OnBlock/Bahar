@@ -3,7 +3,6 @@ package com.baharmc.loader.loaded;
 import com.baharmc.loader.plugin.PluginContained;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,14 +37,5 @@ public interface BaharLoaded {
     Collection<PluginContained> getAllPlugins();
 
     boolean isPluginLoaded(String id);
-
-    @NotNull
-    Object getGameInstance();
-
-    @NotNull
-    File getGameDirectory();
-
-    @NotNull
-    File getConfigDirectory();
 
 }

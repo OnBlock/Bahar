@@ -1,8 +1,6 @@
 package com.baharmc.loader.launched.knot;
 
 import com.baharmc.loader.launched.LaunchedBase;
-import com.baharmc.loader.launched.common.BaharMixinBootstrap;
-import com.baharmc.loader.loaded.BaharLoaded;
 import com.baharmc.loader.loaded.BaharLoaderBasic;
 import com.baharmc.loader.mock.MckGameProvided;
 import com.baharmc.loader.provided.EntryPointResult;
@@ -13,7 +11,6 @@ import com.baharmc.loader.utils.version.GetVersion;
 import org.apache.logging.log4j.LogManager;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,8 +40,9 @@ public final class Knot extends LaunchedBase {
             "net.minecraft.server.MinecraftServer",
             "com.mojang.minecraft.server.MinecraftServer"
         );
-        final GameProviderHelped helped = new GameProviderHelped(getClass().getClassLoader());
-        final Optional<EntryPointResult> optionalEntryPointResult = helped.findFirstClass(classes);
+        final Optional<EntryPointResult> optionalEntryPointResult = new GameProviderHelped(
+            getClass().getClassLoader()
+        ).findFirstClass(classes);
 
         if (!optionalEntryPointResult.isPresent()) {
             return;
@@ -60,23 +58,13 @@ public final class Knot extends LaunchedBase {
             entrypointResult.getEntryPointPath()
         );
 
-        getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
-
         loaded = new KnotClassLoader(this, provided);
 
+        getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
         deobfuscate(provided);
-
         provided.getEntryPointTransformed().locateEntryPoints(this);
         Thread.currentThread().setContextClassLoader(getTargetClassLoader());
-
-        final BaharLoaded baharLoaded = new BaharLoaderBasic(this, provided);
-
-        baharLoaded.loadPlugins();
-        baharLoaded.freeze();
-        MixinBootstrap.init();
-        new BaharMixinBootstrap(baharLoaded).init();
-        doneMixinBootstrapping();
-        loaded.getDelegate().initializeTransformers();
+        new BaharLoaderBasic(this, provided).loadPlugins();
         provided.launch(getTargetClassLoader());
     }
 
@@ -102,5 +90,11 @@ public final class Knot extends LaunchedBase {
     @Override
     public ClassLoader getTargetClassLoader() {
         return (ClassLoader) loaded;
+    }
+
+    @NotNull
+    @Override
+    public KnotClassLoaded getKnotClassLoaded() {
+        return loaded;
     }
 }

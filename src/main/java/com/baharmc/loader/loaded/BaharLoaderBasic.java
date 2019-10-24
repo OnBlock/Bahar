@@ -2,6 +2,7 @@ package com.baharmc.loader.loaded;
 
 import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharMixinBootstrap;
 import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.PluginContained;
@@ -9,8 +10,8 @@ import com.baharmc.loader.provided.GameProvided;
 import net.fabricmc.loader.api.SemanticVersion;
 import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.launch.MixinBootstrap;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,11 @@ public class BaharLoaderBasic implements BaharLoaded {
 
     @Override
     public void loadPlugins() {
-
+        freeze();
+        MixinBootstrap.init();
+        new BaharMixinBootstrap(this).init();
+        launched.doneMixinBootstrapping();
+        launched.getKnotClassLoaded().getDelegate().initializeTransformers();
     }
 
     @Override
@@ -103,24 +108,6 @@ public class BaharLoaderBasic implements BaharLoaded {
     @Override
     public boolean isPluginLoaded(@NotNull String id) {
         return plugins.containsKey(id);
-    }
-
-    @NotNull
-    @Override
-    public Object getGameInstance() {
-        return null;
-    }
-
-    @NotNull
-    @Override
-    public File getGameDirectory() {
-        return null;
-    }
-
-    @NotNull
-    @Override
-    public File getConfigDirectory() {
-        return null;
     }
 
     private void finishPluginLoading() {
