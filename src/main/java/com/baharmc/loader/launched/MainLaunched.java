@@ -2,11 +2,13 @@ package com.baharmc.loader.launched;
 
 import com.baharmc.loader.utils.UrlUtil;
 import com.baharmc.loader.utils.argument.ArgumentParsed;
+import org.graalvm.compiler.lir.alloc.SaveCalleeSaveRegisters;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import java.util.Scanner;
 
 public class MainLaunched {
 
@@ -32,10 +34,17 @@ public class MainLaunched {
         if (!serverJar.exists()) {
             System.err.println("Could not find Minecraft server .JAR (" + serverJarPath + ")!");
             System.err.println();
-            System.err.println("Bahar's server-side launcher expects the server .JAR to be provided.");
-            System.err.println();
-            System.err.println("Without the official Minecraft server .JAR, Bahar Server cannot launch.");
-            throw new RuntimeException("Searched for '" + serverJar.getName() + "' but could not find it.");
+            System.err.println("Do you want to download the server .jar to .bahar directory? (Type Y/N)");
+
+            final Scanner scanner = new Scanner(System.in);
+            final String yesNo = scanner.next();
+
+            if ((yesNo.equalsIgnoreCase("n") || yesNo.equalsIgnoreCase("no")) ||
+                !yesNo.equalsIgnoreCase("y") && !yesNo.equalsIgnoreCase("ye") && !yesNo.equalsIgnoreCase("yes")) {
+                return;
+            }
+
+            // TODO download the jar to .bahar/server.jar path.
         }
 
         final ClassLoader newClassLoader = new InjectingURLClassLoader(
