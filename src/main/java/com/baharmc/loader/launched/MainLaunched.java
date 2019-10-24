@@ -4,9 +4,6 @@ import com.baharmc.loader.utils.UrlUtil;
 import com.baharmc.loader.utils.argument.ArgumentParsed;
 import me.tongfei.progressbar.ProgressBar;
 import me.tongfei.progressbar.ProgressBarStyle;
-import org.cactoos.io.InputOf;
-import org.cactoos.scalar.LengthOf;
-import org.graalvm.compiler.lir.alloc.SaveCalleeSaveRegisters;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedInputStream;
