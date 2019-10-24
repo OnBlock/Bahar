@@ -5,7 +5,10 @@ import com.baharmc.loader.utils.argument.ArgumentParsed;
 import org.graalvm.compiler.lir.alloc.SaveCalleeSaveRegisters;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
@@ -50,6 +53,10 @@ public class MainLaunched {
                 directory.mkdirs();
             }
 
+            downloadJar(
+                "https://launcher.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar",
+                directory.getAbsolutePath()
+            );
             return;
         }
 
@@ -73,6 +80,19 @@ public class MainLaunched {
                 .invoke(object);
         } catch (Exception exception) {
             exception.printStackTrace();
+        }
+    }
+
+    private void downloadJar(@NotNull String url, @NotNull String directory) throws Exception {
+        try (BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream());
+             FileOutputStream fileOS = new FileOutputStream(directory + File.separator + "server.jar")) {
+            final byte[] data = new byte[1024];
+            int byteContent;
+            while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
+                fileOS.write(data, 0, byteContent);
+            }
+        } catch (IOException e) {
+            // handles IO exceptions
         }
     }
 
