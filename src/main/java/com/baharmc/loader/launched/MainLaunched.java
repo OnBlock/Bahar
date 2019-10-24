@@ -58,7 +58,6 @@ public class MainLaunched {
                 directory.mkdirs();
             }
 
-            //clearScreen();
             downloadJar(
                 "https://launcher.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar",
                 directory.getAbsolutePath()
@@ -93,11 +92,11 @@ public class MainLaunched {
         final URL url = new URL(urlString);
         final BufferedInputStream inputStream = new BufferedInputStream(url.openStream());
         final FileOutputStream fileOS = new FileOutputStream(directory + File.separator + "server.jar");
-        final byte[] data = new byte[1024];
+        final byte[] data = new byte[512];
         int byteContent;
 
         try (final ProgressBar progressBar = new ProgressBar("Downloading...", getFileSize(url) / 1024)) {
-            while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
+            while ((byteContent = inputStream.read(data, 0, 512)) != -1) {
                 fileOS.write(data, 0, byteContent);
                 progressBar.step();
             }
