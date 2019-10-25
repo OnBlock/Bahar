@@ -3,6 +3,7 @@ package com.baharmc.loader.launched.common;
 import com.baharmc.loader.loaded.BaharLoaded;
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginContained;
+import net.minecraft.server.MinecraftServer;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.list.Joined;
@@ -34,22 +35,18 @@ public final class BaharMixinBootstrap {
 		try {
 			new And(
 				Mixins::addConfiguration,
-				new SetOf<>(
-					new Filtered<>(
-						s -> !s.isEmpty(),
-						new Joined<>(
-							new Mapped<>(
-								metaData -> new ListOf<>(
-									((LoadedPluginMetaData)metaData).getMixinConfigs()
-								),
-								new CollectionOf<>(
-									new Filtered<>(
-										m -> m instanceof LoadedPluginMetaData,
-										new Mapped<>(
-											PluginContained::getMetadata,
-											loaded.getAllPlugins()
-										)
-									)
+				new Filtered<>(
+					s -> !s.isEmpty(),
+					new Joined<>(
+						new Mapped<>(
+							metaData -> new ListOf<>(
+								((LoadedPluginMetaData) metaData).getMixinConfigs()
+							),
+							new Filtered<>(
+								m -> m instanceof LoadedPluginMetaData,
+								new Mapped<>(
+									PluginContained::getMetadata,
+									loaded.getAllPlugins()
 								)
 							)
 						)

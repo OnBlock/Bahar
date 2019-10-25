@@ -54,10 +54,7 @@ public abstract class LaunchedBase implements BaharLaunched {
 
         logger.debug("Requesting deobfuscation of " + resultJarFile.getFileName());
 
-        final Mappings mappings = mappingConfiguration.getMappings();
-        final String targetNameSpace = MappingConfiguration.TARGET_NAMESPACE;
-
-        if (mappings.getNamespaces().contains(targetNameSpace)) {
+        if (mappingConfiguration.getMappings().getNamespaces().contains(MappingConfiguration.TARGET_NAMESPACE)) {
             return;
         }
 
