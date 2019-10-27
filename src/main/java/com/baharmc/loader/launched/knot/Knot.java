@@ -1,6 +1,8 @@
 package com.baharmc.loader.launched.knot;
 
 import com.baharmc.loader.launched.LaunchedBase;
+import com.baharmc.loader.launched.common.BaharMixinBootstrap;
+import com.baharmc.loader.loaded.BaharLoaded;
 import com.baharmc.loader.loaded.BaharLoaderBasic;
 import com.baharmc.loader.mock.MckGameProvided;
 import com.baharmc.loader.provided.EntryPointResult;
@@ -11,6 +13,7 @@ import com.baharmc.loader.utils.version.GetVersion;
 import org.apache.logging.log4j.LogManager;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +67,18 @@ public final class Knot extends LaunchedBase {
         deobfuscate(provided);
         provided.getEntryPointTransformed().locateEntryPoints(this);
         Thread.currentThread().setContextClassLoader(getTargetClassLoader());
-        new BaharLoaderBasic(this, provided).loadPlugins();
+
+        // LOADING
+        final BaharLoaded baharLoaded = new BaharLoaderBasic(this, provided);
+
+        baharLoaded.loadPlugins();
+        baharLoaded.freeze();
+        MixinBootstrap.init();
+        new BaharMixinBootstrap(baharLoaded).init();
+        doneMixinBootstrapping();
+        getKnotClassLoaded().getDelegate().initializeTransformers();
+        // LOADING
+
         provided.launch(getTargetClassLoader());
     }
 

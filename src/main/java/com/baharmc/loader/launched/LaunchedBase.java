@@ -4,7 +4,6 @@ import com.baharmc.loader.launched.common.MappingConfiguration;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.utils.UrlConversionException;
 import com.baharmc.loader.utils.UrlUtil;
-import net.fabricmc.mappings.Mappings;
 import org.apache.logging.log4j.Logger;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.collection.Filtered;

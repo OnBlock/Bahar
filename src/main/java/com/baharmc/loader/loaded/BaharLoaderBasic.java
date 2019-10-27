@@ -2,7 +2,6 @@ package com.baharmc.loader.loaded;
 
 import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.launched.BaharLaunched;
-import com.baharmc.loader.launched.common.BaharMixinBootstrap;
 import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.PluginContained;
@@ -10,7 +9,6 @@ import com.baharmc.loader.provided.GameProvided;
 import net.fabricmc.loader.api.SemanticVersion;
 import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -45,11 +43,7 @@ public class BaharLoaderBasic implements BaharLoaded {
 
     @Override
     public void loadPlugins() {
-        freeze();
-        MixinBootstrap.init();
-        new BaharMixinBootstrap(this).init();
-        launched.doneMixinBootstrapping();
-        launched.getKnotClassLoaded().getDelegate().initializeTransformers();
+
     }
 
     @Override
