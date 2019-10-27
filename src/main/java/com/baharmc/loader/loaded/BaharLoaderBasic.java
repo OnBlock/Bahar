@@ -1,5 +1,8 @@
 package com.baharmc.loader.loaded;
 
+import com.baharmc.loader.discovery.ClasspathPluginCandidateFinded;
+import com.baharmc.loader.discovery.PluginCandidateFinded;
+import com.baharmc.loader.discovery.PluginResolve;
 import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.launched.BaharLaunched;
 import com.baharmc.loader.mock.MckMappingResolved;
@@ -7,7 +10,9 @@ import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.provided.GameProvided;
 import net.fabricmc.loader.api.SemanticVersion;
+import net.fabricmc.loader.discovery.ClasspathModCandidateFinder;
 import org.cactoos.collection.CollectionOf;
+import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -30,6 +35,8 @@ public class BaharLoaderBasic implements BaharLoaded {
 
     private final Map<String, PluginContained> plugins = new HashMap<>();
 
+    private boolean locked = false;
+
     static BaharLoaded INSTANCE;
 
     public BaharLoaderBasic(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
@@ -40,8 +47,31 @@ public class BaharLoaderBasic implements BaharLoaded {
     }
 
     @Override
+    public void load() {
+        if (locked) {
+            throw new RuntimeException("Bahar is already loaded!");
+        }
+
+        final PluginResolve pluginResolve = new PluginResolve(
+            new ClasspathPluginCandidateFinded()
+        );
+
+
+    }
+
+    @Override
+    public void lock() {
+        if (locked) {
+            throw new RuntimeException("Bahar is already locked!");
+        }
+
+        locked = true;
+    }
+
+    @Override
     public void loadPlugins() {
 
+        finishLoading();
     }
 
     @Override
@@ -92,8 +122,7 @@ public class BaharLoaderBasic implements BaharLoaded {
         return plugins.containsKey(id);
     }
 
-    @Override
-    public void finishLoading() {
+    private void finishLoading() {
         for (PluginContained pluginContained : plugins.values()) {
             if (!pluginContained.getMetadata().getId().equals("bahar")) {
                 launched.propose(pluginContained.getOriginURL());

@@ -71,8 +71,8 @@ public final class Knot extends LaunchedBase {
         // LOADING
         final BaharLoaded baharLoaded = new BaharLoaderBasic(this, provided);
 
-        baharLoaded.loadPlugins();
-        baharLoaded.finishLoading();
+        baharLoaded.load();
+        baharLoaded.lock();
         MixinBootstrap.init();
         new BaharMixinBootstrap(baharLoaded).init();
         doneMixinBootstrapping();
