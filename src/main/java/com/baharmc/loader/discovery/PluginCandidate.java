@@ -13,12 +13,12 @@ public final class PluginCandidate {
     @NotNull
     private final URL url;
 
-    private final int dept;
+    private final int depth;
 
-    public PluginCandidate(@NotNull LoadedPluginMetaData info, @NotNull URL url, int dept) {
+    public PluginCandidate(@NotNull LoadedPluginMetaData info, @NotNull URL url, int depth) {
         this.info = info;
         this.url = url;
-        this.dept = dept;
+        this.depth = depth;
     }
 
     @NotNull
@@ -31,8 +31,8 @@ public final class PluginCandidate {
         return url;
     }
 
-    public int getDept() {
-        return dept;
+    public int getDepth() {
+        return depth;
     }
 
     @Override

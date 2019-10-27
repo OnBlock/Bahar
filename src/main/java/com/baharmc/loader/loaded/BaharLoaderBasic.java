@@ -1,7 +1,6 @@
 package com.baharmc.loader.loaded;
 
 import com.baharmc.loader.discovery.ClasspathPluginCandidateFinded;
-import com.baharmc.loader.discovery.PluginCandidateFinded;
 import com.baharmc.loader.discovery.PluginResolve;
 import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.launched.BaharLaunched;
@@ -10,9 +9,7 @@ import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.provided.GameProvided;
 import net.fabricmc.loader.api.SemanticVersion;
-import net.fabricmc.loader.discovery.ClasspathModCandidateFinder;
 import org.cactoos.collection.CollectionOf;
-import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

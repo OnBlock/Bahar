@@ -1,7 +1,6 @@
 package com.baharmc.loader.loaded;
 
 import com.baharmc.loader.plugin.PluginContained;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
