@@ -22,7 +22,7 @@ public interface BaharLoaded {
 
     void disablePlugins();
 
-    void freeze();
+    void finishLoading();
 
     @NotNull
     <T> List<T> getEntryPoints(@NotNull String key, @NotNull Class<T> type);

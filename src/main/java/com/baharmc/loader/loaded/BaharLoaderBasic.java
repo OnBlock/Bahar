@@ -30,8 +30,6 @@ public class BaharLoaderBasic implements BaharLoaded {
 
     private final Map<String, PluginContained> plugins = new HashMap<>();
 
-    private boolean frozen = false;
-
     static BaharLoaded INSTANCE;
 
     public BaharLoaderBasic(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
@@ -54,16 +52,6 @@ public class BaharLoaderBasic implements BaharLoaded {
     @Override
     public void disablePlugins() {
 
-    }
-
-    @Override
-    public void freeze() {
-        if (frozen) {
-            throw new RuntimeException("Already frozen!");
-        }
-
-        frozen = true;
-        finishPluginLoading();
     }
 
     @NotNull
@@ -104,7 +92,8 @@ public class BaharLoaderBasic implements BaharLoaded {
         return plugins.containsKey(id);
     }
 
-    private void finishPluginLoading() {
+    @Override
+    public void finishLoading() {
         for (PluginContained pluginContained : plugins.values()) {
             if (!pluginContained.getMetadata().getId().equals("bahar")) {
                 launched.propose(pluginContained.getOriginURL());
