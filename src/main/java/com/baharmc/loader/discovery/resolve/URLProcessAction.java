@@ -1,8 +1,7 @@
 package com.baharmc.loader.discovery.resolve;
 
 import com.baharmc.loader.discovery.PluginCandidateSet;
-import com.baharmc.loader.launched.BaharLaunched;
-import com.baharmc.loader.loaded.BaharLoaded;
+import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.google.gson.JsonSyntaxException;
 import net.fabricmc.loader.discovery.ModCandidate;
 import net.fabricmc.loader.discovery.ModCandidateSet;
@@ -63,28 +62,19 @@ public final class URLProcessAction extends RecursiveAction {
         }
 
         if (Files.isDirectory(path)) {
-            // Directory
-            modJson = path.resolve("fabric.mod.json");
+            modJson = path.resolve("bahar.plugin.yml");
             rootDir = path;
-
-            if (loader.isDevelopmentEnvironment() && !Files.exists(modJson)) {
-                loader.getLogger().warn("Adding directory " + path + " to mod classpath in development environment - workaround for Gradle splitting mods into two directories");
-                synchronized (launcherSyncObject) {
-                    FabricLauncherBase.getLauncher().propose(url);
-                }
-            }
         } else {
-            // JAR file
             try {
                 jarFs = FileSystemUtil.getJarFileSystem(path, false);
-                modJson = jarFs.get().getPath("fabric.mod.json");
+                modJson = jarFs.get().getPath("bahar.plugin.yml");
                 rootDir = jarFs.get().getRootDirectories().iterator().next();
             } catch (IOException e) {
                 throw new RuntimeException("Failed to open mod JAR at " + path + "!");
             }
         }
 
-        LoaderModMetadata[] info;
+        LoadedPluginMetaData[] info;
 
         try (InputStream stream = Files.newInputStream(modJson)) {
             info = ModMetadataParser.getMods(loader, stream);

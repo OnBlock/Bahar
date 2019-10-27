@@ -1,0 +1,31 @@
+{
+  "id": "bahar",
+  "name": "BaharRuntime",
+  "version": "${version}",
+  "isStable": false,
+  "isSnapshot": false,
+  "description": "The Bahar Server runtime plugin.",
+  "license": "MIT",
+  "authors": {
+    "portlek": {
+      "roles": [
+        "Head Developer"
+      ],
+      "contacts": {
+        "github": "https://github.com/portlek"
+      }
+    },
+    "CODY_AI": {
+      "roles": [
+        "Head Developer"
+      ],
+      "contacts": {
+        "website": "https://onblock.xyz/",
+        "github": "https://github.com/OnBlock"
+      }
+    }
+  },
+  "depends": {
+    "minecraft": ">=19w41a"
+  }
+}
