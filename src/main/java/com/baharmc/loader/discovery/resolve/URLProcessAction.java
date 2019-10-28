@@ -1,38 +1,38 @@
 package com.baharmc.loader.discovery.resolve;
 
+import com.baharmc.loader.discovery.PluginCandidate;
 import com.baharmc.loader.discovery.PluginCandidateSet;
+import com.baharmc.loader.discovery.PluginResolve;
+import com.baharmc.loader.metadata.PluginMetaDataParsed;
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
-import com.google.gson.JsonSyntaxException;
-import net.fabricmc.loader.discovery.ModCandidate;
-import net.fabricmc.loader.discovery.ModCandidateSet;
-import net.fabricmc.loader.discovery.ModResolver;
-import net.fabricmc.loader.launch.common.FabricLauncherBase;
-import net.fabricmc.loader.metadata.LoaderModMetadata;
-import net.fabricmc.loader.metadata.ModMetadataParser;
-import net.fabricmc.loader.metadata.NestedJarEntry;
-import net.fabricmc.loader.util.FileSystemUtil;
-import net.fabricmc.loader.util.UrlConversionException;
-import net.fabricmc.loader.util.UrlUtil;
+import com.baharmc.loader.utils.FileSystemUtil;
+import com.baharmc.loader.utils.UrlConversionException;
+import com.baharmc.loader.utils.UrlUtil;
 import org.apache.logging.log4j.Logger;
+import org.cactoos.iterable.Filtered;
+import org.cactoos.list.ListOf;
+import org.cactoos.list.Mapped;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.RecursiveAction;
-import java.util.stream.Collectors;
 
 public final class URLProcessAction extends RecursiveAction {
 
     @NotNull
-    private final Logger logger;
+    private final transient Logger logger;
 
     @NotNull
-    private final Map<String, PluginCandidateSet> candidateById;
+    private final Map<String, PluginCandidateSet> candidatesById;
 
     @NotNull
     private final URL url;
@@ -41,7 +41,7 @@ public final class URLProcessAction extends RecursiveAction {
 
     public URLProcessAction(@NotNull Logger logger, @NotNull Map<String, PluginCandidateSet> candidateById, @NotNull URL url, int depth) {
         this.logger = logger;
-        this.candidateById = candidateById;
+        this.candidatesById = candidateById;
         this.url = url;
         this.depth = depth;
     }
@@ -61,7 +61,7 @@ public final class URLProcessAction extends RecursiveAction {
             throw new RuntimeException("Failed to convert URL " + url + "!", e);
         }
 
-        if (Files.isDirectory(path)) {
+        if (path.toFile().isDirectory()) {
             modJson = path.resolve("bahar.plugin.yml");
             rootDir = path;
         } else {
@@ -70,41 +70,38 @@ public final class URLProcessAction extends RecursiveAction {
                 modJson = jarFs.get().getPath("bahar.plugin.yml");
                 rootDir = jarFs.get().getRootDirectories().iterator().next();
             } catch (IOException e) {
-                throw new RuntimeException("Failed to open mod JAR at " + path + "!");
+                throw new RuntimeException("Failed to open plugin JAR at " + path + "!");
             }
         }
 
         LoadedPluginMetaData[] info;
 
         try (InputStream stream = Files.newInputStream(modJson)) {
-            info = ModMetadataParser.getMods(loader, stream);
-        } catch (JsonSyntaxException e) {
-            throw new RuntimeException("Mod at '" + path + "' has an invalid fabric.mod.json file!", e);
+            info = new PluginMetaDataParsed(stream).value();
         } catch (NoSuchFileException e) {
-            info = new LoaderModMetadata[0];
+            info = new LoadedPluginMetaData[0];
         } catch (IOException e) {
-            throw new RuntimeException("Failed to open fabric.mod.json for mod at '" + path + "'!", e);
+            throw new RuntimeException("Failed to open bahar.plugin.yml for plugin at '" + path + "'!", e);
         }
 
-        for (LoaderModMetadata i : info) {
-            ModCandidate candidate = new ModCandidate(i, normalizedUrl, depth);
-            boolean added;
+        for (LoadedPluginMetaData i : info) {
+            final PluginCandidate candidate = new PluginCandidate(i, normalizedUrl, depth);
 
-            if (candidate.getInfo().getId() == null || candidate.getInfo().getId().isEmpty()) {
-                throw new RuntimeException(String.format("Mod file `%s` has no id", candidate.getOriginUrl().getFile()));
+            if (candidate.getInfo().getId().isEmpty()) {
+                throw new RuntimeException(String.format("Plugin file `%s` has no id", candidate.getUrl().getFile()));
             }
 
-            if (!MOD_ID_PATTERN.matcher(candidate.getInfo().getId()).matches()) {
-                List<String> errorList = new ArrayList<>();
-                isModIdValid(candidate.getInfo().getId(), errorList);
-                StringBuilder fullError = new StringBuilder("Mod id `");
+            if (!PluginResolve.PLUGIN_ID_PATTERN.matcher(candidate.getInfo().getId()).matches()) {
+                final List<String> errors = new IsPluginIdValid(candidate.getInfo().getId()).value();
+                final StringBuilder fullError = new StringBuilder("Plugin id `");
+
                 fullError.append(candidate.getInfo().getId()).append("` does not match the requirements because");
 
-                if (errorList.size() == 1) {
-                    fullError.append(" it ").append(errorList.get(0));
+                if (errors.size() == 1) {
+                    fullError.append(" it ").append(errors.get(0));
                 } else {
                     fullError.append(":");
-                    for (String error : errorList) {
+                    for (String error : errors) {
                         fullError.append("\n  - It ").append(error);
                     }
                 }
@@ -112,51 +109,67 @@ public final class URLProcessAction extends RecursiveAction {
                 throw new RuntimeException(fullError.toString());
             }
 
-            added = candidatesById.computeIfAbsent(candidate.getInfo().getId(), ModCandidateSet::new).add(candidate);
+            final boolean added = candidatesById.computeIfAbsent(
+                candidate.getInfo().getId(),
+                PluginCandidateSet::new
+            ).add(candidate);
 
             if (!added) {
-                loader.getLogger().debug(candidate.getOriginUrl() + " already present as " + candidate);
-            } else {
-                loader.getLogger().debug("Adding " + candidate.getOriginUrl() + " as " + candidate);
+                logger.debug(candidate.getUrl() + " already present as " + candidate);
+                continue;
+            }
 
-                List<Path> jarInJars = inMemoryCache.computeIfAbsent(candidate.getOriginUrl(), (u) -> {
-                    loader.getLogger().debug("Searching for nested JARs in " + candidate);
-                    Collection<NestedJarEntry> jars = candidate.getInfo().getJars();
-                    List<Path> list = new ArrayList<>(jars.size());
+            logger.debug("Adding " + candidate.getUrl() + " as " + candidate);
 
-                    jars.stream()
-                        .map((j) -> rootDir.resolve(j.getFile().replace("/", rootDir.getFileSystem().getSeparator())))
-                        .forEach((modPath) -> {
-                            if (!Files.isDirectory(modPath) && modPath.toString().endsWith(".jar")) {
-                                // TODO: pre-check the JAR before loading it, if possible
-                                loader.getLogger().debug("Found nested JAR: " + modPath);
-                                Path dest = inMemoryFs.getPath(UUID.randomUUID() + ".jar");
+            final URI uri;
+            try {
+                uri = candidate.getUrl().toURI();
+            } catch (Exception exception) {
+                throw new RuntimeException(exception);
+            }
 
-                                try {
-                                    Files.copy(modPath, dest);
-                                } catch (IOException e) {
-                                    throw new RuntimeException("Failed to load nested JAR " + modPath + " into memory (" + dest + ")!", e);
-                                }
+            logger.debug("Searching for nested JARs in " + candidate);
 
-                                list.add(dest);
+            final List<Path> jarInJars = PluginResolve.IN_MEMORY_CACHE.computeIfAbsent(uri, u -> new ListOf<>(
+                new Mapped<>(
+                    filtered -> {
+                        logger.debug("Found nested JAR: " + filtered);
+
+                        final Path dest = PluginResolve.IN_MEMORY_FS.getPath(UUID.randomUUID() + ".jar");
+
+                        try {
+                            Files.copy(filtered, dest);
+                        } catch (IOException e) {
+                            throw new RuntimeException("Failed to load nested JAR " + filtered + " into memory (" + dest + ")!", e);
+                        }
+
+                        return dest;
+                    },
+                    new Filtered<>(
+                        pluginPath -> !Files.isDirectory(pluginPath) && pluginPath.toString().endsWith(".jar"),
+                        new Mapped<>(
+                            jar -> rootDir.resolve(
+                                jar.getFile().replace("/", rootDir.getFileSystem().getSeparator())
+                            ),
+                            candidate.getInfo().getJars()
+                        )
+                    )
+                )
+            ));
+
+            if (!jarInJars.isEmpty()) {
+                invokeAll(
+                    new Mapped<>(
+                        jar -> {
+                            try {
+                                return new URLProcessAction(logger, candidatesById, UrlUtil.asUrl(jar.normalize()), depth + 1);
+                            } catch (UrlConversionException e) {
+                                throw new RuntimeException("Failed to turn path '" + jar.normalize() + "' into URL!", e);
                             }
-                        });
-
-                    return list;
-                });
-
-                if (!jarInJars.isEmpty()) {
-                    invokeAll(
-                        jarInJars.stream()
-                            .map((p) -> {
-                                try {
-                                    return new ModResolver.UrlProcessAction(loader, candidatesById, UrlUtil.asUrl(p.normalize()), depth + 1);
-                                } catch (UrlConversionException e) {
-                                    throw new RuntimeException("Failed to turn path '" + p.normalize() + "' into URL!", e);
-                                }
-                            }).collect(Collectors.toList())
-                    );
-                }
+                        },
+                        jarInJars
+                    )
+                );
             }
         }
     }

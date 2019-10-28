@@ -1,6 +1,6 @@
 package com.baharmc.loader.loaded;
 
-import com.baharmc.loader.discovery.ClasspathPluginCandidateFinded;
+import com.baharmc.loader.discovery.ClasspathPluginCandidateFound;
 import com.baharmc.loader.discovery.PluginResolve;
 import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.launched.BaharLaunched;
@@ -50,7 +50,9 @@ public class BaharLoaderBasic implements BaharLoaded {
         }
 
         final PluginResolve pluginResolve = new PluginResolve(
-            new ClasspathPluginCandidateFinded()
+            launched.getLogger(),
+            provided,
+            new ClasspathPluginCandidateFound()
         );
 
 

@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public final class ClasspathPluginCandidateFinded implements PluginCandidateFinded {
+public final class ClasspathPluginCandidateFound implements PluginCandidateFound {
 
     @Override
     public void findCandidates(@NotNull Consumer<URL> consumer) {

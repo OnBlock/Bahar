@@ -16,7 +16,7 @@ isSnapshot: false
 #Optional fields
 #Plugin description, describe how awesome your plugin is!
 description: 'The base plugin loader'
-#If you're not licensing your plugin then set to null
+#If you're not licensing your plugin then remove it
 license: MIT
 #A list of the plugin authors
 authors:

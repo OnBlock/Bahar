@@ -13,6 +13,6 @@ public interface Person {
     List<String> getRoles();
 
     @NotNull
-    Contact getContact();
+    List<Contact> getContact();
 
 }

@@ -2,7 +2,7 @@ package com.baharmc.loader.entrypoint;
 
 import com.baharmc.loader.language.LanguageAdapted;
 import com.baharmc.loader.launched.BaharLaunched;
-import com.baharmc.loader.metadata.EntryPointMetadata;
+import com.baharmc.loader.metadata.EntryPointMetaData;
 import com.baharmc.loader.plugin.PluginContained;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +26,7 @@ public final class EntryPointStorage {
 
     public void add(@NotNull PluginContained pluginContained,
                     @NotNull String key,
-                    @NotNull EntryPointMetadata metadata,
+                    @NotNull EntryPointMetaData metadata,
                     @NotNull Map<String, LanguageAdapted> adapterMap) throws Exception {
         if (!adapterMap.containsKey(metadata.getAdapter())) {
             throw new Exception(

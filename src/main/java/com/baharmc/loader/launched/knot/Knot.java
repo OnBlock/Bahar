@@ -27,7 +27,7 @@ public final class Knot extends LaunchedBase {
     private GameProvided provided = new MckGameProvided();
 
     @NotNull
-    private KnotClassLoaded loaded = new KnotClassLoader(this, provided);
+    private KnotClassLoaded loaded = new KnotClassLoaderBasic(this, provided);
 
     public Knot(@NotNull File serverJarFile) {
         super(LogManager.getFormatterLogger("Bahar"), serverJarFile);
@@ -61,7 +61,7 @@ public final class Knot extends LaunchedBase {
             entrypointResult.getEntryPointPath()
         );
 
-        loaded = new KnotClassLoader(this, provided);
+        loaded = new KnotClassLoaderBasic(this, provided);
 
         getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
         deobfuscate(provided);
