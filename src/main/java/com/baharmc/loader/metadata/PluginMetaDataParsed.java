@@ -1,13 +1,12 @@
 package com.baharmc.loader.metadata;
 
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
-import com.baharmc.loader.plugin.PluginMetaDataBasic;
 import org.cactoos.Scalar;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.InputStream;
+import java.util.Map;
 
 public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData[]> {
 
@@ -20,11 +19,11 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData[]
 
     @Override
     public LoadedPluginMetaData[] value() {
-        final Yaml yaml = new Yaml(
-            new Constructor(
-                PluginMetaDataBasic.class
-            )
-        );
+        final Yaml yaml = new Yaml();
+        final Map<String, Object> parsed = yaml.load(stream);
+        final String id = parsed.get("id", "");
+
+
         return new LoadedPluginMetaData[0];
     }
 
