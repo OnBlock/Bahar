@@ -43,24 +43,20 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData> 
                         "Plugin version must be specified!"
                     )
                 ),
-                new License() {
-                    @NotNull
-                    @Override
-                    public List<String> getLicenses() {
-                        final boolean one = parsed.containsKey("license");
-                        final boolean more = parsed.containsKey("licenses");
+                () -> {
+                    final boolean one = parsed.containsKey("license");
+                    final boolean more = parsed.containsKey("licenses");
 
-                        if (one) {
-                            return new ListOf<>(
-                                get(String.class, parsed.getOrDefault("license", ""))
-                            );
-                        } else if (more) {
-                            //noinspection unchecked
-                            return (List<String>) get(List.class, parsed.getOrDefault("licenses", new ListOf<>()));
-                        }
-                        
-                        return new ListOf<>();
+                    if (one) {
+                        return new ListOf<>(
+                            get(String.class, parsed.getOrDefault("license", ""))
+                        );
+                    } else if (more) {
+                        //noinspection unchecked
+                        return (List<String>) get(List.class, parsed.getOrDefault("licenses", new ListOf<>()));
                     }
+
+                    return new ListOf<>();
                 },
                 new ListOf<>(),
                 new ListOf<>(),
