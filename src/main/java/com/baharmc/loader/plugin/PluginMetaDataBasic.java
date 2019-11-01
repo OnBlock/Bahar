@@ -1,11 +1,7 @@
 package com.baharmc.loader.plugin;
 
-import com.baharmc.loader.plugin.metadata.Contact;
-import com.baharmc.loader.plugin.metadata.License;
-import com.baharmc.loader.plugin.metadata.Person;
-import com.baharmc.loader.plugin.metadata.PluginDependency;
+import com.baharmc.loader.plugin.metadata.*;
 import com.baharmc.loader.utils.semanticversion.Version;
-import net.fabricmc.loader.metadata.NestedJarEntry;
 import org.apache.logging.log4j.Logger;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.list.ListOf;

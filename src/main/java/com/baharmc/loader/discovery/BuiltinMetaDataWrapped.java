@@ -2,8 +2,8 @@ package com.baharmc.loader.discovery;
 
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginMetaData;
+import com.baharmc.loader.plugin.metadata.NestedJarEntry;
 import com.baharmc.loader.utils.semanticversion.Version;
-import net.fabricmc.loader.metadata.NestedJarEntry;
 import org.apache.logging.log4j.Logger;
 import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;

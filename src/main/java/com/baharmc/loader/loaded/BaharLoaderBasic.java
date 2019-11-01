@@ -1,6 +1,7 @@
 package com.baharmc.loader.loaded;
 
 import com.baharmc.loader.discovery.ClasspathPluginCandidateFound;
+import com.baharmc.loader.discovery.PluginResolutionException;
 import com.baharmc.loader.discovery.PluginResolve;
 import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.launched.BaharLaunched;
@@ -8,7 +9,7 @@ import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.provided.GameProvided;
-import net.fabricmc.loader.api.SemanticVersion;
+import com.baharmc.loader.utils.semanticversion.SemanticVersion;
 import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,7 +56,11 @@ public class BaharLoaderBasic implements BaharLoaded {
             new ClasspathPluginCandidateFound()
         );
 
-
+        try {
+            pluginResolve.resolve();
+        } catch (PluginResolutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

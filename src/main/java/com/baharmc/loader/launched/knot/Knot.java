@@ -17,6 +17,7 @@ import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -90,7 +91,7 @@ public final class Knot extends LaunchedBase {
 
     @NotNull
     @Override
-    public byte[] getClassByteArray(String name) throws IOException {
+    public byte[] getClassByteArray(@NotNull String name) throws IOException {
         return loaded.getDelegate().getClassByteArray(name, false);
     }
 
@@ -110,5 +111,20 @@ public final class Knot extends LaunchedBase {
     @Override
     public KnotClassLoaded getKnotClassLoaded() {
         return loaded;
+    }
+
+    @Override
+    public boolean isClassLoaded(@NotNull String name) {
+        return loaded.isClassLoaded(name);
+    }
+
+    @NotNull
+    @Override
+    public InputStream getResourceAsStream(@NotNull String name) {
+        try {
+            return loaded.getResourceAsStream(name, false);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read file '" + name + "'!", e);
+        }
     }
 }

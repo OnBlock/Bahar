@@ -1,7 +1,7 @@
 package com.baharmc.loader.discovery;
 
 import com.baharmc.loader.launched.BaharLaunched;
-import net.fabricmc.loader.util.UrlUtil;
+import com.baharmc.loader.utils.UrlUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

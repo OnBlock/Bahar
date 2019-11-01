@@ -1,6 +1,6 @@
 package com.baharmc.loader.plugin;
 
-import net.fabricmc.loader.metadata.NestedJarEntry;
+import com.baharmc.loader.plugin.metadata.NestedJarEntry;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
