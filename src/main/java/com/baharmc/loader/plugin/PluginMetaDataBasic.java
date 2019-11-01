@@ -38,12 +38,12 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
     private final List<Contact> contacts;
 
     @NotNull
-    private final List<PluginDependency> pluginDependencies;
+    private final List<Dependency> pluginDependencies;
 
     public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
                                @NotNull String description, @NotNull Version version, @NotNull License license,
                                @NotNull List<Person> authors, @NotNull List<Contact> contacts,
-                               @NotNull List<PluginDependency> pluginDependencies) {
+                               @NotNull List<Dependency> pluginDependencies) {
         this.id = id;
         this.name = name;
         this.isStable = isStable;

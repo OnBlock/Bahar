@@ -23,13 +23,13 @@ authors:
   CODY_AI:
     roles:
       - Head Developer
-    contatcs:
+    contacts:
       website: https://onblock.xyz/
       github: https://github.com/OnBlock
   portlek:
     roles:
       - Head Developer
-    contatcs:
+    contacts:
       github: https://github.com/portlek
 #A list of ways to contact you!
 contacts:
