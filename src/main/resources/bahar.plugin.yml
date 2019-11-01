@@ -40,4 +40,4 @@ contacts:
 #Note: the plugin version must respects the semver
 #e.g: plugin_id: '>=1.3.0'
 depends:
-  minecraft: '>=19w41a'
+  minecraft: '>=1.14.4'

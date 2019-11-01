@@ -61,6 +61,7 @@ dependencies {
     }
     fatJar 'net.fabricmc:tiny-mappings-parser:0.1.1.8'
     fatJar 'net.fabricmc:tiny-remapper:0.1.0.40'
+    fatJar 'net.fabricmc:fabric-loader-sat4j:2.3.5.4'
 
     fatJar 'com.google.jimfs:jimfs:1.1'
 

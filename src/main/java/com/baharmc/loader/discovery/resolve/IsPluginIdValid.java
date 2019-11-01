@@ -2,6 +2,7 @@ package com.baharmc.loader.discovery.resolve;
 
 import com.baharmc.loader.discovery.PluginResolve;
 import org.cactoos.Scalar;
+import org.cactoos.list.ListOf;
 import org.cactoos.list.Sorted;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,6 +51,10 @@ public final class IsPluginIdValid implements Scalar<List<String>> {
             }
 
             invalidChars.add(c);
+        }
+
+        if (invalidChars.isEmpty()) {
+            return new ListOf<>();
         }
 
         final StringBuilder error = new StringBuilder("contains invalid characters: '");

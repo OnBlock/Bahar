@@ -1,5 +1,7 @@
 package com.baharmc.loader.loaded;
 
+import com.baharmc.loader.discovery.PluginCandidate;
+import com.baharmc.loader.discovery.PluginResolutionException;
 import com.baharmc.loader.plugin.PluginContained;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,5 +41,7 @@ public interface BaharLoaded {
     Collection<PluginContained> getAllPlugins();
 
     boolean isPluginLoaded(String id);
+
+    void addPlugin(@NotNull PluginCandidate pluginCandidate) throws PluginResolutionException;
 
 }

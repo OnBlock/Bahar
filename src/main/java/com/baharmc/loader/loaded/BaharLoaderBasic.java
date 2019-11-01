@@ -1,5 +1,6 @@
 package com.baharmc.loader.loaded;
 
+import com.baharmc.loader.contained.PluginContainerBasic;
 import com.baharmc.loader.discovery.ClasspathPluginCandidateFound;
 import com.baharmc.loader.discovery.PluginCandidate;
 import com.baharmc.loader.discovery.PluginResolutionException;
@@ -8,12 +9,14 @@ import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.launched.BaharLaunched;
 import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
+import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.utils.semanticversion.SemanticVersion;
 import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +68,21 @@ public class BaharLoaderBasic implements BaharLoaded {
             throw new RuntimeException(e);
         }
 
-        pluginCandidates.forEach((s, pluginCandidate) -> System.out.println(s + "-> " + pluginCandidate));
+        if (!pluginCandidates.containsKey("bahar")) {
+            throw new RuntimeException("Bahar cannot be loaded!");
+        }
+
+        launched.getLogger().info(
+            "Loading for Bahar " +
+                pluginCandidates.get("bahar").getInfo().getVersion().getFriendlyString()
+        );
+        pluginCandidates.values().forEach(pluginCandidate -> {
+            try {
+                addPlugin(pluginCandidate);
+            } catch (PluginResolutionException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
@@ -129,6 +146,21 @@ public class BaharLoaderBasic implements BaharLoaded {
     @Override
     public boolean isPluginLoaded(@NotNull String id) {
         return plugins.containsKey(id);
+    }
+
+    @Override
+    public void addPlugin(@NotNull PluginCandidate pluginCandidate) throws PluginResolutionException {
+        final LoadedPluginMetaData info = pluginCandidate.getInfo();
+        final URL url = pluginCandidate.getUrl();
+
+        if (plugins.containsKey(info.getId())) {
+            throw new PluginResolutionException(
+                "Duplicate plugin ID: " + info.getId() +
+                    "! (" + plugins.get(info.getId()).getOriginURL().getFile() + ", " + url.getFile() + ")"
+            );
+        }
+
+        plugins.put(info.getId(), new PluginContainerBasic(info, url));
     }
 
     private void finishLoading() {
