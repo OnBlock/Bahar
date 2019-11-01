@@ -1,6 +1,7 @@
 package com.baharmc.loader.utils.version;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -35,6 +36,7 @@ public final class FieldStringConstantVisitor extends ClassVisitor implements An
     }
 
     @Override
+    @Nullable
     public FieldVisitor visitField(int access, String name, String descriptor, String signature, Object value) {
         if (result.isEmpty() && name.equals(fieldName) && descriptor.equals(McVersion.STRING_DESC) && value instanceof String) {
             result = (String) value;
@@ -44,10 +46,17 @@ public final class FieldStringConstantVisitor extends ClassVisitor implements An
     }
 
     @Override
+    @Nullable
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
-        if (!result.isEmpty() || !name.equals("<clinit>")) return null;
+        if (!result.isEmpty() || !name.equals("<clinit>")) {
+            return null;
+        }
 
         return new InsnFwdMethodVisitor() {
+
+            @NotNull
+            private String lastLdc = "";
+
             @Override
             public void visitLdcInsn(Object value) {
                 String str;
@@ -55,14 +64,14 @@ public final class FieldStringConstantVisitor extends ClassVisitor implements An
                 if (value instanceof String && McVersion.VERSION_PATTERN.matcher((str = (String) value)).matches()) {
                     lastLdc = str;
                 } else {
-                    lastLdc = null;
+                    lastLdc = "";
                 }
             }
 
             @Override
             public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
                 if (result.isEmpty()
-                    && lastLdc != null
+                    && !lastLdc.isEmpty()
                     && opcode == Opcodes.PUTSTATIC
                     && owner.equals(className)
                     && name.equals(fieldName)
@@ -70,15 +79,14 @@ public final class FieldStringConstantVisitor extends ClassVisitor implements An
                     result = lastLdc;
                 }
 
-                lastLdc = null;
+                lastLdc = "";
             }
 
             @Override
             protected void visitAnyInsn() {
-                lastLdc = null;
+                lastLdc = "";
             }
 
-            String lastLdc;
         };
     }
 

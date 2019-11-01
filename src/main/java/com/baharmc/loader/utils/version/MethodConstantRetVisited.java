@@ -15,6 +15,7 @@ public final class MethodConstantRetVisited extends ClassVisitor implements Anal
 
     public MethodConstantRetVisited(@NotNull String methodName) {
         super(Opcodes.ASM7);
+
         this.methodName = methodName;
     }
 

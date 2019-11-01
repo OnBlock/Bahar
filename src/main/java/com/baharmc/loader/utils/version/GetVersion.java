@@ -1,5 +1,6 @@
 package com.baharmc.loader.utils.version;
 
+import com.baharmc.loader.utils.FileSystemDelegate;
 import com.baharmc.loader.utils.FileSystemUtil;
 import com.google.gson.stream.JsonReader;
 import org.cactoos.Scalar;
@@ -27,10 +28,10 @@ public final class GetVersion implements Scalar<McVersion> {
 
     @Override
     public McVersion value() {
-        try (FileSystemUtil.FileSystemDelegate jarFs = FileSystemUtil.getJarFileSystem(gameJar, false)) {
-            FileSystem fs = jarFs.get();
-            Path file;
+        try (FileSystemDelegate jarFs = FileSystemUtil.getJarFileSystem(gameJar, false)) {
+            final FileSystem fs = jarFs.get();
             final McVersion mcVersion;
+            Path file;
 
             if (Files.isRegularFile(file = fs.getPath("version.json"))) {
                 mcVersion = fromVersionJson(Files.newInputStream(file));
@@ -61,10 +62,10 @@ public final class GetVersion implements Scalar<McVersion> {
     }
 
     @NotNull
-    private McVersion fromVersionJson(InputStream is) {
+    private McVersion fromVersionJson(@NotNull InputStream is) {
         try (JsonReader reader = new JsonReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-            String name = null;
-            String release = null;
+            String name = "";
+            String release = "";
 
             reader.beginObject();
 
@@ -78,7 +79,7 @@ public final class GetVersion implements Scalar<McVersion> {
 
             reader.endObject();
 
-            if (name != null && release != null) {
+            if (!name.isEmpty() && !release.isEmpty()) {
                 return new McVersion(name, release);
             }
         } catch (IOException e) {
@@ -88,26 +89,38 @@ public final class GetVersion implements Scalar<McVersion> {
         return new McVersion("","");
     }
 
+    @NotNull
     private McVersion fromFileName(String name) {
-        int pos = name.lastIndexOf('.');
-        if (pos > 0) name = name.substring(0, pos);
+        final int pos = name.lastIndexOf('.');
+
+        if (pos > 0) {
+            name = name.substring(0, pos);
+        }
 
         return new McVersion(name, getRelease(name));
     }
 
     @NotNull
-    private String getRelease(String version) {
-        if (McVersion.RELEASE_PATTERN.matcher(version).matches()) return version;
+    private String getRelease(@NotNull String version) {
+        if (McVersion.RELEASE_PATTERN.matcher(version).matches()) {
+            return version;
+        }
 
         assert isProbableVersion(version);
 
         int pos = version.indexOf("-pre");
-        if (pos >= 0) return version.substring(0, pos);
+
+        if (pos >= 0) {
+            return version.substring(0, pos);
+        }
 
         pos = version.indexOf(" Pre-Release ");
-        if (pos >= 0) return version.substring(0, pos);
 
-        Matcher matcher =  McVersion.SNAPSHOT_PATTERN.matcher(version);
+        if (pos >= 0) {
+            return version.substring(0, pos);
+        }
+
+        final Matcher matcher =  McVersion.SNAPSHOT_PATTERN.matcher(version);
 
         if (matcher.matches()) {
             int year = Integer.parseInt(matcher.group(1));
@@ -163,16 +176,18 @@ public final class GetVersion implements Scalar<McVersion> {
         return "";
     }
 
-    private boolean isProbableVersion(String str) {
+    private boolean isProbableVersion(@NotNull String str) {
         return McVersion.VERSION_PATTERN.matcher(str).matches();
     }
 
     @NotNull
-    private <T extends ClassVisitor & Analyzed> McVersion fromAnalyzer(InputStream is, T analyzer) {
+    private <T extends ClassVisitor & Analyzed> McVersion fromAnalyzer(@NotNull InputStream is, @NotNull T analyzer) {
         try {
-            ClassReader cr = new ClassReader(is);
+            final ClassReader cr = new ClassReader(is);
+
             cr.accept(analyzer, ClassReader.SKIP_FRAMES | ClassReader.SKIP_DEBUG);
-            String result = analyzer.getResult();
+
+            final String result = analyzer.getResult();
 
             return new McVersion(result, getRelease(result));
         } catch (IOException e) {
