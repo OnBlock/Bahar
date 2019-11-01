@@ -2,10 +2,6 @@ package com.baharmc.loader.metadata;
 
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginMetaDataBasic;
-import com.baharmc.loader.plugin.metadata.Contact;
-import com.baharmc.loader.plugin.metadata.License;
-import com.baharmc.loader.plugin.metadata.Person;
-import com.baharmc.loader.plugin.metadata.PluginDependency;
 import com.baharmc.loader.utils.semanticversion.Version;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;

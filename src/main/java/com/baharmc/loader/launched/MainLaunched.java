@@ -1,7 +1,7 @@
 package com.baharmc.loader.launched;
 
-import com.baharmc.loader.utils.UrlUtil;
 import com.baharmc.loader.utils.ArgumentParsed;
+import com.baharmc.loader.utils.UrlUtil;
 import me.tongfei.progressbar.ProgressBar;
 import me.tongfei.progressbar.ProgressBarStyle;
 import org.jetbrains.annotations.NotNull;

@@ -5,6 +5,7 @@ import com.baharmc.loader.discovery.PluginCandidateSet;
 import com.baharmc.loader.discovery.PluginResolve;
 import com.baharmc.loader.metadata.PluginMetaDataParsed;
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
+import com.baharmc.loader.utils.FileSystemDelegate;
 import com.baharmc.loader.utils.FileSystemUtil;
 import com.baharmc.loader.utils.UrlConversionException;
 import com.baharmc.loader.utils.UrlUtil;
@@ -48,7 +49,7 @@ public final class URLProcessAction extends RecursiveAction {
 
     @Override
     protected void compute() {
-        final FileSystemUtil.FileSystemDelegate jarFs;
+        final FileSystemDelegate jarFs;
         final Path path, pluginYml, rootDir;
         final URL normalizedUrl;
 

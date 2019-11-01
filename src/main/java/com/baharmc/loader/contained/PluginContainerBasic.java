@@ -2,6 +2,7 @@ package com.baharmc.loader.contained;
 
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.plugin.PluginMetaData;
+import com.baharmc.loader.utils.FileSystemDelegate;
 import com.baharmc.loader.utils.FileSystemUtil;
 import com.baharmc.loader.utils.UrlConversionException;
 import com.baharmc.loader.utils.UrlUtil;
@@ -45,7 +46,7 @@ public class PluginContainerBasic implements PluginContained {
             if (Files.isDirectory(holder)) {
                 root = holder.toAbsolutePath();
             } else {
-                final FileSystemUtil.FileSystemDelegate delegate = FileSystemUtil.getJarFileSystem(holder, false);
+                final FileSystemDelegate delegate = FileSystemUtil.getJarFileSystem(holder, false);
 
                 if (delegate.get() == null) {
                     throw new RuntimeException("Could not open JAR file " + holder.getFileName() + " for NIO reading!");
