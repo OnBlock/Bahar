@@ -1,15 +1,15 @@
 package com.baharmc.loader.metadata;
 
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
+import com.baharmc.loader.plugin.PluginMetaDataBasic;
 import org.cactoos.Scalar;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Optional;
 
-public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData[]> {
+public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData> {
 
 
     @NotNull
@@ -20,26 +20,23 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData[]
     }
 
     @Override
-    public LoadedPluginMetaData[] value() {
+    public LoadedPluginMetaData value() {
         final Yaml yaml = new Yaml();
         final Map<String, Object> parsed = yaml.load(stream);
-        final Optional<String> id = get(String.class, parsed.getOrDefault("id", ""));
+        final String id = get(String.class, parsed.getOrDefault("id", ""), "Plugin id must be specified!");
+        final String name = get(String.class, parsed.getOrDefault("name", ""), "Plugin name must be specified!");
 
-        if (!id.isPresent()) {
-            throw new RuntimeException("Plugin Id must be specified!");
-        }
-
-        return new LoadedPluginMetaData[0];
+        return new PluginMetaDataBasic(id, name);
     }
 
     @NotNull
-    private <T> Optional<T> get(@NotNull Class<T> tClass, @NotNull Object object) {
+    private <T> T get(@NotNull Class<T> tClass, @NotNull Object object, @NotNull String error) {
         if (!tClass.isAssignableFrom(object.getClass())) {
-            return Optional.empty();
+            throw new RuntimeException(error);
         }
 
         //noinspection unchecked
-        return Optional.of((T) object);
+        return (T) object;
     }
 
 }
