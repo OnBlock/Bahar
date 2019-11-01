@@ -1,6 +1,7 @@
 package com.baharmc.loader.entrypoint;
 
 import com.baharmc.loader.language.LanguageAdapted;
+import com.baharmc.loader.language.LanguageAdapterException;
 import com.baharmc.loader.launched.BaharLaunched;
 import com.baharmc.loader.metadata.EntryPointMetaData;
 import com.baharmc.loader.plugin.PluginContained;
@@ -27,9 +28,9 @@ public final class EntryPointStorage {
     public void add(@NotNull PluginContained pluginContained,
                     @NotNull String key,
                     @NotNull EntryPointMetaData metadata,
-                    @NotNull Map<String, LanguageAdapted> adapterMap) throws Exception {
+                    @NotNull Map<String, LanguageAdapted> adapterMap) {
         if (!adapterMap.containsKey(metadata.getAdapter())) {
-            throw new Exception(
+            throw new RuntimeException(
                 "Could not find adapter '" +
                     metadata.getAdapter() +
                 "' (plugin " + pluginContained.getMetadata().getId() + "!)"
@@ -56,11 +57,11 @@ public final class EntryPointStorage {
             try {
                 T result = entry.getOrCreate(type);
                 results.add(result);
-            } catch (Exception e) {
+            } catch (Throwable  t) {
                 hadException = true;
                 launched.getLogger().fatal(
-                    "Exception occured while getting '" + key + "' entry points @ " + entry,
-                    e
+                    "Exception occurred while getting '" + key + "' entry points @ " + entry,
+                    t
                 );
             }
         }
@@ -85,24 +86,27 @@ public final class EntryPointStorage {
         @NotNull
         private final String value;
 
-        public Entry(@NotNull PluginContained pluginContained, @NotNull LanguageAdapted languageAdapted, @NotNull String value) {
+        public Entry(@NotNull PluginContained pluginContained, @NotNull LanguageAdapted languageAdapted,
+                     @NotNull String value) {
             this.pluginContained = pluginContained;
             this.languageAdapted = languageAdapted;
             this.value = value;
         }
 
         @NotNull
-        public <T> T getOrCreate(Class<T> type) throws Exception {
+        public <T> T getOrCreate(Class<T> type) throws LanguageAdapterException {
             Object o = instanceMap.get(type);
+
             if (o == null) {
                 o = create(type);
                 instanceMap.put(type, o);
             }
+
             //noinspection unchecked
             return (T) o;
         }
 
-        private <T> T create(Class<T> type) throws Exception {
+        private <T> T create(Class<T> type) throws LanguageAdapterException {
             return languageAdapted.create(pluginContained, value, type);
         }
 
