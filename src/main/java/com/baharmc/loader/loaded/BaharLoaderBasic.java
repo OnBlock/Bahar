@@ -83,6 +83,8 @@ public class BaharLoaderBasic implements BaharLoaded {
                 throw new RuntimeException(e);
             }
         });
+
+        finishLoading();
     }
 
     @Override
@@ -94,26 +96,16 @@ public class BaharLoaderBasic implements BaharLoaded {
         locked = true;
     }
 
-    @Override
-    public void loadPlugins() {
-
-        finishLoading();
-    }
-
-    @Override
-    public void enablePlugins() {
-
-    }
-
-    @Override
-    public void disablePlugins() {
-
-    }
-
     @NotNull
     @Override
     public <T> List<T> getEntryPoints(@NotNull String key, @NotNull Class<T> type) {
         return entryPointStorage.getEntryPoints(key, type);
+    }
+
+    @NotNull
+    @Override
+    public EntryPointStorage getEntryPointStorage() {
+        return entryPointStorage;
     }
 
     @NotNull
@@ -141,6 +133,12 @@ public class BaharLoaderBasic implements BaharLoaded {
         return new CollectionOf<>(
             plugins.values()
         );
+    }
+
+    @NotNull
+    @Override
+    public PluginContained getRuntime() {
+        return plugins.getOrDefault("bahar", new MckPluginContained());
     }
 
     @Override

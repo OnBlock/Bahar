@@ -2,6 +2,7 @@ package com.baharmc.loader.loaded;
 
 import com.baharmc.loader.discovery.PluginCandidate;
 import com.baharmc.loader.discovery.PluginResolutionException;
+import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.plugin.PluginContained;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,14 +23,11 @@ public interface BaharLoaded {
 
     void lock();
 
-    void loadPlugins();
-
-    void enablePlugins();
-
-    void disablePlugins();
-
     @NotNull
     <T> List<T> getEntryPoints(@NotNull String key, @NotNull Class<T> type);
+
+    @NotNull
+    EntryPointStorage getEntryPointStorage();
 
     @NotNull
     MappingResolved getMappingResolver();
@@ -39,6 +37,9 @@ public interface BaharLoaded {
 
     @NotNull
     Collection<PluginContained> getAllPlugins();
+
+    @NotNull
+    PluginContained getRuntime();
 
     boolean isPluginLoaded(String id);
 

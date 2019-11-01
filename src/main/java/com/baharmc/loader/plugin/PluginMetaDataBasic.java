@@ -1,5 +1,6 @@
 package com.baharmc.loader.plugin;
 
+import com.baharmc.loader.metadata.EntryPointMetaData;
 import com.baharmc.loader.plugin.metadata.*;
 import com.baharmc.loader.utils.semanticversion.Version;
 import org.apache.logging.log4j.Logger;
@@ -40,10 +41,15 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
     @NotNull
     private final List<Dependency> dependencies;
 
+    @NotNull
+    private final EntryPointContained entryPointContained;
+
+
     public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
                                @NotNull String description, @NotNull Version version, @NotNull License license,
                                @NotNull List<Person> authors, @NotNull List<Contact> contacts,
-                               @NotNull List<Dependency> dependencies) {
+                               @NotNull List<Dependency> dependencies,
+                               @NotNull EntryPointContained entryPointContained) {
         this.id = id;
         this.name = name;
         this.isStable = isStable;
@@ -54,13 +60,20 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
         this.authors = authors;
         this.contacts = contacts;
         this.dependencies = dependencies;
+        this.entryPointContained = entryPointContained;
     }
 
     public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
                                @NotNull String description, @NotNull Version version) {
         this(id, name, isStable, isSnapshot, description, version, ListOf<String>::new, new ListOf<>(), new ListOf<>(),
-            new ListOf<>()
+            new ListOf<>(), ListOf<EntryPointMetaData>::new
         );
+    }
+
+    @NotNull
+    @Override
+    public String getName() {
+        return name;
     }
 
     @NotNull
@@ -91,6 +104,12 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
     @Override
     public List<Dependency> getDependencies() {
         return dependencies;
+    }
+
+    @NotNull
+    @Override
+    public List<EntryPointMetaData> getEntryPoints(String type) {
+        return entryPointContained.getMetaDataMap();
     }
 
     @Override

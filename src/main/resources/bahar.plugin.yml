@@ -9,6 +9,9 @@ name: BaharRuntime
 #Default: '${version}' managed by Gradle
 #More info: https://semver.org/
 version: '${version}'
+#Main class of your plugin
+main:
+  - 'com.baharmc.runtime.Runtime'
 #If your plugin is stable set it to true, otherwise false
 isStable: false
 #If your plugin is snapshot set it true, otherwise false

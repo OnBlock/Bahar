@@ -94,6 +94,12 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData> 
                         input -> new DependencyBasic(input.getKey(), input.getValue()),
                         ((Map<String, String>) parsed.getOrDefault("depends", new MapOf<>())).entrySet()
                     )
+                ),
+                () -> new ListOf<>(
+                    new Mapped<>(
+                        input -> new EntryPointMetaDataBasic("main", input),
+                        (List<String>) parsed.getOrDefault("main", "")
+                    )
                 )
             );
         } catch (Exception exception) {

@@ -1,5 +1,6 @@
 package com.baharmc.loader.plugin;
 
+import com.baharmc.loader.metadata.EntryPointMetaData;
 import com.baharmc.loader.plugin.metadata.Dependency;
 import com.baharmc.loader.plugin.metadata.NestedJarEntry;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +19,9 @@ public interface LoadedPluginMetaData extends PluginMetaData {
 
     @NotNull
     List<Dependency> getDependencies();
+
+    @NotNull
+    List<EntryPointMetaData> getEntryPoints(String type);
 
     void emitFormatWarnings(@NotNull Logger logger);
 

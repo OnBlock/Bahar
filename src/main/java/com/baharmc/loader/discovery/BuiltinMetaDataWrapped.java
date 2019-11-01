@@ -1,5 +1,6 @@
 package com.baharmc.loader.discovery;
 
+import com.baharmc.loader.metadata.EntryPointMetaData;
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginMetaData;
 import com.baharmc.loader.plugin.metadata.Dependency;
@@ -20,6 +21,12 @@ public final class BuiltinMetaDataWrapped implements LoadedPluginMetaData {
 
     public BuiltinMetaDataWrapped(@NotNull PluginMetaData pluginMetaData) {
         this.pluginMetaData = pluginMetaData;
+    }
+
+    @NotNull
+    @Override
+    public String getName() {
+        return pluginMetaData.getName();
     }
 
     @NotNull
@@ -49,6 +56,12 @@ public final class BuiltinMetaDataWrapped implements LoadedPluginMetaData {
     @NotNull
     @Override
     public List<Dependency> getDependencies() {
+        return new ListOf<>();
+    }
+
+    @NotNull
+    @Override
+    public List<EntryPointMetaData> getEntryPoints(String type) {
         return new ListOf<>();
     }
 

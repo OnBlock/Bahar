@@ -13,9 +13,13 @@ public final class EntryPointServer {
             runDir = new File(".");
         }
 
+        if (gameInstance == null) {
+            return;
+        }
+
         new InitiatePlugin(gameInstance, runDir).init();
 
-        EntryPointUtils.logErrors("server", BaharLoaded.getInstance().getEntryPoints("server", Plugin.class), Plugin::load);
+        EntryPointUtils.logErrors("main", BaharLoaded.getInstance().getEntryPoints("main", Plugin.class), Plugin::load);
     }
 
 }
