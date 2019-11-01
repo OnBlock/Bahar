@@ -5,12 +5,15 @@ import com.baharmc.loader.plugin.metadata.License;
 import com.baharmc.loader.plugin.metadata.Person;
 import com.baharmc.loader.plugin.metadata.PluginDependency;
 import com.baharmc.loader.utils.semanticversion.Version;
+import net.fabricmc.loader.metadata.NestedJarEntry;
+import org.apache.logging.log4j.Logger;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.List;
 
-public class PluginMetaDataBasic implements PluginMetaData {
+public class PluginMetaDataBasic implements LoadedPluginMetaData {
 
     @NotNull
     private final String id;
@@ -73,6 +76,23 @@ public class PluginMetaDataBasic implements PluginMetaData {
     @Override
     public Version getVersion() {
         return version;
+    }
+
+    @NotNull
+    @Override
+    public Collection<String> getMixinConfigs() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public Collection<NestedJarEntry> getJars() {
+        return null;
+    }
+
+    @Override
+    public void emitFormatWarnings(@NotNull Logger logger) {
+
     }
 
 }
