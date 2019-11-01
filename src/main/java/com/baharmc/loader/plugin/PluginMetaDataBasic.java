@@ -7,6 +7,7 @@ import com.baharmc.loader.plugin.metadata.PluginDependency;
 import com.baharmc.loader.utils.semanticversion.Version;
 import net.fabricmc.loader.metadata.NestedJarEntry;
 import org.apache.logging.log4j.Logger;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
@@ -81,13 +82,13 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
     @NotNull
     @Override
     public Collection<String> getMixinConfigs() {
-        return null;
+        return new CollectionOf<>();
     }
 
     @NotNull
     @Override
     public Collection<NestedJarEntry> getJars() {
-        return null;
+        return new CollectionOf<>();
     }
 
     @Override
