@@ -44,6 +44,7 @@ dependencies {
     fatJar 'com.baharmc:BaharAPI:0.0.1'
 
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    // TODO FIX THE MAPPINGS.TINY FILE BUG ABOUT DEOBF.
     mappings "net.fabricmc:yarn:${project.yarn_mappings}"
     modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric}"
 
