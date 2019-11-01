@@ -2,12 +2,18 @@ package com.baharmc.loader.metadata;
 
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginMetaDataBasic;
+import com.baharmc.loader.plugin.metadata.Contact;
+import com.baharmc.loader.plugin.metadata.License;
+import com.baharmc.loader.plugin.metadata.Person;
+import com.baharmc.loader.plugin.metadata.PluginDependency;
 import com.baharmc.loader.utils.semanticversion.Version;
 import org.cactoos.Scalar;
+import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData> {
@@ -36,7 +42,29 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData> 
                         parsed.getOrDefault("version", ""),
                         "Plugin version must be specified!"
                     )
-                )
+                ),
+                new License() {
+                    @NotNull
+                    @Override
+                    public List<String> getLicenses() {
+                        final boolean one = parsed.containsKey("license");
+                        final boolean more = parsed.containsKey("licenses");
+
+                        if (one) {
+                            return new ListOf<>(
+                                get(String.class, parsed.getOrDefault("license", ""))
+                            );
+                        } else if (more) {
+                            //noinspection unchecked
+                            return (List<String>) get(List.class, parsed.getOrDefault("licenses", new ListOf<>()));
+                        }
+                        
+                        return new ListOf<>();
+                    }
+                },
+                new ListOf<>(),
+                new ListOf<>(),
+                new ListOf<>()
             );
         } catch (Exception exception) {
             throw new RuntimeException(exception);
