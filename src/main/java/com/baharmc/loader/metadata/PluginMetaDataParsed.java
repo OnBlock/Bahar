@@ -25,6 +25,10 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData[]
         final Map<String, Object> parsed = yaml.load(stream);
         final Optional<String> id = get(String.class, parsed.getOrDefault("id", ""));
 
+        if (!id.isPresent()) {
+            throw new RuntimeException("Plugin Id must be specified!");
+        }
+
         return new LoadedPluginMetaData[0];
     }
 
