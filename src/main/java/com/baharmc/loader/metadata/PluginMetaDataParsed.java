@@ -47,16 +47,18 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData> 
                     final boolean one = parsed.containsKey("license");
                     final boolean more = parsed.containsKey("licenses");
 
+                    if (!one && !more) {
+                        return new ListOf<>();
+                    }
+
                     if (one) {
                         return new ListOf<>(
                             get(String.class, parsed.getOrDefault("license", ""))
                         );
-                    } else if (more) {
-                        //noinspection unchecked
-                        return (List<String>) get(List.class, parsed.getOrDefault("licenses", new ListOf<>()));
                     }
 
-                    return new ListOf<>();
+                    //noinspection unchecked
+                    return (List<String>) get(List.class, parsed.getOrDefault("licenses", new ListOf<>()));
                 },
                 new ListOf<>(),
                 new ListOf<>(),
