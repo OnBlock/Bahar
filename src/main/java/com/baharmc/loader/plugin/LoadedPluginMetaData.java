@@ -1,10 +1,12 @@
 package com.baharmc.loader.plugin;
 
+import com.baharmc.loader.plugin.metadata.Dependency;
 import com.baharmc.loader.plugin.metadata.NestedJarEntry;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface LoadedPluginMetaData extends PluginMetaData {
 
@@ -13,6 +15,9 @@ public interface LoadedPluginMetaData extends PluginMetaData {
 
     @NotNull
     Collection<NestedJarEntry> getJars();
+
+    @NotNull
+    List<Dependency> getDependencies();
 
     void emitFormatWarnings(@NotNull Logger logger);
 

@@ -1,7 +1,5 @@
 package com.baharmc.loader.api;
 
-import net.fabricmc.api.EnvType;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

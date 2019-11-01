@@ -1,6 +1,7 @@
 package com.baharmc.loader.loaded;
 
 import com.baharmc.loader.discovery.ClasspathPluginCandidateFound;
+import com.baharmc.loader.discovery.PluginCandidate;
 import com.baharmc.loader.discovery.PluginResolutionException;
 import com.baharmc.loader.discovery.PluginResolve;
 import com.baharmc.loader.entrypoint.EntryPointStorage;
@@ -56,11 +57,15 @@ public class BaharLoaderBasic implements BaharLoaded {
             new ClasspathPluginCandidateFound()
         );
 
+        final Map<String, PluginCandidate> pluginCandidates;
+
         try {
-            pluginResolve.resolve();
+            pluginCandidates = pluginResolve.resolve();
         } catch (PluginResolutionException e) {
             throw new RuntimeException(e);
         }
+
+        pluginCandidates.forEach((s, pluginCandidate) -> System.out.println(s + "-> " + pluginCandidate));
     }
 
     @Override

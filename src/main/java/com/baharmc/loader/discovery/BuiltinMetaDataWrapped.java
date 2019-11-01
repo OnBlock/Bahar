@@ -2,13 +2,16 @@ package com.baharmc.loader.discovery;
 
 import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginMetaData;
+import com.baharmc.loader.plugin.metadata.Dependency;
 import com.baharmc.loader.plugin.metadata.NestedJarEntry;
 import com.baharmc.loader.utils.semanticversion.Version;
 import org.apache.logging.log4j.Logger;
 import org.cactoos.collection.CollectionOf;
+import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.List;
 
 public final class BuiltinMetaDataWrapped implements LoadedPluginMetaData {
 
@@ -41,6 +44,12 @@ public final class BuiltinMetaDataWrapped implements LoadedPluginMetaData {
     @Override
     public Version getVersion() {
         return pluginMetaData.getVersion();
+    }
+
+    @NotNull
+    @Override
+    public List<Dependency> getDependencies() {
+        return new ListOf<>();
     }
 
     @Override

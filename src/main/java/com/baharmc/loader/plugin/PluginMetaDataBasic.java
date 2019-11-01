@@ -38,12 +38,12 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
     private final List<Contact> contacts;
 
     @NotNull
-    private final List<Dependency> pluginDependencies;
+    private final List<Dependency> dependencies;
 
     public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
                                @NotNull String description, @NotNull Version version, @NotNull License license,
                                @NotNull List<Person> authors, @NotNull List<Contact> contacts,
-                               @NotNull List<Dependency> pluginDependencies) {
+                               @NotNull List<Dependency> dependencies) {
         this.id = id;
         this.name = name;
         this.isStable = isStable;
@@ -53,7 +53,7 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
         this.license = license;
         this.authors = authors;
         this.contacts = contacts;
-        this.pluginDependencies = pluginDependencies;
+        this.dependencies = dependencies;
     }
 
     public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
@@ -85,6 +85,12 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
     @Override
     public Collection<NestedJarEntry> getJars() {
         return new CollectionOf<>();
+    }
+
+    @NotNull
+    @Override
+    public List<Dependency> getDependencies() {
+        return dependencies;
     }
 
     @Override
