@@ -22,6 +22,7 @@ public final class IsPluginIdValid implements Scalar<List<String>> {
     @Override
     public List<String> value() {
         final List<String> errorList = new ArrayList<>();
+
         if (pluginId.isEmpty()) {
             errorList.add("is empty!");
             return errorList;
