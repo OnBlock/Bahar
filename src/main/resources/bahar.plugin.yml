@@ -12,6 +12,9 @@ version: '${version}'
 #Main class of your plugin
 main:
   - 'com.baharmc.runtime.Runtime'
+#Mixin config file
+mixins:
+  - 'mixins.bahar.json'
 #If your plugin is stable set it to true, otherwise false
 isStable: false
 #If your plugin is snapshot set it true, otherwise false

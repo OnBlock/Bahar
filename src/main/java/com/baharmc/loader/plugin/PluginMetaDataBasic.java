@@ -44,12 +44,14 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
     @NotNull
     private final EntryPointContained entryPointContained;
 
+    @NotNull
+    private final List<String> mixinConfigs;
 
     public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
                                @NotNull String description, @NotNull Version version, @NotNull License license,
                                @NotNull List<Person> authors, @NotNull List<Contact> contacts,
                                @NotNull List<Dependency> dependencies,
-                               @NotNull EntryPointContained entryPointContained) {
+                               @NotNull EntryPointContained entryPointContained, @NotNull List<String> mixinConfigs) {
         this.id = id;
         this.name = name;
         this.isStable = isStable;
@@ -61,12 +63,13 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
         this.contacts = contacts;
         this.dependencies = dependencies;
         this.entryPointContained = entryPointContained;
+        this.mixinConfigs = mixinConfigs;
     }
 
     public PluginMetaDataBasic(@NotNull String id, @NotNull String name, boolean isStable, boolean isSnapshot,
                                @NotNull String description, @NotNull Version version) {
         this(id, name, isStable, isSnapshot, description, version, ListOf<String>::new, new ListOf<>(), new ListOf<>(),
-            new ListOf<>(), ListOf<EntryPointMetaData>::new
+            new ListOf<>(), ListOf<EntryPointMetaData>::new, new ListOf<>()
         );
     }
 
@@ -91,7 +94,7 @@ public class PluginMetaDataBasic implements LoadedPluginMetaData {
     @NotNull
     @Override
     public Collection<String> getMixinConfigs() {
-        return new CollectionOf<>();
+        return mixinConfigs;
     }
 
     @NotNull

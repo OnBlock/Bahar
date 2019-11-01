@@ -98,9 +98,10 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData> 
                 () -> new ListOf<>(
                     new Mapped<>(
                         input -> new EntryPointMetaDataBasic("main", input),
-                        (List<String>) parsed.getOrDefault("main", "")
+                        (List<String>) parsed.getOrDefault("main", new ListOf<>())
                     )
-                )
+                ),
+                (List<String>) parsed.getOrDefault("mixins", new ListOf<>())
             );
         } catch (Exception exception) {
             throw new RuntimeException(exception);
