@@ -8,7 +8,7 @@ public interface Version {
     String getFriendlyString();
 
     @NotNull
-    static Version parse(String string) throws VersionParsingException {
+    static Version parse(@NotNull String string) throws VersionParsingException {
         return VersionDeserializer.deserialize(string);
     }
 

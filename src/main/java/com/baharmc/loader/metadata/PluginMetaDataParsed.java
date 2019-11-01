@@ -21,23 +21,26 @@ public final class PluginMetaDataParsed implements Scalar<LoadedPluginMetaData> 
 
     @Override
     public LoadedPluginMetaData value() {
-        final Yaml yaml = new Yaml();
-        final Map<String, Object> parsed = yaml.load(stream);
-        final String id = get(String.class, parsed.getOrDefault("id", ""), "Plugin id must be specified!");
-        final String name = get(String.class, parsed.getOrDefault("name", ""), "Plugin name must be specified!");
-        final String versionString = get(String.class, parsed.getOrDefault("version", ""), "Plugin version must be specified!");
-        final boolean isStable = get(boolean.class, parsed.getOrDefault("isStable", true));
-        final boolean isSnapshot = get(boolean.class, parsed.getOrDefault("isSnapshot", false));
-        final String description = get(String.class, parsed.getOrDefault("description", ""));
-        final Version version;
+        final Map<String, Object> parsed = new Yaml().load(stream);
 
         try {
-            version = Version.parse(versionString);
+            return new PluginMetaDataBasic(
+                get(String.class, parsed.getOrDefault("id", ""), "Plugin id must be specified!"),
+                get(String.class, parsed.getOrDefault("name", ""), "Plugin name must be specified!"),
+                get(boolean.class, parsed.getOrDefault("isStable", true)),
+                get(boolean.class, parsed.getOrDefault("isSnapshot", false)),
+                get(String.class, parsed.getOrDefault("description", "")),
+                Version.parse(
+                    get(
+                        String.class,
+                        parsed.getOrDefault("version", ""),
+                        "Plugin version must be specified!"
+                    )
+                )
+            );
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
-
-        return new PluginMetaDataBasic(id, name, isStable, isSnapshot, description, version);
     }
 
     @NotNull
