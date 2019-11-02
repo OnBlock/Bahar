@@ -1,11 +1,12 @@
 package com.baharmc.runtime.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class RollingAverage {
 
     public static final int SAMPLE_INTERVAL = 20;
-    public static final java.math.BigDecimal TPS_BASE = new BigDecimal(1E9).multiply(new java.math.BigDecimal(SAMPLE_INTERVAL));
+    public static final java.math.BigDecimal TPS_BASE = new BigDecimal("1E9").multiply(new BigDecimal(SAMPLE_INTERVAL));
     private static final int TPS = 20;
     public static final int TICK_TIME = 1000000000 / TPS;
     private static final long SEC_IN_NANO = 1000000000;
@@ -21,7 +22,7 @@ public class RollingAverage {
         this.size = size;
         this.time = size * SEC_IN_NANO;
         this.total = dec(TPS).multiply(dec(SEC_IN_NANO)).multiply(dec(size));
-        this.samples = new java.math.BigDecimal[size];
+        this.samples = new BigDecimal[size];
         this.times = new long[size];
         for (int i = 0; i < size; i++) {
             this.samples[i] = dec(TPS);
@@ -29,11 +30,11 @@ public class RollingAverage {
         }
     }
 
-    private static java.math.BigDecimal dec(long t) {
-        return new java.math.BigDecimal(t);
+    private static BigDecimal dec(long t) {
+        return new BigDecimal(t);
     }
 
-    public void add(java.math.BigDecimal x, long t) {
+    public void add(BigDecimal x, long t) {
         time -= times[index];
         total = total.subtract(samples[index].multiply(dec(times[index])));
         samples[index] = x;
@@ -46,6 +47,6 @@ public class RollingAverage {
     }
 
     public double getAverage() {
-        return total.divide(dec(time), 30, java.math.RoundingMode.HALF_UP).doubleValue();
+        return total.divide(dec(time), 30, RoundingMode.HALF_UP).doubleValue();
     }
 }
