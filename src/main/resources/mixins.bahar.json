@@ -7,11 +7,11 @@
   },
   "minVersion": "0.7.11",
   "server": [
-    "events.MinecraftDedicatedServerMixin",
-    "events.MinecraftServerMixin",
-    "MinecraftServerMixin",
+    "CommandManagerMixin",
     "MinecraftServerBranded",
+    "MinecraftServerMixin",
     "ServerCommandOutputMixin",
-    "CommandManagerMixin"
+    "events.MinecraftDedicatedServerMixin",
+    "events.MinecraftServerMixin"
   ]
 }
