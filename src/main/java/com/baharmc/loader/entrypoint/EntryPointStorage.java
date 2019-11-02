@@ -2,7 +2,7 @@ package com.baharmc.loader.entrypoint;
 
 import com.baharmc.loader.language.LanguageAdapted;
 import com.baharmc.loader.language.LanguageAdapterException;
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.metadata.EntryPointMetaData;
 import com.baharmc.loader.plugin.PluginContained;
 import org.cactoos.list.ListOf;

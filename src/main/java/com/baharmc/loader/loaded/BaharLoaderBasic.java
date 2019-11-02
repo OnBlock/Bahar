@@ -6,7 +6,7 @@ import com.baharmc.loader.discovery.PluginCandidate;
 import com.baharmc.loader.discovery.PluginResolutionException;
 import com.baharmc.loader.discovery.PluginResolve;
 import com.baharmc.loader.entrypoint.EntryPointStorage;
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
 import com.baharmc.loader.plugin.LoadedPluginMetaData;

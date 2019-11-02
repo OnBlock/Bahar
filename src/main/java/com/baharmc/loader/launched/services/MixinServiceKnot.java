@@ -1,6 +1,6 @@
 package com.baharmc.loader.launched.services;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.launched.knot.Knot;
 import com.google.common.collect.ImmutableList;
 import org.spongepowered.asm.lib.ClassReader;

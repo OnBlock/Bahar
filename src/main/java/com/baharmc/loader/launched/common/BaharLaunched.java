@@ -1,6 +1,5 @@
-package com.baharmc.loader.launched;
+package com.baharmc.loader.launched.common;
 
-import com.baharmc.loader.launched.common.MappingConfiguration;
 import com.baharmc.loader.launched.knot.KnotClassLoaded;
 import com.baharmc.loader.provided.GameProvided;
 import org.apache.logging.log4j.Logger;

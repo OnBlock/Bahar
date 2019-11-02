@@ -2,7 +2,7 @@ package com.baharmc.loader.loaded;
 
 import com.baharmc.loader.entrypoint.EntryPointStorage;
 import com.baharmc.loader.language.DefaultLanguageAdapted;
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.launched.knot.Knot;
 import com.baharmc.loader.metadata.EntryPointMetaData;
 import com.baharmc.loader.plugin.PluginContained;

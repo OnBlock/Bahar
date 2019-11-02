@@ -1,6 +1,6 @@
 package com.baharmc.loader.discovery;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.utils.UrlUtil;
 import org.jetbrains.annotations.NotNull;
 

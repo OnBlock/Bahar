@@ -1,6 +1,6 @@
 package com.baharmc.loader.launched.services;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import org.spongepowered.asm.service.IGlobalPropertyService;
 
 public class BaharGlobalPropertyService implements IGlobalPropertyService {

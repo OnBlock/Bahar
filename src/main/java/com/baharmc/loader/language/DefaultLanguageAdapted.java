@@ -1,6 +1,6 @@
 package com.baharmc.loader.language;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.plugin.PluginContained;
 import org.jetbrains.annotations.NotNull;
 

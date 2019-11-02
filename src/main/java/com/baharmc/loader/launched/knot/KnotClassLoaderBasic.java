@@ -1,6 +1,6 @@
 package com.baharmc.loader.launched.knot;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.provided.GameProvided;
 import org.jetbrains.annotations.NotNull;
 

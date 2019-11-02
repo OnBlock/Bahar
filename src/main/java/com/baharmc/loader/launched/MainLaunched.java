@@ -29,13 +29,10 @@ public class MainLaunched {
     }
 
     public void start() throws Exception {
-        final String serverJarPath;
-
-        serverJarPath = new ArgumentParsed(args).value().getKey().getOrDefault(
+        final String serverJarPath = new ArgumentParsed(args).value().getKey().getOrDefault(
             "serverJarPath",
             ".bahar/server.jar"
         );
-
         final File serverJar = new File(serverJarPath);
 
         if (!serverJar.exists()) {
@@ -61,6 +58,7 @@ public class MainLaunched {
                 "https://launcher.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar",
                 directory.getAbsolutePath()
             );
+
             return;
         }
 
