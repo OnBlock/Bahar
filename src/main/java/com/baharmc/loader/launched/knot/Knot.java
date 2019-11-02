@@ -1,7 +1,7 @@
 package com.baharmc.loader.launched.knot;
 
-import com.baharmc.loader.launched.common.LaunchedBase;
 import com.baharmc.loader.launched.common.BaharMixinBootstrap;
+import com.baharmc.loader.launched.common.LaunchedBase;
 import com.baharmc.loader.loaded.BaharLoaded;
 import com.baharmc.loader.loaded.BaharLoaderBasic;
 import com.baharmc.loader.mock.MckGameProvided;

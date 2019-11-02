@@ -38,6 +38,10 @@ public final class InjectingURLClassLoader extends URLClassLoader {
 				}
 			}
 
+			if (name.startsWith("net.minecraft.")) {
+				c = Thread.currentThread().getContextClassLoader().loadClass(name);
+			}
+
 			if (c == null) {
 				c = getParent().loadClass(name);
 			}

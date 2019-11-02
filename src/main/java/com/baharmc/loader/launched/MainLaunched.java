@@ -68,7 +68,8 @@ public class MainLaunched {
                 UrlUtil.asUrl(serverJar)
             },
             parentLoader,
-            "com.google.common.jimfs."
+            "com.google.common.jimfs.",
+            "net.minecraft."
         );
 
         Thread.currentThread().setContextClassLoader(newClassLoader);
