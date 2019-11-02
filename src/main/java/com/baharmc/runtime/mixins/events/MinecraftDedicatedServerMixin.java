@@ -1,4 +1,4 @@
-package com.baharmc.server.mixins;
+package com.baharmc.runtime.mixins.events;
 
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +19,7 @@ public abstract class MinecraftDedicatedServerMixin {
     @Inject(at = @At(value = "INVOKE", target = "net.minecraft.util.SystemUtil.getMeasuringTimeNano()J", ordinal = 1), method = "setupServer")
     private void bahar$setupServer$ready(CallbackInfoReturnable<Boolean> cir) {
         LOGGER.info("Bahar: Starting all plugins");
+        // TODO trigger server start event
     }
 
 }

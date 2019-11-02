@@ -1,4 +1,4 @@
-package com.baharmc.server.mixins;
+package com.baharmc.runtime.mixins;
 
 import com.baharmc.api.Bahar;
 import com.baharmc.server.BaharServer;
@@ -17,6 +17,7 @@ public abstract class ServerCommandOutputMixin {
         Bahar.setServer(
             new BaharServer(
                 minecraftServer
+                // TODO command and event registery class instances.
             )
         );
     }
