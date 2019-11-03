@@ -1,6 +1,8 @@
 package com.baharmc.loader.launched.knot;
 
-import com.baharmc.loader.launched.LaunchedBase;
+import com.baharmc.loader.launched.common.BaharMixinBootstrap;
+import com.baharmc.loader.launched.common.LaunchedBase;
+import com.baharmc.loader.loaded.BaharLoaded;
 import com.baharmc.loader.loaded.BaharLoaderBasic;
 import com.baharmc.loader.mock.MckGameProvided;
 import com.baharmc.loader.provided.EntryPointResult;
@@ -11,9 +13,11 @@ import com.baharmc.loader.utils.version.GetVersion;
 import org.apache.logging.log4j.LogManager;
 import org.cactoos.list.ListOf;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +28,7 @@ public final class Knot extends LaunchedBase {
     private GameProvided provided = new MckGameProvided();
 
     @NotNull
-    private KnotClassLoaded loaded = new KnotClassLoader(this, provided);
+    private KnotClassLoaded loaded = new KnotClassLoaderBasic(this, provided);
 
     public Knot(@NotNull File serverJarFile) {
         super(LogManager.getFormatterLogger("Bahar"), serverJarFile);
@@ -58,13 +62,24 @@ public final class Knot extends LaunchedBase {
             entrypointResult.getEntryPointPath()
         );
 
-        loaded = new KnotClassLoader(this, provided);
+        loaded = new KnotClassLoaderBasic(this, provided);
 
         getLogger().info("Loading for game " + provided.getGameName() + " " + provided.getRawGameVersion());
         deobfuscate(provided);
         provided.getEntryPointTransformed().locateEntryPoints(this);
         Thread.currentThread().setContextClassLoader(getTargetClassLoader());
-        new BaharLoaderBasic(this, provided).loadPlugins();
+
+        // LOADING
+        final BaharLoaded baharLoaded = new BaharLoaderBasic(this, provided);
+
+        baharLoaded.load();
+        baharLoaded.lock();
+        MixinBootstrap.init();
+        new BaharMixinBootstrap(baharLoaded).init();
+        doneMixinBootstrapping();
+        getKnotClassLoaded().getDelegate().initializeTransformers();
+        // LOADING
+
         provided.launch(getTargetClassLoader());
     }
 
@@ -76,7 +91,7 @@ public final class Knot extends LaunchedBase {
 
     @NotNull
     @Override
-    public byte[] getClassByteArray(String name) throws IOException {
+    public byte[] getClassByteArray(@NotNull String name) throws IOException {
         return loaded.getDelegate().getClassByteArray(name, false);
     }
 
@@ -96,5 +111,20 @@ public final class Knot extends LaunchedBase {
     @Override
     public KnotClassLoaded getKnotClassLoaded() {
         return loaded;
+    }
+
+    @Override
+    public boolean isClassLoaded(@NotNull String name) {
+        return loaded.isClassLoaded(name);
+    }
+
+    @NotNull
+    @Override
+    public InputStream getResourceAsStream(@NotNull String name) {
+        try {
+            return loaded.getResourceAsStream(name, false);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read file '" + name + "'!", e);
+        }
     }
 }

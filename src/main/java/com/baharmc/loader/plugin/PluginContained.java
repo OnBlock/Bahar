@@ -10,7 +10,7 @@ public interface PluginContained {
     void instantiate();
 
     @NotNull
-    PluginMetaData getMetadata();
+    LoadedPluginMetaData getMetadata();
 
     @NotNull
     Path getRootPath();

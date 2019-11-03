@@ -6,17 +6,17 @@ public final class Runtime implements Plugin {
 
     @Override
     public void load() {
-        System.out.println("Runtime was loaded!");
+        // TODO load plugins
     }
 
     @Override
     public void enable() {
-        System.out.println("Runtime was enabled!");
+        // TODO enable plugins
     }
 
     @Override
     public void disable() {
-        System.out.println("Runtime was disabled!");
+        // TODO disable plugins
     }
 
 }

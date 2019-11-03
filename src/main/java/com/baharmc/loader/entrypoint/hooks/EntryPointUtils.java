@@ -1,6 +1,6 @@
 package com.baharmc.loader.entrypoint.hooks;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

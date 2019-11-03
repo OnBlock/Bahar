@@ -1,15 +1,11 @@
 package com.baharmc.loader.launched.common;
 
 import com.baharmc.loader.loaded.BaharLoaded;
-import com.baharmc.loader.plugin.LoadedPluginMetaData;
-import com.baharmc.loader.plugin.PluginContained;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.list.Joined;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
 import org.cactoos.scalar.And;
-import org.cactoos.set.SetOf;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
@@ -34,24 +30,14 @@ public final class BaharMixinBootstrap {
 		try {
 			new And(
 				Mixins::addConfiguration,
-				new SetOf<>(
-					new Filtered<>(
-						s -> !s.isEmpty(),
-						new Joined<>(
-							new Mapped<>(
-								metaData -> new ListOf<>(
-									((LoadedPluginMetaData)metaData).getMixinConfigs()
-								),
-								new CollectionOf<>(
-									new Filtered<>(
-										m -> m instanceof LoadedPluginMetaData,
-										new Mapped<>(
-											PluginContained::getMetadata,
-											loaded.getAllPlugins()
-										)
-									)
-								)
-							)
+				new Filtered<>(
+					s -> !s.isEmpty(),
+					new Joined<>(
+						new Mapped<>(
+							pluginContained -> new ListOf<>(
+								pluginContained.getMetadata().getMixinConfigs()
+							),
+							loaded.getAllPlugins()
 						)
 					)
 				)

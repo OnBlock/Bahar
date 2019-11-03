@@ -1,7 +1,7 @@
 package com.baharmc.loader.launched;
 
+import com.baharmc.loader.utils.ArgumentParsed;
 import com.baharmc.loader.utils.UrlUtil;
-import com.baharmc.loader.utils.argument.ArgumentParsed;
 import me.tongfei.progressbar.ProgressBar;
 import me.tongfei.progressbar.ProgressBarStyle;
 import org.jetbrains.annotations.NotNull;
@@ -29,13 +29,10 @@ public class MainLaunched {
     }
 
     public void start() throws Exception {
-        final String serverJarPath;
-
-        serverJarPath = new ArgumentParsed(args).value().getKey().getOrDefault(
+        final String serverJarPath = new ArgumentParsed(args).value().getKey().getOrDefault(
             "serverJarPath",
             ".bahar/server.jar"
         );
-
         final File serverJar = new File(serverJarPath);
 
         if (!serverJar.exists()) {
@@ -61,6 +58,7 @@ public class MainLaunched {
                 "https://launcher.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar",
                 directory.getAbsolutePath()
             );
+
             return;
         }
 
@@ -70,7 +68,8 @@ public class MainLaunched {
                 UrlUtil.asUrl(serverJar)
             },
             parentLoader,
-            "com.google.common.jimfs."
+            "com.google.common.jimfs.",
+            "net.minecraft."
         );
 
         Thread.currentThread().setContextClassLoader(newClassLoader);

@@ -1,7 +1,7 @@
 package com.baharmc.loader.transformed;
 
 import com.baharmc.loader.entrypoint.EntryPointPatch;
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;

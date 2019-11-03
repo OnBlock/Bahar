@@ -1,6 +1,6 @@
 package com.baharmc.loader.launched.knot;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.provided.GameProvided;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,8 @@ import java.security.SecureClassLoader;
 import java.util.Enumeration;
 import java.util.Objects;
 
-class KnotClassLoader extends SecureClassLoader implements KnotClassLoaded {
+class KnotClassLoaderBasic extends SecureClassLoader implements KnotClassLoaded {
+
 	private static class DynamicURLClassLoader extends URLClassLoader {
 		private DynamicURLClassLoader(URL[] urls) {
 			super(urls, new DummyClassLoader());
@@ -28,11 +29,16 @@ class KnotClassLoader extends SecureClassLoader implements KnotClassLoaded {
 		}
 	}
 
+	@NotNull
 	private final DynamicURLClassLoader urlLoader;
+
+	@NotNull
 	private final ClassLoader originalLoader;
+
+	@NotNull
 	private final KnotClassDelegate delegate;
 
-	KnotClassLoader(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
+	KnotClassLoaderBasic(@NotNull BaharLaunched launched, @NotNull GameProvided provided) {
 		super(new DynamicURLClassLoader(new URL[0]));
 		this.originalLoader = getClass().getClassLoader();
 		this.urlLoader = (DynamicURLClassLoader) getParent();

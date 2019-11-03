@@ -6,6 +6,9 @@ import org.jetbrains.annotations.NotNull;
 public interface PluginMetaData {
 
     @NotNull
+    String getName();
+
+    @NotNull
     String getId();
 
     @NotNull

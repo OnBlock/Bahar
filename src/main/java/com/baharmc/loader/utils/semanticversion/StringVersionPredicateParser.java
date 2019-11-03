@@ -16,16 +16,20 @@
 
 package com.baharmc.loader.utils.semanticversion;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Predicate;
 
 public final class StringVersionPredicateParser {
-	public static Predicate<StringVersion> create(String text) throws VersionParsingException {
+
+	public static Predicate<StringVersion> create(@NotNull String text) {
 		final String compared = text.trim();
 
 		if (compared.equals("*")) {
-			return (t) -> true;
+			return t -> true;
 		} else {
-			return (t) -> compared.equals(t.getFriendlyString());
+			return t -> compared.equals(t.getFriendlyString());
 		}
 	}
+
 }

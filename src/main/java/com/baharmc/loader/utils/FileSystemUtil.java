@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.FileSystem;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -15,50 +14,28 @@ import java.util.Map;
 
 public final class FileSystemUtil {
 
-    public static class FileSystemDelegate implements AutoCloseable {
-
-        @NotNull
-        private final FileSystem fileSystem;
-
-        private final boolean owner;
-
-        public FileSystemDelegate(@NotNull FileSystem fileSystem, boolean owner) {
-            this.fileSystem = fileSystem;
-            this.owner = owner;
-        }
-
-        public FileSystem get() {
-            return fileSystem;
-        }
-
-        @Override
-        public void close() throws IOException {
-            if (owner) {
-                fileSystem.close();
-            }
-        }
-    }
-
     private FileSystemUtil() {
     }
 
-    private static final Map<String, String> jfsArgsCreate = new HashMap<>();
-    private static final Map<String, String> jfsArgsEmpty = new HashMap<>();
+    private static final Map<String, String> JFS_ARGS_CREATE = new HashMap<>();
+
+    private static final Map<String, String> JFS_ARGS_EMPTY = new HashMap<>();
 
     static {
-        jfsArgsCreate.put("create", "true");
+        JFS_ARGS_CREATE.put("create", "true");
     }
 
-	public static FileSystemDelegate getJarFileSystem(File file, boolean create) throws IOException {
+	public static FileSystemDelegate getJarFileSystem(@NotNull File file, boolean create) throws IOException {
     	return getJarFileSystem(file.toURI(), create);
 	}
 
-	public static FileSystemDelegate getJarFileSystem(Path path, boolean create) throws IOException {
+	public static FileSystemDelegate getJarFileSystem(@NotNull Path path, boolean create) throws IOException {
 		return getJarFileSystem(path.toUri(), create);
 	}
 
-	public static FileSystemDelegate getJarFileSystem(URI uri, boolean create) throws IOException {
-        URI jarUri;
+	public static FileSystemDelegate getJarFileSystem(@NotNull URI uri, boolean create) throws IOException {
+        final URI jarUri;
+
         try {
             jarUri = new URI("jar:" + uri.getScheme(), uri.getHost(), uri.getPath(), uri.getFragment());
         } catch (URISyntaxException e) {
@@ -66,7 +43,7 @@ public final class FileSystemUtil {
         }
 
         try {
-            return new FileSystemDelegate(FileSystems.newFileSystem(jarUri, create ? jfsArgsCreate : jfsArgsEmpty), true);
+            return new FileSystemDelegate(FileSystems.newFileSystem(jarUri, create ? JFS_ARGS_CREATE : JFS_ARGS_EMPTY), true);
         } catch (FileSystemAlreadyExistsException e) {
             return new FileSystemDelegate(FileSystems.getFileSystem(jarUri), false);
         }

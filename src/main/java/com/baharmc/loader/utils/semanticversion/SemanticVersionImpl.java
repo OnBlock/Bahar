@@ -24,34 +24,45 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class SemanticVersionImpl implements SemanticVersion {
-	private static final Pattern DOT_SEPARATED_ID = Pattern.compile("|[-0-9A-Za-z]+(\\.[-0-9A-Za-z]+)*");
-	private final int[] components;
-	private final String prerelease;
-	private final String build;
-	private String friendlyName;
 
-	public SemanticVersionImpl(String version, boolean storeX) throws VersionParsingException {
-		int buildDelimPos = version.indexOf('+');
+	private static final Pattern DOT_SEPARATED_ID = Pattern.compile("|[-0-9A-Za-z]+(\\.[-0-9A-Za-z]+)*");
+
+	@NotNull
+	private final int[] components;
+
+	@NotNull
+	private final String prerelease;
+
+	@NotNull
+	private final String build;
+
+	@NotNull
+	private String friendlyName = "";
+
+	public SemanticVersionImpl(@NotNull String version, boolean storeX) throws VersionParsingException {
+		final int buildDelimPos = version.indexOf('+');
+
 		if (buildDelimPos >= 0) {
 			build = version.substring(buildDelimPos + 1);
 			version = version.substring(0, buildDelimPos);
 		} else {
-			build = null;
+			build = "";
 		}
 
 		int dashDelimPos = version.indexOf('-');
+
 		if (dashDelimPos >= 0) {
 			prerelease = version.substring(dashDelimPos + 1);
 			version = version.substring(0, dashDelimPos);
 		} else {
-			prerelease = null;
+			prerelease = "";
 		}
 
-		if (prerelease != null && !DOT_SEPARATED_ID.matcher(prerelease).matches()) {
+		if (!prerelease.isEmpty() && !DOT_SEPARATED_ID.matcher(prerelease).matches()) {
 			throw new VersionParsingException("Invalid prerelease string '" + prerelease + "'!");
 		}
 
-		if (build != null && !DOT_SEPARATED_ID.matcher(build).matches()) {
+		if (!build.isEmpty() && !DOT_SEPARATED_ID.matcher(build).matches()) {
 			throw new VersionParsingException("Invalid build string '" + build + "'!");
 		}
 
@@ -61,7 +72,8 @@ public class SemanticVersionImpl implements SemanticVersion {
 			throw new VersionParsingException("Missing version component!");
 		}
 
-		String[] componentStrings = version.split("\\.");
+		final String[] componentStrings = version.split("\\.");
+
 		if (componentStrings.length < 1) {
 			throw new VersionParsingException("Did not provide version numbers!");
 		}
@@ -69,11 +81,11 @@ public class SemanticVersionImpl implements SemanticVersion {
 		components = new int[componentStrings.length];
 
 		for (int i = 0; i < componentStrings.length; i++) {
-			String compStr = componentStrings[i];
+			final String compStr = componentStrings[i];
 
 			if (storeX) {
 				if (compStr.equals("x") || compStr.equals("X") || compStr.equals("*")) {
-					if (prerelease != null) {
+					if (!prerelease.isEmpty()) {
 						throw new VersionParsingException("Pre-release versions are not allowed to use X-ranges!");
 					}
 
@@ -106,7 +118,7 @@ public class SemanticVersionImpl implements SemanticVersion {
 	}
 
 	private void buildFriendlyName() {
-		StringBuilder fnBuilder = new StringBuilder();
+		final StringBuilder fnBuilder = new StringBuilder();
 		boolean first = true;
 
 		for (int i : components) {
@@ -123,11 +135,11 @@ public class SemanticVersionImpl implements SemanticVersion {
 			}
 		}
 
-		if (prerelease != null) {
+		if (!prerelease.isEmpty()) {
 			fnBuilder.append('-').append(prerelease);
 		}
 
-		if (build != null) {
+		if (!build.isEmpty()) {
 			fnBuilder.append('+').append(build);
 		}
 
@@ -151,14 +163,16 @@ public class SemanticVersionImpl implements SemanticVersion {
 		}
 	}
 
-	@Override
+	@NotNull
+    @Override
 	public Optional<String> getPrereleaseKey() {
-		return Optional.ofNullable(prerelease);
+		return Optional.of(prerelease);
 	}
 
+	@NotNull
 	@Override
 	public Optional<String> getBuildKey() {
-		return Optional.ofNullable(build);
+		return Optional.of(build);
 	}
 
 	@NotNull
@@ -183,9 +197,17 @@ public class SemanticVersionImpl implements SemanticVersion {
 
 	@Override
 	public int hashCode() {
-		return Arrays.hashCode(components) * 73 + (prerelease != null ? prerelease.hashCode() * 11 : 0) + (build != null ? build.hashCode() : 0);
+		return Arrays.hashCode(components) * 73 + (!prerelease.isEmpty()
+			? prerelease.hashCode() * 11
+			: 0
+		) + (
+			!build.isEmpty()
+				? build.hashCode()
+				: 0
+		);
 	}
 
+	@NotNull
 	@Override
 	public String toString() {
 		return getFriendlyString();
@@ -202,7 +224,7 @@ public class SemanticVersionImpl implements SemanticVersion {
 		return false;
 	}
 
-	public boolean equalsComponentsExactly(SemanticVersionImpl other) {
+	public boolean equalsComponentsExactly(@NotNull SemanticVersionImpl other) {
 		for (int i = 0; i < Math.max(getVersionComponentCount(), other.getVersionComponentCount()); i++) {
 			if (getVersionComponent(i) != other.getVersionComponent(i)) {
 				return false;
@@ -213,6 +235,6 @@ public class SemanticVersionImpl implements SemanticVersion {
 	}
 
 	boolean isPrerelease() {
-		return prerelease != null;
+		return !prerelease.isEmpty();
 	}
 }

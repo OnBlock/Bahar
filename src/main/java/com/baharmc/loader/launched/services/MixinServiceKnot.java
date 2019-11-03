@@ -1,9 +1,8 @@
 package com.baharmc.loader.launched.services;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.launched.knot.Knot;
 import com.google.common.collect.ImmutableList;
-import net.fabricmc.loader.launch.common.FabricLauncherBase;
 import org.spongepowered.asm.lib.ClassReader;
 import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -56,7 +55,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 
 	@Override
 	public Class<?> findClass(String name, boolean initialize) throws ClassNotFoundException {
-		return Class.forName(name, initialize, FabricLauncherBase.getLauncher().getTargetClassLoader());
+		return Class.forName(name, initialize, BaharLaunched.getInstance().getTargetClassLoader());
 	}
 
 	@Override
@@ -120,7 +119,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 
 	@Override
 	public InputStream getResourceAsStream(String name) {
-		return FabricLauncherBase.getLauncher().getResourceAsStream(name);
+		return BaharLaunched.getInstance().getResourceAsStream(name);
 	}
 
 	@Override
@@ -130,7 +129,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 
 	@Override
 	public boolean isClassLoaded(String className) {
-		return FabricLauncherBase.getLauncher().isClassLoaded(className);
+		return BaharLaunched.getInstance().isClassLoaded(className);
 	}
 
 	@Override

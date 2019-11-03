@@ -1,4 +1,4 @@
-package com.baharmc.server.mixins;
+package com.baharmc.runtime.mixins.events;
 
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +19,7 @@ public abstract class MinecraftServerMixin {
     @Inject(at = @At("HEAD"), method = "shutdown")
     private void bahar$shutdown(CallbackInfo ci) {
         LOGGER.info("Bahar: Stopping all plugins");
+        // TODO trigger server stop event
     }
 
 }

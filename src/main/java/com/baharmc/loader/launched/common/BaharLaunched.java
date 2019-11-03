@@ -1,12 +1,12 @@
-package com.baharmc.loader.launched;
+package com.baharmc.loader.launched.common;
 
-import com.baharmc.loader.launched.common.MappingConfiguration;
 import com.baharmc.loader.launched.knot.KnotClassLoaded;
 import com.baharmc.loader.provided.GameProvided;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Map;
@@ -56,6 +56,11 @@ public interface BaharLaunched {
     String getEntryPoint();
 
     @NotNull
-    byte[] getClassByteArray(String name) throws IOException;
+    byte[] getClassByteArray(@NotNull String name) throws IOException;
+
+    boolean isClassLoaded(@NotNull String name);
+
+    @NotNull
+    InputStream getResourceAsStream(@NotNull String name);
 
 }

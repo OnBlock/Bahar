@@ -1,17 +1,22 @@
 package com.baharmc.loader.loaded;
 
+import com.baharmc.loader.contained.PluginContainerBasic;
+import com.baharmc.loader.discovery.ClasspathPluginCandidateFound;
+import com.baharmc.loader.discovery.PluginCandidate;
+import com.baharmc.loader.discovery.PluginResolutionException;
+import com.baharmc.loader.discovery.PluginResolve;
 import com.baharmc.loader.entrypoint.EntryPointStorage;
-import com.baharmc.loader.launched.BaharLaunched;
-import com.baharmc.loader.launched.common.BaharMixinBootstrap;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.mock.MckMappingResolved;
 import com.baharmc.loader.mock.MckPluginContained;
+import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginContained;
 import com.baharmc.loader.provided.GameProvided;
-import net.fabricmc.loader.api.SemanticVersion;
+import com.baharmc.loader.utils.semanticversion.SemanticVersion;
 import org.cactoos.collection.CollectionOf;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.launch.MixinBootstrap;
 
+import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +37,7 @@ public class BaharLoaderBasic implements BaharLoaded {
 
     private final Map<String, PluginContained> plugins = new HashMap<>();
 
-    private boolean frozen = false;
+    private boolean locked = false;
 
     static BaharLoaded INSTANCE;
 
@@ -44,38 +49,63 @@ public class BaharLoaderBasic implements BaharLoaded {
     }
 
     @Override
-    public void loadPlugins() {
-        freeze();
-        MixinBootstrap.init();
-        new BaharMixinBootstrap(this).init();
-        launched.doneMixinBootstrapping();
-        launched.getKnotClassLoaded().getDelegate().initializeTransformers();
-    }
-
-    @Override
-    public void enablePlugins() {
-
-    }
-
-    @Override
-    public void disablePlugins() {
-
-    }
-
-    @Override
-    public void freeze() {
-        if (frozen) {
-            throw new RuntimeException("Already frozen!");
+    public void load() {
+        if (locked) {
+            throw new RuntimeException("Bahar is already loaded!");
         }
 
-        frozen = true;
-        finishPluginLoading();
+        final PluginResolve pluginResolve = new PluginResolve(
+            launched.getLogger(),
+            provided,
+            new ClasspathPluginCandidateFound()
+        );
+
+        final Map<String, PluginCandidate> pluginCandidates;
+
+        try {
+            pluginCandidates = pluginResolve.resolve();
+        } catch (PluginResolutionException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (!pluginCandidates.containsKey("bahar")) {
+            throw new RuntimeException("Bahar cannot be loaded!");
+        }
+
+        launched.getLogger().info(
+            "Loading for Bahar " +
+                pluginCandidates.get("bahar").getInfo().getVersion().getFriendlyString()
+        );
+        pluginCandidates.values().forEach(pluginCandidate -> {
+            try {
+                addPlugin(pluginCandidate);
+            } catch (PluginResolutionException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        finishLoading();
+    }
+
+    @Override
+    public void lock() {
+        if (locked) {
+            throw new RuntimeException("Bahar is already locked!");
+        }
+
+        locked = true;
     }
 
     @NotNull
     @Override
     public <T> List<T> getEntryPoints(@NotNull String key, @NotNull Class<T> type) {
         return entryPointStorage.getEntryPoints(key, type);
+    }
+
+    @NotNull
+    @Override
+    public EntryPointStorage getEntryPointStorage() {
+        return entryPointStorage;
     }
 
     @NotNull
@@ -105,12 +135,33 @@ public class BaharLoaderBasic implements BaharLoaded {
         );
     }
 
+    @NotNull
+    @Override
+    public PluginContained getRuntime() {
+        return plugins.getOrDefault("bahar", new MckPluginContained());
+    }
+
     @Override
     public boolean isPluginLoaded(@NotNull String id) {
         return plugins.containsKey(id);
     }
 
-    private void finishPluginLoading() {
+    @Override
+    public void addPlugin(@NotNull PluginCandidate pluginCandidate) throws PluginResolutionException {
+        final LoadedPluginMetaData info = pluginCandidate.getInfo();
+        final URL url = pluginCandidate.getUrl();
+
+        if (plugins.containsKey(info.getId())) {
+            throw new PluginResolutionException(
+                "Duplicate plugin ID: " + info.getId() +
+                    "! (" + plugins.get(info.getId()).getOriginURL().getFile() + ", " + url.getFile() + ")"
+            );
+        }
+
+        plugins.put(info.getId(), new PluginContainerBasic(info, url));
+    }
+
+    private void finishLoading() {
         for (PluginContained pluginContained : plugins.values()) {
             if (!pluginContained.getMetadata().getId().equals("bahar")) {
                 launched.propose(pluginContained.getOriginURL());

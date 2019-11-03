@@ -1,16 +1,24 @@
 package com.baharmc.loader.utils.semanticversion;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Optional;
 
 public interface SemanticVersion extends Version, Comparable<SemanticVersion> {
+
     int COMPONENT_WILDCARD = Integer.MIN_VALUE;
 
     int getVersionComponentCount();
+
     int getVersionComponent(int pos);
 
+    @NotNull
     Optional<String> getPrereleaseKey();
+
+    @NotNull
     Optional<String> getBuildKey();
+
     boolean hasWildcard();
 
     @Override
@@ -28,8 +36,8 @@ public interface SemanticVersion extends Version, Comparable<SemanticVersion> {
             }
         }
 
-        Optional<String> prereleaseA = getPrereleaseKey();
-        Optional<String> prereleaseB = o.getPrereleaseKey();
+        final Optional<String> prereleaseA = getPrereleaseKey();
+        final Optional<String> prereleaseB = o.getPrereleaseKey();
 
         if (prereleaseA.isPresent() || prereleaseB.isPresent()) {
             if (prereleaseA.isPresent() && prereleaseB.isPresent()) {
@@ -44,7 +52,8 @@ public interface SemanticVersion extends Version, Comparable<SemanticVersion> {
         }
     }
 
-    static SemanticVersion parse(String s) throws VersionParsingException {
+    static SemanticVersion parse(@NotNull String s) throws VersionParsingException {
         return VersionDeserializer.deserializeSemantic(s);
     }
+
 }

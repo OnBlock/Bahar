@@ -16,6 +16,8 @@
 
 package com.baharmc.loader.utils.semanticversion;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,31 +26,31 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public final class SemanticVersionPredicateParser {
+
 	private static final Map<String, Function<SemanticVersionImpl, Predicate<SemanticVersionImpl>>> PREFIXES;
 
-	public static Predicate<SemanticVersionImpl> create(String text) throws VersionParsingException {
-		List<Predicate<SemanticVersionImpl>> predicateList = new ArrayList<>();
-		List<SemanticVersionImpl> prereleaseVersions = new ArrayList<>();
+	public static Predicate<SemanticVersionImpl> create(@NotNull String text) throws VersionParsingException {
+		final List<Predicate<SemanticVersionImpl>> predicateList = new ArrayList<>();
 
 		for (String s : text.split(" ")) {
 			s = s.trim();
+
 			if (s.isEmpty() || s.equals("*")) {
 				continue;
 			}
 
 			Function<SemanticVersionImpl, Predicate<SemanticVersionImpl>> factory = null;
-			for (String prefix : PREFIXES.keySet()) {
-				if (s.startsWith(prefix)) {
-					factory = PREFIXES.get(prefix);
-					s = s.substring(prefix.length());
+
+			for (Map.Entry<String, Function<SemanticVersionImpl, Predicate<SemanticVersionImpl>>> prefix : PREFIXES.entrySet()) {
+				final String key = prefix.getKey();
+				if (s.startsWith(key)) {
+					factory = prefix.getValue();
+					s = s.substring(key.length());
 					break;
 				}
 			}
 
-			SemanticVersionImpl version = new SemanticVersionImpl(s, true);
-			if (version.isPrerelease()) {
-				prereleaseVersions.add(version);
-			}
+			final SemanticVersionImpl version = new SemanticVersionImpl(s, true);
 
 			if (factory == null) {
 				factory = PREFIXES.get("=");
@@ -60,10 +62,10 @@ public final class SemanticVersionPredicateParser {
 		}
 
 		if (predicateList.isEmpty()) {
-			return (s) -> true;
+			return s -> true;
 		}
 
-		return (s) -> {
+		return s -> {
 			for (Predicate<SemanticVersionImpl> p : predicateList) {
 				if (!p.test(s)) {
 					return false;
@@ -75,17 +77,16 @@ public final class SemanticVersionPredicateParser {
 	}
 
 	static {
-		// Make sure to keep this sorted in order of length!
 		PREFIXES = new LinkedHashMap<>();
-		PREFIXES.put(">=", (target) -> (source) -> source.compareTo(target) >= 0);
-		PREFIXES.put("<=", (target) -> (source) -> source.compareTo(target) <= 0);
-		PREFIXES.put(">", (target) -> (source) -> source.compareTo(target) > 0);
-		PREFIXES.put("<", (target) -> (source) -> source.compareTo(target) < 0);
-		PREFIXES.put("=", (target) -> (source) -> source.compareTo(target) == 0);
-		PREFIXES.put("~", (target) -> (source) -> source.compareTo(target) >= 0
+		PREFIXES.put(">=", target -> source -> source.compareTo(target) >= 0);
+		PREFIXES.put("<=", target -> source -> source.compareTo(target) <= 0);
+		PREFIXES.put(">", target -> source -> source.compareTo(target) > 0);
+		PREFIXES.put("<", target -> source -> source.compareTo(target) < 0);
+		PREFIXES.put("=", target -> source -> source.compareTo(target) == 0);
+		PREFIXES.put("~", target -> source -> source.compareTo(target) >= 0
 				&& source.getVersionComponent(0) == target.getVersionComponent(0)
 				&& source.getVersionComponent(1) == target.getVersionComponent(1));
-		PREFIXES.put("^", (target) -> (source) -> source.compareTo(target) >= 0
+		PREFIXES.put("^", target -> source -> source.compareTo(target) >= 0
 				&& source.getVersionComponent(0) == target.getVersionComponent(0));
 	}
 }

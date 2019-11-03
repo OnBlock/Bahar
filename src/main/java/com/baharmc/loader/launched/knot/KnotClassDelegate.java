@@ -1,8 +1,9 @@
 package com.baharmc.loader.launched.knot;
 
-import com.baharmc.loader.launched.BaharLaunched;
+import com.baharmc.loader.launched.common.BaharLaunched;
 import com.baharmc.loader.provided.GameProvided;
 import com.baharmc.loader.transformed.BaharTransformed;
+import com.baharmc.loader.utils.FileSystemDelegate;
 import com.baharmc.loader.utils.FileSystemUtil;
 import com.baharmc.loader.utils.UrlConversionException;
 import com.baharmc.loader.utils.UrlUtil;
@@ -97,7 +98,7 @@ public final class KnotClassDelegate {
                         }
 
                         if (manifest == null) {
-                            try (FileSystemUtil.FileSystemDelegate jarFs = FileSystemUtil.getJarFileSystem(path, false)) {
+                            try (FileSystemDelegate jarFs = FileSystemUtil.getJarFileSystem(path, false)) {
                                 Path manifestPath = jarFs.get().getPath("META-INF/MANIFEST.MF");
                                 if (Files.exists(manifestPath)) {
                                     try (InputStream stream = Files.newInputStream(manifestPath)) {

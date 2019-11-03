@@ -1,7 +1,8 @@
 package com.baharmc.loader.contained;
 
+import com.baharmc.loader.plugin.LoadedPluginMetaData;
 import com.baharmc.loader.plugin.PluginContained;
-import com.baharmc.loader.plugin.PluginMetaData;
+import com.baharmc.loader.utils.FileSystemDelegate;
 import com.baharmc.loader.utils.FileSystemUtil;
 import com.baharmc.loader.utils.UrlConversionException;
 import com.baharmc.loader.utils.UrlUtil;
@@ -15,15 +16,15 @@ import java.nio.file.Path;
 public class PluginContainerBasic implements PluginContained {
 
     @NotNull
-    private final PluginMetaData pluginMetaData;
+    private final LoadedPluginMetaData info;
 
     @NotNull
     private final URL originUrl;
 
     private Path root;
 
-    public PluginContainerBasic(@NotNull PluginMetaData pluginMetaData, @NotNull URL originUrl) {
-        this.pluginMetaData = pluginMetaData;
+    public PluginContainerBasic(@NotNull LoadedPluginMetaData info, @NotNull URL originUrl) {
+        this.info = info;
         this.originUrl = originUrl;
     }
 
@@ -45,7 +46,7 @@ public class PluginContainerBasic implements PluginContained {
             if (Files.isDirectory(holder)) {
                 root = holder.toAbsolutePath();
             } else {
-                final FileSystemUtil.FileSystemDelegate delegate = FileSystemUtil.getJarFileSystem(holder, false);
+                final FileSystemDelegate delegate = FileSystemUtil.getJarFileSystem(holder, false);
 
                 if (delegate.get() == null) {
                     throw new RuntimeException("Could not open JAR file " + holder.getFileName() + " for NIO reading!");
@@ -54,14 +55,14 @@ public class PluginContainerBasic implements PluginContained {
                 root = delegate.get().getRootDirectories().iterator().next();
             }
         } catch (IOException | UrlConversionException e) {
-            throw new RuntimeException("Failed to find root directory for plugin '" + pluginMetaData.getId() + "'!", e);
+            throw new RuntimeException("Failed to find root directory for plugin '" + info.getId() + "'!", e);
         }
     }
 
     @NotNull
     @Override
-    public PluginMetaData getMetadata() {
-        return pluginMetaData;
+    public LoadedPluginMetaData getMetadata() {
+        return info;
     }
 
     @NotNull

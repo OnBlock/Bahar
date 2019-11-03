@@ -9,6 +9,12 @@ name: BaharRuntime
 #Default: '${version}' managed by Gradle
 #More info: https://semver.org/
 version: '${version}'
+#Main class of your plugin
+main:
+  - 'com.baharmc.runtime.Runtime'
+#Mixin config file
+mixins:
+  - 'mixins.bahar.json'
 #If your plugin is stable set it to true, otherwise false
 isStable: false
 #If your plugin is snapshot set it true, otherwise false
@@ -16,20 +22,20 @@ isSnapshot: false
 #Optional fields
 #Plugin description, describe how awesome your plugin is!
 description: 'The base plugin loader'
-#If you're not licensing your plugin then set to null
+#If you're not licensing your plugin then remove it
 license: MIT
 #A list of the plugin authors
 authors:
   CODY_AI:
     roles:
       - Head Developer
-    contatcs:
+    contacts:
       website: https://onblock.xyz/
       github: https://github.com/OnBlock
   portlek:
     roles:
       - Head Developer
-    contatcs:
+    contacts:
       github: https://github.com/portlek
 #A list of ways to contact you!
 contacts:
@@ -40,4 +46,4 @@ contacts:
 #Note: the plugin version must respects the semver
 #e.g: plugin_id: '>=1.3.0'
 depends:
-  minecraft: '>=19w41a'
+  minecraft: '>=1.14.4'

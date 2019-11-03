@@ -16,19 +16,22 @@
 
 package com.baharmc.loader.utils.semanticversion;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Predicate;
 
 @FunctionalInterface
 public interface VersionPredicateParser<E extends Version> {
+
 	/**
 	 * Parse and create a predicate comparing given Version objects.
 	 *
 	 * @param s The predicate string. Guaranteed to be non-null and non-empty.
 	 * @return The resulting predicate.
 	 */
-	Predicate<E> create(String s);
+	Predicate<E> create(@NotNull String s);
 
-	static boolean matches(Version version, String s) throws VersionParsingException {
+	static boolean matches(@NotNull Version version, @NotNull String s) throws VersionParsingException {
 		if (version instanceof SemanticVersionImpl) {
 			return SemanticVersionPredicateParser.create(s).test((SemanticVersionImpl) version);
 		} else if (version instanceof StringVersion) {

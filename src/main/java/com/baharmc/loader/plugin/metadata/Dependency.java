@@ -3,7 +3,7 @@ package com.baharmc.loader.plugin.metadata;
 import com.baharmc.loader.utils.semanticversion.Version;
 import org.jetbrains.annotations.NotNull;
 
-public interface PluginDependency {
+public interface Dependency {
 
     @NotNull
     String getPluginId();
