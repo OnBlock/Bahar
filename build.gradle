@@ -1,0 +1,108 @@
+plugins {
+    id 'java'
+
+    id 'eclipse'
+    id 'idea'
+    id("fabric-loom") version "0.2.3-SNAPSHOT"
+}
+
+group 'com.baharmc'
+version '0.0.1'
+
+archivesBaseName = "Bahar-server"
+
+sourceCompatibility = 8
+targetCompatibility = 8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        name = 'Fabric'
+        url = 'http://maven.modmuss50.me/'
+    }
+    maven {
+        name = 'SpongePowered'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+    maven {
+        name = 'mojang'
+        url = 'https://libraries.minecraft.net/'
+    }
+    maven {
+        name = 'bintray'
+        url = 'https://dl.bintray.com/baharmc/maven'
+    }
+}
+
+configurations {
+    fatJar
+    compile.extendsFrom fatJar
+}
+
+dependencies {
+    fatJar 'com.baharmc:BaharAPI:0.0.1'
+
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+    fatJar "net.fabricmc:yarn:${project.yarn_mappings}"
+    modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric}"
+
+    fatJar 'com.google.code.findbugs:jsr305:3.0.2'
+
+    compile 'org.ow2.asm:asm:7.1'
+    compile 'org.ow2.asm:asm-analysis:7.1'
+    compile 'org.ow2.asm:asm-commons:7.1'
+    compile 'org.ow2.asm:asm-tree:7.1'
+    compile 'org.ow2.asm:asm-util:7.1'
+
+    fatJar('net.fabricmc:sponge-mixin:0.7.11.36') {
+        exclude module: 'launchwrapper'
+        exclude module: 'guava'
+    }
+    fatJar 'net.fabricmc:tiny-mappings-parser:0.1.1.8'
+    fatJar 'net.fabricmc:tiny-remapper:0.1.0.40'
+    fatJar 'net.fabricmc:fabric-loader-sat4j:2.3.5.4'
+
+    fatJar 'com.google.jimfs:jimfs:1.1'
+
+    compile ('net.minecraft:launchwrapper:1.12') {
+        transitive = false
+    }
+    compile 'net.sf.jopt-simple:jopt-simple:5.0.3'
+
+    fatJar 'org.yaml:snakeyaml:1.25'
+    fatJar 'me.tongfei:progressbar:0.7.4'
+    fatJar 'com.google.code.gson:gson:2.8.6'
+    compileOnly 'org.jetbrains:annotations:17.0.0'
+    fatJar 'org.cactoos:cactoos:0.42'
+}
+
+processResources {
+    inputs.property "version", version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'bahar.plugin.yml'
+        expand 'version': version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'bahar.plugin.yml'
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'com.baharmc.loader.Main'
+        )
+    }
+    from {
+        configurations.fatJar.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}

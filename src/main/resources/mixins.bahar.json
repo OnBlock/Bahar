@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "com.baharmc.runtime.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.7.11",
+  "server": [
+    "CommandManagerMixin",
+    "MinecraftServerBranded",
+    "MinecraftServerMixin",
+    "ServerCommandOutputMixin",
+    "events.MinecraftDedicatedServerMixin",
+    "events.MinecraftServerMixin"
+  ]
+}
