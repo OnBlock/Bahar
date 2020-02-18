@@ -67,10 +67,6 @@
     </build>
 
     <repositories>
-        <repository>
-            <id>portlek</id>
-            <url>https://dl.bintray.com/portlek/maven</url>
-        </repository>
     </repositories>
 
     <dependencies>
