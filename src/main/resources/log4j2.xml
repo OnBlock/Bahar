@@ -35,7 +35,7 @@
         <Root level="debug" additivity="false">
             <appender-ref ref="console" />
         </Root>
-        
+
         <Root level="info">
             <filters>
                 <MarkerFilter marker="NETWORK_PACKETS" onMatch="DENY" onMismatch="NEUTRAL" />

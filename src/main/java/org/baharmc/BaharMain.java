@@ -17,7 +17,7 @@ public final class BaharMain {
     private void exec() {
         final JCommander jCommander = new JCommander(baharArgs);
 
-        jCommander.setProgramName("bahar");
+        jCommander.setProgramName("Bahar");
 
         try {
             jCommander.parse(args);
