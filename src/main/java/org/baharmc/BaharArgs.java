@@ -12,11 +12,10 @@ public final class BaharArgs {
     private boolean help = false;
 
     @Parameter(
-        names = "-gui",
-        arity = 1,
+        names = {"-gui", "--gui"},
         description = "Bahar runs with GUI."
     )
-    public boolean gui = true;
+    public boolean gui = false;
 
     public boolean isHelp() {
         return help;
