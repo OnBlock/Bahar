@@ -75,7 +75,7 @@
     <dependencies>
         <dependency>
             <groupId>org.baharmc</groupId>
-            <artifactId>Bahar</artifactId>
+            <artifactId>BaharAPI</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
